@@ -21,7 +21,7 @@ public class UserDto {
     private String university;
     private String userStatus;
     private int  userScore;
-    //private UserRole role;
+    private UserRole role;
 
     /* DTO -> Entity */
     public UserEntity toEntity() {
@@ -37,6 +37,7 @@ public class UserDto {
                 .university(university)
                 .userStatus(userStatus)
                 .userScore(userScore)
+                .role(role)
                 .build();
         return userEntity;
     }

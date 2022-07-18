@@ -18,11 +18,11 @@ public class MyPageEntity extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "my_page_entity")
+    @Column(name = "my_page_id")
     private int myPageId;
 
-    @OneToOne
-    @JoinColumn(name = "user_entity")
+    //이름 수정
+    @OneToOne(mappedBy = "myPageEntity")
     private UserEntity userEntity;
 
 //    @OneToMany

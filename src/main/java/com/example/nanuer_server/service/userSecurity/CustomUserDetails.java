@@ -15,13 +15,14 @@ import java.util.Collection;
 @AllArgsConstructor
 public class CustomUserDetails implements UserDetails {
 
-    private final UserEntity user;
+    private final UserEntity userEntity;
 
     @Override
-    public String getPassword() { return user.getPassword(); }
+    public String getPassword() { return userEntity.getPassword(); }
 
     @Override
-    public String getUsername() { return user.getId(); }
+    public String getUsername() { return userEntity.getId(); }
+    //username == id
 
     /* 계정 만료 여부
      *  true : 만료 안됨
@@ -64,7 +65,7 @@ public class CustomUserDetails implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Collection<GrantedAuthority> collectors = new ArrayList<>();
 
-       // collectors.add(() -> "ROLE_"+user.getRole());
+        collectors.add(() -> "ROLE_"+userEntity.getRole());
 
         return collectors;
     }

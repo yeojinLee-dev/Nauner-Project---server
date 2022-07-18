@@ -19,7 +19,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     private final HttpSession session;
 
-    /* username이 DB에 있는지 확인 */
+    /* id가 DB에 있는지 확인 */
     @Override
     public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
         UserEntity user = userRepository.findById(id).orElseThrow(() ->
@@ -30,4 +30,5 @@ public class CustomUserDetailsService implements UserDetailsService {
         /* 시큐리티 세션에 유저 정보 저장 */
         return new CustomUserDetails(user);
     }
+
 }

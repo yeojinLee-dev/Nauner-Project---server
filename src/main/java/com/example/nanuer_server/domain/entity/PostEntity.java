@@ -20,7 +20,7 @@ public class PostEntity extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "post_entity")
+    @Column(name = "post_id")
     private int postId;
 
     private int categoryId;
@@ -48,21 +48,22 @@ public class PostEntity extends BaseTimeEntity {
 
     private String post_status;
 
-    //@ManyToOne
-    //@JoinColumn(name = "post_entities")
+    //@Column(s) not allowed on a @OneToOne property 발생
+    //@Column(name = "user_entity")
     @ManyToOne
+    @JoinColumn(name = "post_entities")
     @ToString.Exclude
-    @JoinColumn(name = "user_id")
     private UserEntity userEntity;
 
+    //@Column(s) not allowed on a @OneToOne property 발생
+    @Column(name = "category_entity")
     @OneToOne
     @ToString.Exclude
-    @JoinColumn(name = "category_entity")
     private CategoryEntity categoryEntity;
 
 
     @ManyToOne
-    @JoinColumn(name="my_page_entity")
+    @JoinColumn(name="my_page_id")
     @ToString.Exclude
     private MyPageEntity myPageEntity;
 

@@ -20,7 +20,7 @@ public class UserSessionDto implements Serializable {
     private String university;
     private String userStatus;
     private int  userScore;
-   // private UserRole role;
+    private UserRole role;
 
     /* Entity -> Dto */
     public UserSessionDto(UserEntity user) {
@@ -35,6 +35,7 @@ public class UserSessionDto implements Serializable {
         this.university = user.getUniversity();
         this.userStatus = user.getUserStatus();
         this.userScore = user.getUserScore();
+        this.role = user.getRole();
         //this.role = user.getRole();
     }
 }

@@ -19,16 +19,16 @@ public class LikeEntity extends BaseTimeEntity {
     private int LikeId;
 
     @ManyToOne
-    @JoinColumn(name = "my_page_entity")
+    @JoinColumn(name = "my_page_id")
     @ToString.Exclude
     private MyPageEntity myPageEntity;
 
     @ManyToOne
-    @JoinColumn(name = "user_entity")
+    @JoinColumn(name = "user_id")
     private UserEntity userEntity;
 
     @ManyToOne
-    @JoinColumn(name="post_entity")
+    @JoinColumn(name="post_id")
     @ToString.Exclude
     private PostEntity postEntity;
 

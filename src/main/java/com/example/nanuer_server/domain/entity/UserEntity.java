@@ -4,6 +4,8 @@ import com.example.nanuer_server.domain.BaseTimeEntity;
 import com.example.nanuer_server.dto.UserDto;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
+
+import javax.management.relation.Role;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +21,7 @@ public class UserEntity extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_entity")
+    @Column(name = "user_id")
     private int userId;
 
     @Column(nullable = false, unique = true)
@@ -55,14 +57,19 @@ public class UserEntity extends BaseTimeEntity {
     @ColumnDefault("0")
     private int userScore;
 
+    //@Column(s) not allowed on a @OneToOne property 발생
+    //@Column(name = "my_page_entity")
     @OneToOne
     @ToString.Exclude // 순환참조 방지
-    @JoinColumn(name = "my_page_entity")
     private MyPageEntity myPageEntity;
 
-    @OneToMany
-    @JoinColumn(name = "post_entity")
+    //mapped 이름 수정
+    @OneToMany(mappedBy = "userEntity")
+    @Column(name = "post_entities")
     private List<PostEntity> postEntities = new ArrayList<>();
+
+    @Enumerated(EnumType.STRING)
+    private UserRole role;
 
     /*
     public static UserEntity createUser(UserDto userDto) {

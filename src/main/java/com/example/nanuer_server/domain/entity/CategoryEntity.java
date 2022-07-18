@@ -10,19 +10,15 @@ import javax.persistence.*;
 @Builder
 @Data
 @Entity
-@Table(name = "CategoryEntity", indexes = {
-        @Index(name = "idx_categoryentity", columnList = "category_entity, post_entity")
-})
 public class CategoryEntity extends BaseTimeEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "category_entity")
     private int categoryId;
 
     @Column(nullable = false)
     private String categoryName;
 
-    @OneToOne
-    @JoinColumn(name="post_entity")
+    //일대일, 양방향, 이름 수정 (mapped에는 테이블 이름을 앞에 소문자로 적어야하는듯..싶은..)
+    @OneToOne(mappedBy = "categoryEntity")
     private PostEntity postEntity;
 }
