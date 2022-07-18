@@ -23,8 +23,6 @@ public class PostEntity extends BaseTimeEntity {
     @Column(name = "post_id")
     private int postId;
 
-    private int categoryId;
-
     private String title;
 
     private String content;
@@ -46,19 +44,18 @@ public class PostEntity extends BaseTimeEntity {
 
     private String time;
 
-    private String post_status;
+    private String postStatus;
 
     //@Column(s) not allowed on a @OneToOne property 발생
     //@Column(name = "user_entity")
     @ManyToOne
-    @JoinColumn(name = "post_entities")
+    @JoinColumn(name = "user_id")
     @ToString.Exclude
     private UserEntity userEntity;
 
     //@Column(s) not allowed on a @OneToOne property 발생
-    @Column(name = "category_entity")
+    @JoinColumn(name = "category_id")
     @OneToOne
-    @ToString.Exclude
     private CategoryEntity categoryEntity;
 
 
