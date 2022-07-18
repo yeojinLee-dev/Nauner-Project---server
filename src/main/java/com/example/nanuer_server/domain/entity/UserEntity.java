@@ -1,11 +1,9 @@
 package com.example.nanuer_server.domain.entity;
 
 import com.example.nanuer_server.domain.BaseTimeEntity;
-import com.example.nanuer_server.dto.UserDto;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
-import javax.management.relation.Role;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;

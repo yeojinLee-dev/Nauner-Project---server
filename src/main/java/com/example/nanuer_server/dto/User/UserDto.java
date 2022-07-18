@@ -1,4 +1,4 @@
-package com.example.nanuer_server.dto;
+package com.example.nanuer_server.dto.User;
 
 import com.example.nanuer_server.domain.entity.UserEntity;
 import com.example.nanuer_server.domain.entity.UserRole;
@@ -22,7 +22,6 @@ public class UserDto {
     private String userStatus;
     private int  userScore;
     private UserRole role;
-
     /* DTO -> Entity */
     public UserEntity toEntity() {
         UserEntity userEntity = UserEntity.builder()
@@ -37,7 +36,7 @@ public class UserDto {
                 .university(university)
                 .userStatus(userStatus)
                 .userScore(userScore)
-                .role(role)
+                .role(UserRole.ROLE_USER)
                 .build();
         return userEntity;
     }
