@@ -1,6 +1,8 @@
 package com.example.nanuer_server.domain.entity;
 
 import com.example.nanuer_server.domain.BaseTimeEntity;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
@@ -8,6 +10,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Table(name="User")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -34,7 +37,7 @@ public class UserEntity extends BaseTimeEntity {
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false)
+    @Column(name= "nick_name" ,nullable = false)
     private String nickName;
 
     @Column(nullable = false)
@@ -43,16 +46,16 @@ public class UserEntity extends BaseTimeEntity {
     @Column(nullable = false)
     private String birth;
 
-    @Column
+    @Column(name = "profile_img")
     private String profileImg;
 
     @Column(nullable = false)
     private String university;
 
-    @Column(nullable = false)
+    @Column(name = "user_status",nullable = false)
     private String userStatus;
 
-    @ColumnDefault("0")
+    @Column(name = "user_score")
     private int userScore;
 
     //@Column(s) not allowed on a @OneToOne property 발생
@@ -65,7 +68,7 @@ public class UserEntity extends BaseTimeEntity {
     //mapped 이름 수정
     //@Column(name = "post_entities")
     @OneToMany(mappedBy = "userEntity")
-    private List<PostEntity> postEntities = new ArrayList<>();
+    private List<PostEntity> postEntities = new ArrayList<PostEntity>();
 
     @Enumerated(EnumType.STRING)
     private UserRole role;
@@ -87,6 +90,12 @@ public class UserEntity extends BaseTimeEntity {
         //userEntity.setPassword(passwordEncoder.encode(memberDto.getPassword()));
         return userEntity;
     }*/
+
+    public void status(String status){
+        this.userStatus  = status;
+
+    }
+
 
 
 }

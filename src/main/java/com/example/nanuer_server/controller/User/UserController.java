@@ -64,7 +64,6 @@ public class UserController {
 
 
     //삭제
-
     @DeleteMapping("/{id}")
     public BaseResponse<String> delete(@PathVariable("id") String id) {
         try{
@@ -77,5 +76,37 @@ public class UserController {
             return new BaseResponse<>((exception.getStatus()));
         }
     }
+
+    //유저 상태관리
+    @PatchMapping("/{id}/status")
+    public BaseResponse<String> UserStatus(@PathVariable("id") String id) {
+        try{
+            userService.UserStatus(id);
+            UserEntity userEntity = userService.GetUser(id);
+            String status = userEntity.getUserStatus();
+            String result = id + " 해당 유저가 " + status + " 되었습니다.";
+            return new BaseResponse<>(result);
+
+        }
+        catch (BaseException exception) {
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
+
+    //유저 정보 조회
+    @GetMapping("/{id}")
+    public BaseResponse<UserEntity> GetUser(@PathVariable("id") String id) {
+        try{
+            UserEntity userInfo = userService.GetUser(id);
+
+            return new BaseResponse<>(userInfo);
+
+        }
+        catch (BaseException exception) {
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
+
+
 
 }

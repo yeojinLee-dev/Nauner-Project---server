@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
+import java.util.Objects;
 import java.util.Optional;
 
 @Slf4j
@@ -60,6 +61,32 @@ public class UserService {
         userRepository.delete(userEntity.get());
 
     }
+
+    //비활성화, 활성화
+    public void UserStatus(String id) throws BaseException {
+        Optional<UserEntity> userEntity = userRepository.findById(id);
+        if(userEntity.isEmpty()) {
+            throw new BaseException(USERS_EMPTY_USER_ID);
+        }
+        else{
+            if(Objects.equals(userEntity.get().getUserStatus(), "active")) {
+                userEntity.get().status("inactive");
+            }
+            else if(Objects.equals(userEntity.get().getUserStatus(), "inactive")){
+                userEntity.get().status("active");
+            }
+        }
+    }
+
+    //유저 정보 가져오기
+    public UserEntity GetUser(String id) throws BaseException {
+        Optional<UserEntity> userEntity = userRepository.findById(id);
+        if(!userEntity.isPresent()) {
+            throw new BaseException(USERS_EMPTY_USER_ID);
+        }
+        return userEntity.get();
+    }
+
 
 
 }

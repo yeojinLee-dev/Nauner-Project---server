@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @NoArgsConstructor
 @Builder
 public class UserDto {
+
     private String id;
     private String password;
     private String name;
@@ -34,8 +35,8 @@ public class UserDto {
                 .birth(birth)
                 .profileImg(profileImg)
                 .university(university)
-                .userStatus(userStatus)
-                .userScore(userScore)
+                .userStatus("active")
+                .userScore(0)
                 .role(UserRole.ROLE_USER)
                 .build();
         return userEntity;

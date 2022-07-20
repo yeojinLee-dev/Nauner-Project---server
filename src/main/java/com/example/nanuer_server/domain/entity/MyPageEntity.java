@@ -7,6 +7,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Table(name="MyPage")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -23,7 +24,9 @@ public class MyPageEntity extends BaseTimeEntity {
 
     //이름 수정
     @OneToOne(mappedBy = "myPageEntity")
+    @JoinColumn(name = "user_id")
     private UserEntity userEntity;
+
 
 //    @OneToMany
 //    @JoinColumn(name = "my_page_entity")

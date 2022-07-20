@@ -2,13 +2,13 @@ package com.example.nanuer_server.domain.entity;
 
 import com.example.nanuer_server.domain.BaseTimeEntity;
 import com.example.nanuer_server.domain.Progress;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
-
+@Table(name = "Post")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -28,35 +28,41 @@ public class PostEntity extends BaseTimeEntity {
     private String content;
 
     private int view;
-
     //**
+
     private int like;
 
     private Progress progress;
 
+    @Column(name = "cost_info")
     private String costInfo;
 
     private int total;
 
+    @Column(name = "delivery_cost")
     private String deliveryCost;
 
     private String location;
 
     private String time;
 
+    @Column(name = "post_status")
     private String postStatus;
+
 
     //@Column(s) not allowed on a @OneToOne property 발생
     //@Column(name = "user_entity")
-    @ManyToOne
     @JoinColumn(name = "user_id")
+    @ManyToOne
     @ToString.Exclude
     private UserEntity userEntity;
+
 
     //@Column(s) not allowed on a @OneToOne property 발생
     @JoinColumn(name = "category_id")
     @OneToOne
     private CategoryEntity categoryEntity;
+
 
 
     @ManyToOne
