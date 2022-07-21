@@ -1,4 +1,4 @@
-package com.example.nanuer_server.dto;
+package com.example.nanuer_server.dto.User;
 
 import com.example.nanuer_server.domain.entity.UserEntity;
 import com.example.nanuer_server.domain.entity.UserRole;
@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @NoArgsConstructor
 @Builder
 public class UserDto {
+
     private String id;
     private String password;
     private String name;
@@ -22,7 +23,6 @@ public class UserDto {
     private String userStatus;
     private int  userScore;
     private UserRole role;
-
     /* DTO -> Entity */
     public UserEntity toEntity() {
         UserEntity userEntity = UserEntity.builder()
@@ -35,9 +35,9 @@ public class UserDto {
                 .birth(birth)
                 .profileImg(profileImg)
                 .university(university)
-                .userStatus(userStatus)
-                .userScore(userScore)
-                .role(role)
+                .userStatus("active")
+                .userScore(0)
+                .role(UserRole.ROLE_USER)
                 .build();
         return userEntity;
     }
