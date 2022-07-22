@@ -25,15 +25,15 @@ public class MyPageEntity extends BaseTimeEntity {
     @OneToOne(mappedBy = "myPageEntity")
     private UserEntity userEntity;
 
-//    @OneToMany
-//    @JoinColumn(name = "my_page_entity")
-//    @ToString.Exclude
-//    private List<LikeEntity> likeEntities = new ArrayList<>();
+    @OneToMany
+    @JoinColumn(name = "my_page_entity")
+    @ToString.Exclude
+    private List<LikeEntity> likeEntities = new ArrayList<>();
 
-//    @OneToMany
-//    @JoinColumn(name = "my_page_entity")
-//    @ToString.Exclude
-//    private List<PostEntity> postEntities = new ArrayList<>();
+    @OneToMany
+    @JoinColumn(name = "my_page_entity")
+    @ToString.Exclude
+    private List<PostEntity> postEntities = new ArrayList<>();
 
 
 

@@ -58,14 +58,13 @@ public class UserEntity extends BaseTimeEntity {
     private int userScore;
 
     //@Column(s) not allowed on a @OneToOne property 발생
-    //@Column(name = "my_page_entity")
     @OneToOne
+    @JoinColumn(name = "my_page_id")
     @ToString.Exclude // 순환참조 방지
     private MyPageEntity myPageEntity;
 
     //mapped 이름 수정
     @OneToMany(mappedBy = "userEntity")
-    @Column(name = "post_entities")
     private List<PostEntity> postEntities = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)

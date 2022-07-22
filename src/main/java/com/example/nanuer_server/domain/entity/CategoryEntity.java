@@ -13,6 +13,7 @@ import javax.persistence.*;
 public class CategoryEntity extends BaseTimeEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "category_id")
     private int categoryId;
 
     @Column(nullable = false)
