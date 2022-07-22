@@ -7,11 +7,11 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
+import javax.management.relation.Role;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Table(name="User")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -24,7 +24,7 @@ public class UserEntity extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    private Long userId;
+    private int userId;
 
     @Column(nullable = false, unique = true)
     private String id;
@@ -38,7 +38,7 @@ public class UserEntity extends BaseTimeEntity {
     @Column(nullable = false)
     private String password;
 
-    @Column(name= "nick_name" ,nullable = false)
+    @Column(nullable = false)
     private String nickName;
 
     @Column(nullable = false)
@@ -47,13 +47,13 @@ public class UserEntity extends BaseTimeEntity {
     @Column(nullable = false)
     private String birth;
 
-    @Column(name = "profile_img")
+    @Column
     private String profileImg;
 
     @Column(nullable = false)
     private String university;
 
-    @Column(name = "user_status",nullable = false)
+    @Column(nullable = false)
     private String userStatus;
 
     @Column(name = "user_score")
@@ -61,15 +61,15 @@ public class UserEntity extends BaseTimeEntity {
 
     //@Column(s) not allowed on a @OneToOne property 발생
     //@Column(name = "my_page_entity")
-    @JoinColumn(name="my_page_id")
     @OneToOne
+    @JoinColumn(name = "my_page_id")
     @ToString.Exclude // 순환참조 방지
     private MyPageEntity myPageEntity;
 
     //mapped 이름 수정
-    //@Column(name = "post_entities")
     @OneToMany(mappedBy = "userEntity")
-    private List<PostEntity> postEntities = new ArrayList<PostEntity>();
+    @Column(name = "post_entities")
+    private List<PostEntity> postEntities = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
     private UserRole role;

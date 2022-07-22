@@ -8,7 +8,6 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Table(name="MyPage")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -21,13 +20,12 @@ public class MyPageEntity extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "my_page_id")
-    private Long myPageId;
+    private int myPageId;
 
     //이름 수정
     @OneToOne(mappedBy = "myPageEntity")
     @JoinColumn(name = "user_id")
     private UserEntity userEntity;
-
 
 //    @OneToMany
 //    @JoinColumn(name = "my_page_entity")
