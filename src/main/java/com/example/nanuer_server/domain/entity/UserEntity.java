@@ -1,7 +1,8 @@
 package com.example.nanuer_server.domain.entity;
 
 import com.example.nanuer_server.domain.BaseTimeEntity;
-import com.example.nanuer_server.dto.UserDto;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
@@ -10,6 +11,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Table(name="User")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -58,8 +60,8 @@ public class UserEntity extends BaseTimeEntity {
     private int userScore;
 
     //@Column(s) not allowed on a @OneToOne property 발생
+    //@Column(name = "my_page_entity")
     @OneToOne
-    @JoinColumn(name = "my_page_id")
     @ToString.Exclude // 순환참조 방지
     private MyPageEntity myPageEntity;
 
@@ -87,6 +89,12 @@ public class UserEntity extends BaseTimeEntity {
         //userEntity.setPassword(passwordEncoder.encode(memberDto.getPassword()));
         return userEntity;
     }*/
+
+    public void status(String status){
+        this.userStatus  = status;
+
+    }
+
 
 
 }

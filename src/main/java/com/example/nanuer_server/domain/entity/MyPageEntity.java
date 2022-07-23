@@ -25,6 +25,7 @@ public class MyPageEntity extends BaseTimeEntity {
     @OneToOne(mappedBy = "myPageEntity")
     private UserEntity userEntity;
 
+
     @OneToMany
     @JoinColumn(name = "my_page_entity")
     @ToString.Exclude

@@ -1,6 +1,9 @@
 package com.example.nanuer_server.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -16,17 +19,17 @@ import java.time.LocalDateTime;
 public abstract class BaseTimeEntity {
 
     @CreatedDate
-    private LocalDateTime createdDate;
+    private LocalDateTime created_date;
 
     @LastModifiedDate
-    private LocalDateTime modifiedDate;
+    private LocalDateTime modified_date;
 
     public LocalDateTime getCreatedDate() {
-        return createdDate;
+        return created_date;
     }
 
     public LocalDateTime getModifiedDate() {
-        return modifiedDate;
+        return modified_date;
     }
 
 }
