@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 
-public interface UserRepository extends JpaRepository<UserEntity,Long> {
+public interface  UserRepository extends JpaRepository<UserEntity,Long> {
      Optional<UserEntity> findById(String id);
 
      List<UserEntity> findAll();

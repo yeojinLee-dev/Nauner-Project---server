@@ -8,11 +8,10 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
+@Table(name = "post")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Data
 @Entity
 @ToString(callSuper = true) // 부모 클래스의 toString 불러오는 어노테이션. 붙이면 createdAt 하고 updatedAt 데이터 정상적으로 나옴.
 @EqualsAndHashCode(callSuper = true) // 부모클래스의 equalsAndHashCode 불러오는 어노테이션.
@@ -22,8 +21,6 @@ public class PostEntity extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "post_id")
     private int postId;
-
-    private int categoryId;
 
     private String title;
 
@@ -48,17 +45,14 @@ public class PostEntity extends BaseTimeEntity {
 
     private String post_status;
 
-    //@Column(s) not allowed on a @OneToOne property 발생
-    //@Column(name = "user_entity")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     @ToString.Exclude
     private UserEntity userEntity;
 
-    //@Column(s) not allowed on a @OneToOne property 발생
-    @Column(name = "category_entity")
     @OneToOne
     @ToString.Exclude
+    @JoinColumn(name = "category_id")
     private CategoryEntity categoryEntity;
 
 

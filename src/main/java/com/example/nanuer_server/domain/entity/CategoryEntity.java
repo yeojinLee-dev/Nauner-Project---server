@@ -5,15 +5,15 @@ import lombok.*;
 
 import javax.persistence.*;
 
-@Table(name="Category")
+@Table(name="category")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Data
 @Entity
 public class CategoryEntity{
+
     @Id
-    @Column(name="category_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "category_id")
     private int categoryId;

@@ -11,7 +11,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Table(name="User")
+@Table(name="user")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
