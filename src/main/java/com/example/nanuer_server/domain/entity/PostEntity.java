@@ -47,11 +47,9 @@ public class PostEntity extends BaseTimeEntity {
 
     private String time;
 
-    private String postStatus;
+    private String post_status;
 
-    //@Column(s) not allowed on a @OneToOne property 발생
-    //@Column(name = "user_entity")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     @ToString.Exclude
     private UserEntity userEntity;
