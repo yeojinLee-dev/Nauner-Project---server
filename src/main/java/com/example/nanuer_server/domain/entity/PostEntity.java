@@ -31,6 +31,7 @@ public class PostEntity extends BaseTimeEntity {
     //**
     private int like;
 
+    @Enumerated(EnumType.STRING)
     private Progress progress;
 
     private String costInfo;

@@ -1,6 +1,7 @@
 package com.example.nanuer_server.domain.entity;
 
 import com.example.nanuer_server.domain.BaseTimeEntity;
+import com.example.nanuer_server.dto.mypage.MyPageDto;
 import lombok.*;
 
 import javax.persistence.*;
@@ -36,6 +37,12 @@ public class MyPageEntity extends BaseTimeEntity {
     @ToString.Exclude
     private List<PostEntity> postEntities = new ArrayList<>();
 
-
+    public MyPageDto toDto(){
+        MyPageDto myPageDto = MyPageDto.builder()
+                .myPageId(myPageId)
+                .userDto(userEntity.toDto())
+                .build();
+        return myPageDto;
+    }
 
 }
