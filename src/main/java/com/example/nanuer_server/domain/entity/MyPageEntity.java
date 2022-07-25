@@ -1,6 +1,7 @@
 package com.example.nanuer_server.domain.entity;
 
 import com.example.nanuer_server.domain.BaseTimeEntity;
+import com.example.nanuer_server.dto.User.UserInfoDto;
 import com.example.nanuer_server.dto.mypage.MyPageDto;
 import lombok.*;
 
@@ -40,7 +41,7 @@ public class MyPageEntity extends BaseTimeEntity {
     public MyPageDto toDto(){
         MyPageDto myPageDto = MyPageDto.builder()
                 .myPageId(myPageId)
-                .userDto(userEntity.toDto())
+                .userInfoDto(userEntity.toDto())
                 .build();
         return myPageDto;
     }

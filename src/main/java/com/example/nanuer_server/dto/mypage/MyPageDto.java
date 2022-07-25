@@ -1,7 +1,7 @@
 package com.example.nanuer_server.dto.mypage;
 
 import com.example.nanuer_server.domain.entity.MyPageEntity;
-import com.example.nanuer_server.dto.User.UserDto;
+import com.example.nanuer_server.dto.User.UserInfoDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,13 +13,13 @@ import net.bytebuddy.implementation.bind.annotation.BindingPriority;
 @AllArgsConstructor
 @Builder
 public class MyPageDto {
-    private Long myPageId;
-    private UserDto userDto;
+    private int myPageId;
+    private UserInfoDto userInfoDto;
 
     public MyPageEntity toEntity(){
         MyPageEntity myPageEntity = MyPageEntity.builder()
                 .myPageId(myPageId)
-                .userEntity(userDto.toEntity())
+                .userEntity(userInfoDto.UserInfoToEntity())
                 .build();
         return myPageEntity;
     }

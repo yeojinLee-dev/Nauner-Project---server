@@ -38,12 +38,12 @@ public class JwtTokenProvider {
     }
 
     //JWT 토큰 생성
-    public String createToken(String id, UserRole role) {
+    public String createToken(String email, UserRole role) {
         //payload 설정
         //registered claims
         Date now = new Date();
         Claims claims = Jwts.claims()
-                .setSubject(id);
+                .setSubject(email);
 
         //private claims
         //claims.put("id", id); // 정보는 key - value 쌍으로 저장.

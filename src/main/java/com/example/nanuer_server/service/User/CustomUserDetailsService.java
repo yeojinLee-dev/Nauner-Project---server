@@ -16,9 +16,9 @@ public class CustomUserDetailsService implements UserDetailsService {
     private final UserRepository userRepository;
 
     //로그인할 때 들어온 username으로 DB에서 정보 찾기
-    public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
-        UserEntity userEntity = userRepository.findById(id)
-                .orElseThrow(() -> new UsernameNotFoundException("해당 사용자가 존재하지 않습니다. : " + id));
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        UserEntity userEntity = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("해당 사용자가 존재하지 않습니다. : " + email));
 
         //UserDetailsImpl에서 정의한 생성자
         return new CustomUserDetails(userEntity);

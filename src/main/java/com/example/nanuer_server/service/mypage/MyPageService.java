@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static com.example.nanuer_server.config.BaseResponseStatus.USERS_EMPTY_USER_ID;
+import static com.example.nanuer_server.config.BaseResponseStatus.USERS_EMPTY_USER_EMAIL;
 
 @Slf4j
 @Service
@@ -30,10 +30,10 @@ public class MyPageService {
 
     private final PostRepository postRepository;
 
-    public MyPageDto getMyPage(String id) throws BaseException{
-        Optional<UserEntity> userEntity = userRepository.findById(id);
+    public MyPageDto getMyPage(String email) throws BaseException{
+        Optional<UserEntity> userEntity = userRepository.findByEmail(email);
         if(!userEntity.isPresent()){
-            throw new BaseException(USERS_EMPTY_USER_ID);
+            throw new BaseException(USERS_EMPTY_USER_EMAIL);
         }
         MyPageDto myPageDto = userEntity.get().getMyPageEntity().toDto();
         return myPageDto;

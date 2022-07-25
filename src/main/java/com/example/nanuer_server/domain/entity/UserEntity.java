@@ -1,13 +1,10 @@
 package com.example.nanuer_server.domain.entity;
 
 import com.example.nanuer_server.domain.BaseTimeEntity;
-import com.example.nanuer_server.dto.User.UserDto;
-import com.fasterxml.jackson.databind.PropertyNamingStrategies;
-import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import com.example.nanuer_server.dto.User.UserInfoDto;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
-import javax.management.relation.Role;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,10 +23,8 @@ public class UserEntity extends BaseTimeEntity {
     @Column(name = "user_id")
     private int userId;
 
-    @Column(nullable = false, unique = true)
-    private String id;
 
-    @Column(nullable = false)
+    @Column(nullable = false,unique = true)
     private String email;
 
     @Column(nullable = false)
@@ -96,10 +91,8 @@ public class UserEntity extends BaseTimeEntity {
         this.userStatus  = status;
 
     }
-
-    public UserDto toDto(){
-        UserDto userDto = UserDto.builder()
-                .id(id)
+    public UserInfoDto toDto(){
+        UserInfoDto userInfoDto = UserInfoDto.builder()
                 .password(password)
                 .name(name)
                 .nickName(nickName)
@@ -109,10 +102,11 @@ public class UserEntity extends BaseTimeEntity {
                 .profileImg(profileImg)
                 .university(university)
                 .userStatus(userStatus)
-                .userScore(0)
-                .role(UserRole.ROLE_USER)
+                .role(role)
+                .myPageEntity(myPageEntity)
+                .postEntities(postEntities)
                 .build();
-        return userDto;
+        return userInfoDto;
     }
 
 }
