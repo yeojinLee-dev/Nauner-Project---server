@@ -13,7 +13,7 @@ import net.bytebuddy.implementation.bind.annotation.BindingPriority;
 @AllArgsConstructor
 @Builder
 public class MyPageDto {
-    private int myPageId;
+    private Long myPageId;
     private UserDto userDto;
 
     public MyPageEntity toEntity(){

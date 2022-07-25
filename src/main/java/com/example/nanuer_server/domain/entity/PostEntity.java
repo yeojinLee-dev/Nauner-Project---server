@@ -2,6 +2,7 @@ package com.example.nanuer_server.domain.entity;
 
 import com.example.nanuer_server.domain.BaseTimeEntity;
 import com.example.nanuer_server.domain.Progress;
+import com.example.nanuer_server.dto.post.PostDto;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.*;
@@ -21,7 +22,7 @@ public class PostEntity extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "post_id")
-    private int postId;
+    private Long postId;
 
     private String title;
 
@@ -71,4 +72,23 @@ public class PostEntity extends BaseTimeEntity {
     @ToString.Exclude
     private MyPageEntity myPageEntity;
 
+    public PostDto toDto(){
+        PostDto postDto = PostDto.builder()
+                .postId(postId)
+                .title(title)
+                .content(content)
+                .view(view)
+                .like(like)
+                .progress(progress)
+                .costInfo(costInfo)
+                .total(total)
+                .deliveryCost(deliveryCost)
+                .location(location)
+                .time(time)
+                .userDto(userEntity.toDto())
+                .categoryDto(categoryEntity.toDto())
+                .myPageDto(myPageEntity.toDto())
+                .build();
+        return postDto;
+    }
 }
