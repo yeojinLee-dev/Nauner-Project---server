@@ -35,6 +35,7 @@ public class PostEntity extends BaseTimeEntity {
     //**
     private int like;
 
+    @Enumerated(EnumType.STRING)
     private Progress progress;
 
     private String costInfo;
@@ -54,10 +55,9 @@ public class PostEntity extends BaseTimeEntity {
     @ToString.Exclude
     private UserEntity userEntity;
 
-    //@Column(s) not allowed on a @OneToOne property 발생
-    @JoinColumn(name = "category_id")
     @OneToOne
     @ToString.Exclude
+    @JoinColumn(name = "category_id")
     private CategoryEntity categoryEntity;
 
 

@@ -14,8 +14,8 @@ import javax.persistence.*;
 @Entity
 public class CategoryEntity extends BaseTimeEntity{
     @Id
+    @Column(name="category_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "category_id")
     private int categoryId;
 
     @Column(name="category_name",nullable = false)
