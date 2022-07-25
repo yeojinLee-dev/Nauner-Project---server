@@ -1,6 +1,7 @@
 package com.example.nanuer_server.domain.entity;
 
 import com.example.nanuer_server.domain.BaseTimeEntity;
+import com.example.nanuer_server.dto.User.UserDto;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.*;
@@ -96,6 +97,22 @@ public class UserEntity extends BaseTimeEntity {
 
     }
 
-
+    public UserDto toDto(){
+        UserDto userDto = UserDto.builder()
+                .id(id)
+                .password(password)
+                .name(name)
+                .nickName(nickName)
+                .email(email)
+                .phone(phone)
+                .birth(birth)
+                .profileImg(profileImg)
+                .university(university)
+                .userStatus(userStatus)
+                .userScore(0)
+                .role(UserRole.ROLE_USER)
+                .build();
+        return userDto;
+    }
 
 }
