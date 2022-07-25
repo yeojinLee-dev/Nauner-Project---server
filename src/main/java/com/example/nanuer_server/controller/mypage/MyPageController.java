@@ -18,10 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class MyPageController {
     private final MyPageService myPageService;
 
-    @GetMapping("/{id}")
-    public BaseResponse<MyPageDto> getMyPage(@PathVariable("id") String id){
+    @GetMapping("/{email}")
+    public BaseResponse<MyPageDto> getMyPage(@PathVariable("email") String email){
         try{
-             MyPageDto myPageDto = myPageService.getMyPage(id);
+             MyPageDto myPageDto = myPageService.getMyPage(email);
              return new BaseResponse<>(myPageDto);
         }
         catch(BaseException exception){

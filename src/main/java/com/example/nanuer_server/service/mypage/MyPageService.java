@@ -1,7 +1,6 @@
 package com.example.nanuer_server.service.mypage;
 
 import com.example.nanuer_server.config.BaseException;
-import com.example.nanuer_server.config.BaseResponseStatus;
 import com.example.nanuer_server.domain.entity.UserEntity;
 import com.example.nanuer_server.domain.repository.MyPageRepository;
 import com.example.nanuer_server.domain.repository.UserRepository;
@@ -12,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-import static com.example.nanuer_server.config.BaseResponseStatus.USERS_EMPTY_USER_ID;
+import static com.example.nanuer_server.config.BaseResponseStatus.USERS_EMPTY_USER_EMAIL;
 
 @Slf4j
 @Service
@@ -22,10 +21,10 @@ public class MyPageService {
 
     private final MyPageRepository myPageRepository;
 
-    public MyPageDto getMyPage(String id) throws BaseException{
-        Optional<UserEntity> userEntity = userRepository.findById(id);
+    public MyPageDto getMyPage(String email) throws BaseException{
+        Optional<UserEntity> userEntity = userRepository.findByEmail(email);
         if(!userEntity.isPresent()){
-            throw new BaseException(USERS_EMPTY_USER_ID);
+            throw new BaseException(USERS_EMPTY_USER_EMAIL);
         }
         MyPageDto myPageDto = userEntity.get().getMyPageEntity().toDto();
         return myPageDto;
