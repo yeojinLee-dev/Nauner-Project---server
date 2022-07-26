@@ -30,23 +30,7 @@ public class UserInfoDto {
     private List<PostEntity> postEntities;
     private MyPageEntity myPageEntity;
 
-    public UserInfoDto(UserEntity userEntity){
-        this.email = userEntity.getEmail();
-        this.password = userEntity.getPassword();
-        this.name = userEntity.getName();
-        this.nickName = userEntity.getNickName();
-        this.phone = userEntity.getPhone();
-        this.birth = userEntity.getBirth();
-        this.profileImg = userEntity.getProfileImg();
-        this.university = userEntity.getUniversity();
-        this.userStatus = userEntity.getUserStatus();
-        this.userScore = userEntity.getUserScore();
-        this.role = userEntity.getRole();
-        this.postEntities = userEntity.getPostEntities();
-        this.myPageEntity = userEntity.getMyPageEntity();
-    }
-
-    public UserEntity UserInfoToEntity() {
+    public UserEntity toEntity() {
         UserEntity userEntity = UserEntity.builder()
                 .password(password)
                 .name(name)

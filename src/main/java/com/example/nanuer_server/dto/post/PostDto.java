@@ -1,8 +1,8 @@
-package com.example.nanuer_server.dto.post;
+package com.example.nanuer_server.dto.Post;
 
 import com.example.nanuer_server.domain.Progress;
 import com.example.nanuer_server.domain.entity.PostEntity;
-import com.example.nanuer_server.dto.User.UserDto;
+import com.example.nanuer_server.dto.User.UserInfoDto;
 import com.example.nanuer_server.dto.category.CategoryDto;
 import com.example.nanuer_server.dto.mypage.MyPageDto;
 import lombok.*;
@@ -12,7 +12,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class PostDto {
-    private Long postId;
+    private int postId;
     private String title;
     private String content;
     private int view;
@@ -23,7 +23,8 @@ public class PostDto {
     private String deliveryCost;
     private String location;
     private String time;
-    private UserDto userDto;
+    private String postStatus;
+    private UserInfoDto userInfoDto;
     private CategoryDto categoryDto;
     private MyPageDto myPageDto;
 
@@ -40,7 +41,8 @@ public class PostDto {
                 .deliveryCost(deliveryCost)
                 .location(location)
                 .time(time)
-                .userEntity(userDto.toEntity())
+                .postStatus(postStatus)
+                .userEntity(userInfoDto.toEntity())
                 .categoryEntity(categoryDto.toEntity())
                 .myPageEntity(myPageDto.toEntity())
                 .build();

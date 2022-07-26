@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class CategoryDto {
-    private Long categoryId;
+    private int categoryId;
     private String categoryName;
 
     public CategoryEntity toEntity(){

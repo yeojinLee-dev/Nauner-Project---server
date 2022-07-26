@@ -19,7 +19,7 @@ public class MyPageDto {
     public MyPageEntity toEntity(){
         MyPageEntity myPageEntity = MyPageEntity.builder()
                 .myPageId(myPageId)
-                .userEntity(userInfoDto.UserInfoToEntity())
+                .userEntity(userInfoDto.toEntity())
                 .build();
         return myPageEntity;
     }

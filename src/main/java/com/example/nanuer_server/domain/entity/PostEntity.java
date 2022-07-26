@@ -2,7 +2,7 @@ package com.example.nanuer_server.domain.entity;
 
 import com.example.nanuer_server.domain.BaseTimeEntity;
 import com.example.nanuer_server.domain.Progress;
-import com.example.nanuer_server.dto.post.PostDto;
+import com.example.nanuer_server.dto.Post.PostDto;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.*;
@@ -31,33 +31,35 @@ public class PostEntity extends BaseTimeEntity {
     private String content;
 
     private int view;
-
     //**
+
     private int like;
 
     @Enumerated(EnumType.STRING)
     private Progress progress;
 
+    @Column(name = "cost_info")
     private String costInfo;
 
     private int total;
 
+    @Column(name = "delivery_cost")
     private String deliveryCost;
 
     private String location;
 
     private String time;
 
-    private String post_status;
+    private String postStatus;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     @ToString.Exclude
     private UserEntity userEntity;
 
-    @OneToOne
     @ToString.Exclude
     @JoinColumn(name = "category_id")
+    @OneToOne
     private CategoryEntity categoryEntity;
 
 
@@ -79,10 +81,12 @@ public class PostEntity extends BaseTimeEntity {
                 .deliveryCost(deliveryCost)
                 .location(location)
                 .time(time)
-                .userDto(userEntity.toDto())
+                .postStatus(postStatus)
+                .userInfoDto(userEntity.toDto())
                 .categoryDto(categoryEntity.toDto())
                 .myPageDto(myPageEntity.toDto())
                 .build();
         return postDto;
+
     }
 }

@@ -3,7 +3,7 @@ package com.example.nanuer_server.controller.mypage;
 import com.example.nanuer_server.config.BaseException;
 import com.example.nanuer_server.config.BaseResponse;
 import com.example.nanuer_server.dto.mypage.MyPageDto;
-import com.example.nanuer_server.dto.post.PostDto;
+import com.example.nanuer_server.dto.Post.PostDto;
 import com.example.nanuer_server.service.mypage.MyPageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
