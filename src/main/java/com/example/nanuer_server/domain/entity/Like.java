@@ -4,38 +4,33 @@ import com.example.nanuer_server.domain.BaseTimeEntity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
+@Table(name="like")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Data
+//@Data
 @Entity
 @ToString(callSuper = true) // 부모 클래스의 toString 불러오는 어노테이션. 붙이면 createdAt 하고 updatedAt 데이터 정상적으로 나옴.
 @EqualsAndHashCode(callSuper = true) // 부모클래스의 equalsAndHashCode 불러오는 어노테이션.
-public class MyPageEntity extends BaseTimeEntity {
+public class Like extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "my_page_id")
-    private int myPageId;
+    @Column(name = "like_id")
+    private int likeId;
 
-    //이름 수정
-    @OneToOne(mappedBy = "myPageEntity")
-    private UserEntity userEntity;
-
-
-    @OneToMany
-    @JoinColumn(name = "my_page_entity")
+    @ManyToOne
     @ToString.Exclude
-    private List<LikeEntity> likeEntities = new ArrayList<>();
+    private MyPage myPage;
 
-    @OneToMany
-    @JoinColumn(name = "my_page_entity")
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name="post_id")
     @ToString.Exclude
-    private List<PostEntity> postEntities = new ArrayList<>();
-
-
+    private Post postEntity;
 
 }

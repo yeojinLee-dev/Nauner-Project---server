@@ -1,8 +1,8 @@
 package com.example.nanuer_server.dto.Post;
 
-import com.example.nanuer_server.domain.entity.CategoryEntity;
+import com.example.nanuer_server.domain.entity.Category;
 import lombok.*;
-import com.example.nanuer_server.domain.entity.UserEntity;
+import com.example.nanuer_server.domain.entity.User;
 import java.time.LocalDateTime;
 
 @Getter
@@ -16,12 +16,12 @@ public class PostGetResDto {
     private int total;
     private String location;
     private LocalDateTime modified_date;
-    private UserEntity user;
-    private CategoryEntity category;
+    private User user;
+    private Category category;
 
     @Builder
     public PostGetResDto(int post_id, String title, int view, String progress, int total, String location,
-                         LocalDateTime modified_date, UserEntity user, CategoryEntity category) {
+                         LocalDateTime modified_date, User user, Category category) {
         this.post_id = post_id;
         this.title = title;
         this.view = view;

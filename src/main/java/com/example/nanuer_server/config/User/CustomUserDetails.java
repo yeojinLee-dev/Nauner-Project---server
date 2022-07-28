@@ -1,6 +1,6 @@
 package com.example.nanuer_server.config.User;
 
-import com.example.nanuer_server.domain.entity.UserEntity;
+import com.example.nanuer_server.domain.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,14 +11,14 @@ import java.util.List;
 public class CustomUserDetails implements UserDetails {
 
     //직접 정의한 User 클래스를 필도로 가지게 함.
-    private final UserEntity userEntity;
+    private final User userEntity;
 
     //생성자를 통해 유지
-    public CustomUserDetails(UserEntity userEntity) {
+    public CustomUserDetails(User userEntity) {
         this.userEntity = userEntity;
     }
 
-    public UserEntity getUserEntity() {
+    public User getUserEntity() {
         return userEntity;
     }
 

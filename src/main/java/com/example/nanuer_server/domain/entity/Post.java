@@ -5,8 +5,6 @@ import com.example.nanuer_server.domain.Progress;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Table(name = "post")
 @AllArgsConstructor
@@ -15,7 +13,7 @@ import java.util.List;
 @Entity
 @ToString(callSuper = true) // 부모 클래스의 toString 불러오는 어노테이션. 붙이면 createdAt 하고 updatedAt 데이터 정상적으로 나옴.
 @EqualsAndHashCode(callSuper = true) // 부모클래스의 equalsAndHashCode 불러오는 어노테이션.
-public class PostEntity extends BaseTimeEntity {
+public class Post extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,6 +29,7 @@ public class PostEntity extends BaseTimeEntity {
     //**
     private int like;
 
+    @Enumerated(EnumType.STRING)
     private Progress progress;
 
     private String costInfo;
@@ -47,18 +46,19 @@ public class PostEntity extends BaseTimeEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
+    //@Column(name = "user_id")
     @ToString.Exclude
-    private UserEntity userEntity;
+    private User user;
 
     @OneToOne
     @ToString.Exclude
     @JoinColumn(name = "category_id")
-    private CategoryEntity categoryEntity;
+    private Category categoryEntity;
 
 
     @ManyToOne
     @JoinColumn(name="my_page_id")
     @ToString.Exclude
-    private MyPageEntity myPageEntity;
+    private MyPage myPageEntity;
 
 }

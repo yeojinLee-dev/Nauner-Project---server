@@ -1,12 +1,9 @@
 package com.example.nanuer_server.domain.entity;
 
 import com.example.nanuer_server.domain.BaseTimeEntity;
-import com.fasterxml.jackson.databind.PropertyNamingStrategies;
-import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
-import javax.management.relation.Role;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,15 +16,12 @@ import java.util.List;
 @Entity
 @ToString(callSuper = true) // 부모 클래스의 toString 불러오는 어노테이션. 붙이면 createdAt 하고 updatedAt 데이터 정상적으로 나옴.
 @EqualsAndHashCode(callSuper = true) // 부모클래스의 equalsAndHashCode 불러오는 어노테이션.
-public class UserEntity extends BaseTimeEntity {
+public class User extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private int userId;
-
-    @Column(nullable = false, unique = true)
-    private String id;
 
     @Column(nullable = false)
     private String email;
@@ -59,15 +53,14 @@ public class UserEntity extends BaseTimeEntity {
     @ColumnDefault("0")
     private int userScore;
 
-    //@Column(s) not allowed on a @OneToOne property 발생
-    //@Column(name = "my_page_entity")
+    @JoinColumn(name = "my_page_id")
     @OneToOne
     @ToString.Exclude // 순환참조 방지
-    private MyPageEntity myPageEntity;
+    private MyPage myPage;
 
     //mapped 이름 수정
-    @OneToMany(mappedBy = "userEntity")
-    private List<PostEntity> postEntities = new ArrayList<>();
+    @OneToMany(mappedBy = "user", fetch=FetchType.LAZY)
+    private List<Post> posts = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
     private UserRole role;

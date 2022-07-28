@@ -2,7 +2,7 @@ package com.example.nanuer_server.controller.User;
 
 import com.example.nanuer_server.config.BaseException;
 import com.example.nanuer_server.config.BaseResponse;
-import com.example.nanuer_server.domain.entity.UserEntity;
+import com.example.nanuer_server.domain.entity.User;
 import com.example.nanuer_server.domain.entity.UserRole;
 import com.example.nanuer_server.dto.User.UserDto;
 
@@ -32,14 +32,14 @@ public class UserController {
 
     @ResponseBody
     @PostMapping("/join")
-    public BaseResponse<UserEntity> join(@RequestBody UserDto userDto) throws BaseException {
-        //BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    public BaseResponse<User> join(@RequestBody UserDto userDto) throws BaseException {
+        //BCryptPasswordEncoder passwordEncoder = new BCryptPasswordzEncoder();
         //UserEntity userEntity = UserEntity.createUser(userDto);
         log.info("userId={}", userDto.getId());
         log.info("password={}", userDto.getPassword());
         log.info("email={}", userDto.getEmail());
         try {
-            UserEntity userEntity = userService.signup(userDto);
+            User userEntity = userService.signup(userDto);
             return new BaseResponse<>(userEntity);
         } catch (BaseException exception) {
             return new BaseResponse<>((exception.getStatus()));
@@ -52,7 +52,7 @@ public class UserController {
     @ResponseBody
     public BaseResponse<String> login(@RequestBody LoginUserDto loginUserDto) {
         try {
-            UserEntity userEntity = userService.login(loginUserDto);
+            User userEntity = userService.login(loginUserDto);
             String Id = userEntity.getId();
             UserRole role = userEntity.getRole();
             String result = jwtTokenProvider.createToken(Id, role);
@@ -82,7 +82,7 @@ public class UserController {
     public BaseResponse<String> UserStatus(@PathVariable("id") String id) {
         try{
             userService.UserStatus(id);
-            UserEntity userEntity = userService.GetUser(id);
+            User userEntity = userService.GetUser(id);
             String status = userEntity.getUserStatus();
             String result = id + " 해당 유저가 " + status + " 되었습니다.";
             return new BaseResponse<>(result);
@@ -95,9 +95,9 @@ public class UserController {
 
     //유저 정보 조회
     @GetMapping("/{id}")
-    public BaseResponse<UserEntity> GetUser(@PathVariable("id") String id) {
+    public BaseResponse<User> GetUser(@PathVariable("id") String id) {
         try{
-            UserEntity userInfo = userService.GetUser(id);
+            User userInfo = userService.GetUser(id);
 
             return new BaseResponse<>(userInfo);
 
