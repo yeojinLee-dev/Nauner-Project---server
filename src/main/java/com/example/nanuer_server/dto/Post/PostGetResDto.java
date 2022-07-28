@@ -1,6 +1,8 @@
 package com.example.nanuer_server.dto.Post;
 
+import com.example.nanuer_server.domain.Progress;
 import com.example.nanuer_server.domain.entity.Category;
+import com.example.nanuer_server.domain.entity.Post;
 import lombok.*;
 import com.example.nanuer_server.domain.entity.User;
 import java.time.LocalDateTime;
@@ -9,42 +11,27 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class PostGetResDto {
 
-    private int post_id;
+    private int postId;
     private String title;
     private int view;
-    private String progress;
+    private Progress progress;
     private int total;
     private String location;
-    private LocalDateTime modified_date;
+    private LocalDateTime modifiedDate;
     private User user;
     private Category category;
 
     @Builder
-    public PostGetResDto(int post_id, String title, int view, String progress, int total, String location,
-                         LocalDateTime modified_date, User user, Category category) {
-        this.post_id = post_id;
-        this.title = title;
-        this.view = view;
-        this.progress = progress;
-        this.total = total;
-        this.location = location;
-        this.modified_date = modified_date;
-        this.user = user;
-        this.category = category;
-    }
-
-    public PostGetResDto toEntity() {
-        return PostGetResDto.builder()
-                .post_id(post_id)
-                .title(title)
-                .view(view)
-                .progress(progress)
-                .total(total)
-                .location(location)
-                .modified_date(modified_date)
-                .user(user)
-                .category(category)
-                .build();
+    public PostGetResDto(Post entity) {
+        this.postId = entity.getPostId();
+        this.title = entity.getTitle();
+        this.view = entity.getView();
+        this.progress = entity.getProgress();
+        this.total = entity.getTotal();
+        this.location = entity.getLocation();
+        this.modifiedDate = entity.getModified_date();
+        this.user = entity.getUser();
+        this.category = entity.getCategory();
     }
 
 }

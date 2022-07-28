@@ -4,8 +4,9 @@ import com.example.nanuer_server.config.BaseException;
 import com.example.nanuer_server.config.BaseResponse;
 import com.example.nanuer_server.domain.entity.User;
 import com.example.nanuer_server.domain.entity.UserRole;
-import com.example.nanuer_server.dto.User.UserDto;
+import com.example.nanuer_server.dto.User.JoinUserDto;
 
+import com.example.nanuer_server.dto.User.UserInfoDto;
 import com.example.nanuer_server.service.User.UserService;
 import com.example.nanuer_server.config.User.JwtTokenProvider;
 import com.example.nanuer_server.dto.User.LoginUserDto;
@@ -32,12 +33,10 @@ public class UserController {
 
     @ResponseBody
     @PostMapping("/join")
-    public BaseResponse<User> join(@RequestBody UserDto userDto) throws BaseException {
+    public BaseResponse<User> join(@RequestBody JoinUserDto userDto) throws BaseException {
         //BCryptPasswordEncoder passwordEncoder = new BCryptPasswordzEncoder();
         //UserEntity userEntity = UserEntity.createUser(userDto);
-        log.info("userId={}", userDto.getId());
-        log.info("password={}", userDto.getPassword());
-        log.info("email={}", userDto.getEmail());
+
         try {
             User userEntity = userService.signup(userDto);
             return new BaseResponse<>(userEntity);
@@ -52,10 +51,10 @@ public class UserController {
     @ResponseBody
     public BaseResponse<String> login(@RequestBody LoginUserDto loginUserDto) {
         try {
-            User userEntity = userService.login(loginUserDto);
-            String Id = userEntity.getId();
-            UserRole role = userEntity.getRole();
-            String result = jwtTokenProvider.createToken(Id, role);
+            UserInfoDto userInfoDto = userService.login(loginUserDto);
+            String Email = userInfoDto.getEmail();
+            UserRole role = userInfoDto.getRole();
+            String result = jwtTokenProvider.createToken(Email, role);
             return new BaseResponse<>(result);
         } catch (BaseException exception) {
             return new BaseResponse<>((exception.getStatus()));
@@ -64,11 +63,11 @@ public class UserController {
 
 
     //삭제
-    @DeleteMapping("/{id}")
-    public BaseResponse<String> delete(@PathVariable("id") String id) {
+    @DeleteMapping("")
+    public BaseResponse<String> delete(@RequestParam String email) {
         try{
-            userService.delete(id);
-            String result = id + " 해당 유저가 삭제되었습니다.";
+            userService.delete(email);
+            String result = email + " 해당 유저가 삭제되었습니다.";
             return new BaseResponse<>(result);
 
         }
@@ -78,13 +77,13 @@ public class UserController {
     }
 
     //유저 상태관리
-    @PatchMapping("/{id}/status")
-    public BaseResponse<String> UserStatus(@PathVariable("id") String id) {
+    @PatchMapping("/status")
+    public BaseResponse<String> UserStatus(@RequestParam String email) {
         try{
-            userService.UserStatus(id);
-            User userEntity = userService.GetUser(id);
-            String status = userEntity.getUserStatus();
-            String result = id + " 해당 유저가 " + status + " 되었습니다.";
+            userService.UserStatus(email);
+            UserInfoDto userInfoDto  = userService.GetUser(email);
+            String status = userInfoDto.getUserStatus();
+            String result = email + " 해당 유저가 " + status + " 되었습니다.";
             return new BaseResponse<>(result);
 
         }
@@ -94,12 +93,12 @@ public class UserController {
     }
 
     //유저 정보 조회
-    @GetMapping("/{id}")
-    public BaseResponse<User> GetUser(@PathVariable("id") String id) {
+    @GetMapping("/info")
+    public BaseResponse<UserInfoDto> GetUser(@RequestParam String email) {
         try{
-            User userInfo = userService.GetUser(id);
+            UserInfoDto userInfoDto = userService.GetUser(email);
 
-            return new BaseResponse<>(userInfo);
+            return new BaseResponse<>(userInfoDto);
 
         }
         catch (BaseException exception) {

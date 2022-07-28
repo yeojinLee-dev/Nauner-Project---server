@@ -21,10 +21,6 @@ public class Like extends BaseTimeEntity {
     private int likeId;
 
     @ManyToOne
-    @ToString.Exclude
-    private MyPage myPage;
-
-    @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 

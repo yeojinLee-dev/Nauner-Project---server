@@ -1,9 +1,12 @@
 package com.example.nanuer_server.domain.entity;
 
 import com.example.nanuer_server.domain.BaseTimeEntity;
+import com.example.nanuer_server.dto.User.UserInfoDto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
+import javax.management.relation.Role;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,13 +55,15 @@ public class User extends BaseTimeEntity {
 
     @ColumnDefault("0")
     private int userScore;
+//
+//    @JoinColumn(name = "my_page_id")
+//    @OneToOne
+//    @ToString.Exclude // 순환참조 방지
+//    private MyPage myPage;
 
-    @JoinColumn(name = "my_page_id")
-    @OneToOne
-    @ToString.Exclude // 순환참조 방지
-    private MyPage myPage;
 
     //mapped 이름 수정
+    @JsonIgnore
     @OneToMany(mappedBy = "user", fetch=FetchType.LAZY)
     private List<Post> posts = new ArrayList<>();
 
@@ -87,7 +92,21 @@ public class User extends BaseTimeEntity {
         this.userStatus  = status;
 
     }
-
-
+    public UserInfoDto toDto(){
+        UserInfoDto userInfoDto = UserInfoDto.builder()
+                .password(password)
+                .name(name)
+                .nickName(nickName)
+                .email(email)
+                .phone(phone)
+                .birth(birth)
+                .profileImg(profileImg)
+                .university(university)
+                .userStatus(userStatus)
+                .role(role)
+                .postEntities(posts)
+                .build();
+        return userInfoDto;
+    }
 
 }

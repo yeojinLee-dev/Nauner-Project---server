@@ -2,6 +2,7 @@ package com.example.nanuer_server.domain.entity;
 
 import com.example.nanuer_server.domain.BaseTimeEntity;
 import com.example.nanuer_server.domain.Progress;
+import com.example.nanuer_server.dto.Post.PostGetResDto;
 import lombok.*;
 
 import javax.persistence.*;
@@ -11,6 +12,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Builder
 @Entity
+@Getter
 @ToString(callSuper = true) // 부모 클래스의 toString 불러오는 어노테이션. 붙이면 createdAt 하고 updatedAt 데이터 정상적으로 나옴.
 @EqualsAndHashCode(callSuper = true) // 부모클래스의 equalsAndHashCode 불러오는 어노테이션.
 public class Post extends BaseTimeEntity {
@@ -53,12 +55,6 @@ public class Post extends BaseTimeEntity {
     @OneToOne
     @ToString.Exclude
     @JoinColumn(name = "category_id")
-    private Category categoryEntity;
-
-
-    @ManyToOne
-    @JoinColumn(name="my_page_id")
-    @ToString.Exclude
-    private MyPage myPageEntity;
+    private Category category;
 
 }

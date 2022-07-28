@@ -3,12 +3,13 @@ package com.example.nanuer_server.dto.User;
 import com.example.nanuer_server.domain.entity.User;
 import com.example.nanuer_server.domain.entity.UserRole;
 import lombok.*;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class UserDto {
+public class JoinUserDto {
 
     //private String id;
     private String password;
