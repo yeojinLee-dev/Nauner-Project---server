@@ -3,15 +3,11 @@ package com.example.nanuer_server.domain.entity;
 import com.example.nanuer_server.domain.BaseTimeEntity;
 import com.example.nanuer_server.domain.Progress;
 import com.example.nanuer_server.dto.Post.PostDto;
-import com.fasterxml.jackson.databind.PropertyNamingStrategies;
-import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
-
+@Table(name = "post")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -24,7 +20,7 @@ public class PostEntity extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "post_id")
-    private int postId;
+    private Integer postId;
 
     private String title;
 
@@ -60,13 +56,8 @@ public class PostEntity extends BaseTimeEntity {
     @ToString.Exclude
     @JoinColumn(name = "category_id")
     @OneToOne
-    private CategoryEntity categoryEntity;
+    private Category category;
 
-
-    @ManyToOne
-    @JoinColumn(name="my_page_id")
-    @ToString.Exclude
-    private MyPageEntity myPageEntity;
 
     public PostDto toDto(){
         PostDto postDto = PostDto.builder()
@@ -83,8 +74,7 @@ public class PostEntity extends BaseTimeEntity {
                 .time(time)
                 .postStatus(postStatus)
                 .userInfoDto(userEntity.toDto())
-                .categoryDto(categoryEntity.toDto())
-                .myPageDto(myPageEntity.toDto())
+                .categoryDto(category.toDto())
                 .build();
         return postDto;
 

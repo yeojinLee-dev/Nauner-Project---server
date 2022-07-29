@@ -3,7 +3,6 @@ package com.example.nanuer_server.controller;
 import com.example.nanuer_server.config.BaseException;
 import com.example.nanuer_server.config.BaseResponse;
 import com.example.nanuer_server.domain.entity.PostEntity;
-import com.example.nanuer_server.dto.Post.PostGetResDto;
 import com.example.nanuer_server.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -20,7 +19,6 @@ public class PostController {
 
     final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    @Autowired
     private final PostService postService;
 
     @GetMapping("/test")
@@ -32,9 +30,9 @@ public class PostController {
     @GetMapping("")
     public BaseResponse<List<PostEntity>> getPosts(@RequestParam int user_id) {
         try {
-            List<PostEntity> posts = postService.getPosts(user_id);
+            List<PostEntity> postEntities = postService.getPosts(user_id);
 
-            return new BaseResponse<>(posts);
+            return new BaseResponse<>(postEntities);
         } catch (BaseException exception) {
             return new BaseResponse<>(exception.getStatus());
         }

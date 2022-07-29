@@ -1,11 +1,12 @@
 package com.example.nanuer_server.domain.entity;
 
 import com.example.nanuer_server.domain.BaseTimeEntity;
+import com.example.nanuer_server.dto.like.LikeDto;
 import lombok.*;
 
 import javax.persistence.*;
 
-@Table(name="Like")
+@Table(name="like")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -17,14 +18,10 @@ public class LikeEntity extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int LikeId;
+    private Integer likeId;
 
-    @ManyToOne
-    @JoinColumn(name = "my_page_id")
-    @ToString.Exclude
-    private MyPageEntity myPageEntity;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private UserEntity userEntity;
 
@@ -32,5 +29,14 @@ public class LikeEntity extends BaseTimeEntity {
     @JoinColumn(name="post_id")
     @ToString.Exclude
     private PostEntity postEntity;
+
+    public LikeDto toDto(){
+        LikeDto likeDto = LikeDto.builder()
+                .likeId(likeId)
+                .userInfoDto(userEntity.toDto())
+                .postDto(postEntity.toDto())
+                .build();
+        return likeDto;
+    }
 
 }

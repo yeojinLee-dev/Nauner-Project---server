@@ -1,15 +1,15 @@
 package com.example.nanuer_server.dto.User;
 
-import com.example.nanuer_server.domain.entity.MyPageEntity;
-import com.example.nanuer_server.domain.entity.PostEntity;
 import com.example.nanuer_server.domain.entity.UserEntity;
 import com.example.nanuer_server.domain.entity.UserRole;
+import com.example.nanuer_server.dto.Post.PostDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 @NoArgsConstructor
@@ -27,8 +27,7 @@ public class UserInfoDto {
     private String userStatus;
     private int  userScore;
     private UserRole role;
-    private List<PostEntity> postEntities;
-    private MyPageEntity myPageEntity;
+    private List<PostDto> postDtoList;
 
     public UserEntity toEntity() {
         UserEntity userEntity = UserEntity.builder()
@@ -43,8 +42,7 @@ public class UserInfoDto {
                 .userStatus(userStatus)
                 .userScore(userScore)
                 .role(role)
-                .myPageEntity(myPageEntity)
-                .postEntities(postEntities)
+                .postEntities(postDtoList.stream().map(PostDto::toEntity).collect(Collectors.toList()))
                 .build();
         return userEntity;
     }

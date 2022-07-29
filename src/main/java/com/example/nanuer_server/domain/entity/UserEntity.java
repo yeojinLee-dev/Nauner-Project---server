@@ -2,13 +2,15 @@ package com.example.nanuer_server.domain.entity;
 
 import com.example.nanuer_server.domain.BaseTimeEntity;
 import com.example.nanuer_server.dto.User.UserInfoDto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
+@Table(name = "user")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -21,31 +23,27 @@ public class UserEntity extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    private Long userId;
+    private Integer userId;
 
 
     @Column(nullable = false,unique = true)
     private String email;
 
-    @Column(nullable = false)
     private String name;
 
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false)
     private String nickName;
 
     @Column(nullable = false)
     private String phone;
 
-    @Column(nullable = false)
     private String birth;
 
     @Column
     private String profileImg;
 
-    @Column(nullable = false)
     private String university;
 
     @Column(nullable = false)
@@ -56,36 +54,16 @@ public class UserEntity extends BaseTimeEntity {
 
     //@Column(s) not allowed on a @OneToOne property 발생
     //@Column(name = "my_page_entity")
-    @OneToOne
-    @JoinColumn(name = "my_page_id")
-    @ToString.Exclude // 순환참조 방지
-    private MyPageEntity myPageEntity;
 
     //mapped 이름 수정
+    @JsonIgnore
     @OneToMany(mappedBy = "userEntity")
-    @Column(name = "post_entities")
+    @Column(name = "post")
     private List<PostEntity> postEntities = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
-    /*
-    public static UserEntity createUser(UserDto userDto) {
-        UserEntity userEntity = new UserEntity();
-        userEntity.setId(userEntity.getId());
-        userEntity.setName(userEntity.getName());
-        userEntity.setNickName(userEntity.getNickName());
-        userEntity.setEmail(userEntity.getEmail());
-        userEntity.setPhone(userEntity.getPhone());
-        userEntity.setBirth(userEntity.getBirth());
-        userEntity.setProfileImg(userEntity.getProfileImg());
-        userEntity.setUserStatus(userEntity.getUserStatus());
-        userEntity.setUserScore(userEntity.getUserScore());
-        userEntity.setArea(userEntity.getArea());
-        //String password = passwordEncoder.encode(memberDto.getPassword());
-        //userEntity.setPassword(passwordEncoder.encode(memberDto.getPassword()));
-        return userEntity;
-    }*/
 
     public void status(String status){
         this.userStatus  = status;
@@ -103,8 +81,7 @@ public class UserEntity extends BaseTimeEntity {
                 .university(university)
                 .userStatus(userStatus)
                 .role(role)
-                .myPageEntity(myPageEntity)
-                .postEntities(postEntities)
+                .postDtoList(postEntities.stream().map(PostEntity::toDto).collect(Collectors.toList()))
                 .build();
         return userInfoDto;
     }
