@@ -17,6 +17,7 @@ class PostEntityServiceTest {
     void PostTest(){
         try {
             List<PostEntity> postEntityList = postService.getPosts(3);
+            postEntityList.forEach(System.out::println);
         }catch(BaseException exception){
             System.out.println(exception.getMessage());
         }

@@ -42,7 +42,6 @@ public class UserInfoDto {
                 .userStatus(userStatus)
                 .userScore(userScore)
                 .role(role)
-                .postEntities(postDtoList.stream().map(PostDto::toEntity).collect(Collectors.toList()))
                 .build();
         return userEntity;
     }

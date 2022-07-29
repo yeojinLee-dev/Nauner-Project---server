@@ -58,7 +58,7 @@ public class UserEntity extends BaseTimeEntity {
     //mapped 이름 수정
     @JsonIgnore
     @OneToMany(mappedBy = "userEntity")
-    @Column(name = "post")
+    @Column(name = "posts")
     private List<PostEntity> postEntities = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
@@ -81,7 +81,6 @@ public class UserEntity extends BaseTimeEntity {
                 .university(university)
                 .userStatus(userStatus)
                 .role(role)
-                .postDtoList(postEntities.stream().map(PostEntity::toDto).collect(Collectors.toList()))
                 .build();
         return userInfoDto;
     }

@@ -1,6 +1,6 @@
-package com.example.nanuer_server.dto.like;
+package com.example.nanuer_server.dto.heart;
 
-import com.example.nanuer_server.domain.entity.LikeEntity;
+import com.example.nanuer_server.domain.entity.HeartEntity;
 import com.example.nanuer_server.dto.Post.PostDto;
 import com.example.nanuer_server.dto.User.UserInfoDto;
 import lombok.AllArgsConstructor;
@@ -12,17 +12,17 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class LikeDto {
-    private Integer likeId;
+public class HeartDto {
+    private Integer heartId;
     private UserInfoDto userInfoDto;
     private PostDto postDto;
 
-    public LikeEntity toEntity(){
-        LikeEntity likeEntity = LikeEntity.builder()
-                .likeId(likeId)
+    public HeartEntity toEntity(){
+        HeartEntity heartEntity = HeartEntity.builder()
+                .heartId(heartId)
                 .userEntity(userInfoDto.toEntity())
                 .postEntity(postDto.toEntity())
                 .build();
-        return likeEntity;
+        return heartEntity;
     }
 }

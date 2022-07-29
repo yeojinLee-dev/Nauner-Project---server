@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface PostRepository extends JpaRepository<PostEntity,Integer> {
 
-    @Query("select p from PostEntity p join fetch p.category, p.userEntity where p.userEntity.userId = :user_id")
-    List<PostEntity> findAllByUserId(@Param("user_id") int user_id);
+    @Query("select p from PostEntity p join fetch p.userEntity where p.userEntity.userId = :user_id")
+    List<PostEntity> findAll(@Param("user_id") int user_id);
 
 }

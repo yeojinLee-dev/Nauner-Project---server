@@ -15,8 +15,14 @@ class MyPageServiceTest {
     private MyPageService myPageService;
 
     @Test
-    void getLikePage(){
-        List<PostDto> postDtoList = myPageService.getLikePosts(10);
+    void getHeartPage(){
+        List<PostDto> postDtoList = myPageService.getHeartPosts(10);
+        postDtoList.forEach(System.out::println);
+    }
+
+    @Test
+    void getPosts(){
+        List<PostDto> postDtoList = myPageService.getPosts(3);
         postDtoList.forEach(System.out::println);
     }
 

@@ -16,6 +16,6 @@ public class PostService {
     private final PostRepository postRepository;
 
     public List<PostEntity> getPosts(int user_id) throws BaseException {
-        return postRepository.findAllByUserId(user_id);
+        return postRepository.findAll(user_id);
     }
 }
