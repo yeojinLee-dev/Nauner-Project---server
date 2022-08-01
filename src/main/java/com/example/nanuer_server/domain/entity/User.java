@@ -55,12 +55,6 @@ public class User extends BaseTimeEntity {
 
     @ColumnDefault("0")
     private int userScore;
-//
-//    @JoinColumn(name = "my_page_id")
-//    @OneToOne
-//    @ToString.Exclude // 순환참조 방지
-//    private MyPage myPage;
-
 
     //mapped 이름 수정
     @JsonIgnore

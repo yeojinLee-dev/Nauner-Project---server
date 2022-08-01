@@ -4,18 +4,12 @@ import com.example.nanuer_server.config.BaseException;
 import com.example.nanuer_server.domain.entity.Category;
 import com.example.nanuer_server.domain.entity.Post;
 import com.example.nanuer_server.domain.entity.User;
-import com.example.nanuer_server.domain.repository.CategoryRepository;
-import com.example.nanuer_server.domain.repository.PostRepository;
-import com.example.nanuer_server.domain.repository.UserRepository;
-import com.example.nanuer_server.dto.Post.CreatePostReqDto;
-import com.example.nanuer_server.dto.Post.GetPostsResDto;
+import com.example.nanuer_server.domain.repository.*;
+import com.example.nanuer_server.dto.Post.*;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -25,11 +19,11 @@ public class PostService {
     private final UserRepository userRepository;
     private final CategoryRepository categoryRepository;
 
-    public List<GetPostsResDto> getPosts(int user_id) throws BaseException {
-        List<GetPostsResDto> posts = new ArrayList<>();
+    public List<GetPostListResDto> getPostList(int user_id) throws BaseException {
+        List<GetPostListResDto> posts = new ArrayList<>();
 
         List<Post> entities = postRepository.findAll(user_id);
-        for (Post entity : entities) posts.add(new GetPostsResDto(entity));
+        for (Post entity : entities) posts.add(new GetPostListResDto(entity));
 
         return posts;
     }
@@ -42,5 +36,12 @@ public class PostService {
         createPostReqDto.setCategory(category);
 
         return postRepository.save(createPostReqDto.toEntity()).getPostId();
+    }
+
+    public GetPostResDto getPost(int post_id) throws BaseException {
+        Post entity = postRepository.findById(post_id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시물이 없습니다. post_id = " + post_id));
+
+        return new GetPostResDto(entity);
     }
 }

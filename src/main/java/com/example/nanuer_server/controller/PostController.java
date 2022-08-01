@@ -2,8 +2,7 @@ package com.example.nanuer_server.controller;
 
 import com.example.nanuer_server.config.BaseException;
 import com.example.nanuer_server.config.BaseResponse;
-import com.example.nanuer_server.dto.Post.GetPostsResDto;
-import com.example.nanuer_server.dto.Post.CreatePostReqDto;
+import com.example.nanuer_server.dto.Post.*;
 import com.example.nanuer_server.service.PostService;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.RequiredArgsConstructor;
@@ -32,9 +31,9 @@ public class PostController {
     /* 게시물 리스트 조회 */
     @GetMapping("")
     @JsonIgnore
-    public BaseResponse<List<GetPostsResDto>> getPosts(@RequestParam int user_id) {
+    public BaseResponse<List<GetPostListResDto>> getPostList(@RequestParam int user_id) {
         try {
-            List<GetPostsResDto> posts = postService.getPosts(user_id);
+            List<GetPostListResDto> posts = postService.getPostList(user_id);
 
             return new BaseResponse<>(posts);
         } catch (BaseException exception) {
@@ -55,6 +54,17 @@ public class PostController {
 
             String result = "post_id = " + postService.createPost(createPostReqDto) + " 게시물 등록 성공";
             return new BaseResponse<>(result);
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
+    }
+
+    /* 게시물 조회 */
+    @GetMapping("/{post_id}")
+    public BaseResponse<GetPostResDto> getPost(@PathVariable int post_id) {
+        try {
+            GetPostResDto post = postService.getPost(post_id);
+            return new BaseResponse<>(post);
         } catch (BaseException exception) {
             return new BaseResponse<>(exception.getStatus());
         }

@@ -2,6 +2,7 @@ package com.example.nanuer_server.domain.entity;
 
 import com.example.nanuer_server.domain.BaseTimeEntity;
 import com.example.nanuer_server.domain.Progress;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
@@ -53,7 +54,7 @@ public class Post extends BaseTimeEntity {
     @ColumnDefault("ACTIVE")
     private String postStatus;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     @ToString.Exclude
     private User user;
