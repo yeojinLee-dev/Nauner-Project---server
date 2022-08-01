@@ -19,10 +19,10 @@ public class PostService {
     private final UserRepository userRepository;
     private final CategoryRepository categoryRepository;
 
-    public List<GetPostListResDto> getPostList(int user_id) throws BaseException {
+    public List<GetPostListResDto> getPostList(int user_id, String query) throws BaseException {
         List<GetPostListResDto> posts = new ArrayList<>();
 
-        List<Post> entities = postRepository.findAll(user_id);
+        List<Post> entities = postRepository.findAll(user_id, query);
         for (Post entity : entities) posts.add(new GetPostListResDto(entity));
 
         return posts;

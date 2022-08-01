@@ -31,9 +31,9 @@ public class PostController {
     /* 게시물 리스트 조회 */
     @GetMapping("")
     @JsonIgnore
-    public BaseResponse<List<GetPostListResDto>> getPostList(@RequestParam int user_id) {
+    public BaseResponse<List<GetPostListResDto>> getPostList(@RequestParam int user_id, @RequestParam String query) {
         try {
-            List<GetPostListResDto> posts = postService.getPostList(user_id);
+            List<GetPostListResDto> posts = postService.getPostList(user_id, query);
 
             return new BaseResponse<>(posts);
         } catch (BaseException exception) {
@@ -69,5 +69,12 @@ public class PostController {
             return new BaseResponse<>(exception.getStatus());
         }
     }
+//
+//    /* 게시물 수정 */
+//    @PutMapping("/{post_id}")
+//    public BaseResponse<String> updatePost(@PathVariable int post_id, @RequestBody UpdatePostReqDto updatePostReqDto) {
+//
+//
+//    }
 
 }

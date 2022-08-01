@@ -11,6 +11,6 @@ import java.util.List;
 
 public interface PostRepository extends JpaRepository<Post, Integer> {
     @Query(value = "select p from Post p " +
-            "join fetch p.user where p.user.userId = :user_id")
-    List<Post> findAll(@Param("user_id") int user_id);
+            "join fetch p.user where p.user.userId = :user_id and p.title like %:query% or p.content like %:query%")
+    List<Post> findAll(@Param("user_id") int user_id, @Param("query") String query);
 }
