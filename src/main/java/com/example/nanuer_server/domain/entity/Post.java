@@ -2,10 +2,11 @@ package com.example.nanuer_server.domain.entity;
 
 import com.example.nanuer_server.domain.BaseTimeEntity;
 import com.example.nanuer_server.domain.Progress;
-import com.example.nanuer_server.dto.Post.PostGetResDto;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Table(name = "post")
 @AllArgsConstructor
@@ -26,15 +27,20 @@ public class Post extends BaseTimeEntity {
 
     private String content;
 
+    @Column(nullable = true)
     private int view;
 
     //**
-    private int like;
+    @Column(nullable = true)
+    private int heart;
 
+    @ColumnDefault("Recruit")
     @Enumerated(EnumType.STRING)
     private Progress progress;
 
     private String costInfo;
+
+    private String menu;
 
     private int total;
 
@@ -44,11 +50,11 @@ public class Post extends BaseTimeEntity {
 
     private String time;
 
-    private String post_status;
+    @ColumnDefault("ACTIVE")
+    private String postStatus;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    //@Column(name = "user_id")
     @ToString.Exclude
     private User user;
 

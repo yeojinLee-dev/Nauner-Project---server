@@ -5,7 +5,7 @@ import lombok.*;
 
 import javax.persistence.*;
 
-@Table(name="like")
+@Table(name="heart")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -13,12 +13,12 @@ import javax.persistence.*;
 @Entity
 @ToString(callSuper = true) // 부모 클래스의 toString 불러오는 어노테이션. 붙이면 createdAt 하고 updatedAt 데이터 정상적으로 나옴.
 @EqualsAndHashCode(callSuper = true) // 부모클래스의 equalsAndHashCode 불러오는 어노테이션.
-public class Like extends BaseTimeEntity {
+public class Heart extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "like_id")
-    private int likeId;
+    @Column(name = "heart_id")
+    private int heartId;
 
     @ManyToOne
     @JoinColumn(name = "user_id")

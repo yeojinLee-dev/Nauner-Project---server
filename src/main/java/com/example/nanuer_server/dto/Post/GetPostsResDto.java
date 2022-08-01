@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor
-public class PostGetResDto {
+public class GetPostsResDto {
 
     private int postId;
     private String title;
@@ -22,7 +22,7 @@ public class PostGetResDto {
     private Category category;
 
     @Builder
-    public PostGetResDto(Post entity) {
+    public GetPostsResDto(Post entity) {
         this.postId = entity.getPostId();
         this.title = entity.getTitle();
         this.view = entity.getView();

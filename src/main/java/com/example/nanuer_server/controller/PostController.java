@@ -2,24 +2,24 @@ package com.example.nanuer_server.controller;
 
 import com.example.nanuer_server.config.BaseException;
 import com.example.nanuer_server.config.BaseResponse;
-import com.example.nanuer_server.domain.entity.Post;
-import com.example.nanuer_server.dto.Post.PostGetResDto;
+import com.example.nanuer_server.dto.Post.GetPostsResDto;
+import com.example.nanuer_server.dto.Post.CreatePostReqDto;
 import com.example.nanuer_server.service.PostService;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static com.example.nanuer_server.config.BaseResponseStatus.*;
+
+@Log4j2
 @RestController
 @RequestMapping("/post")
 @RequiredArgsConstructor
 public class PostController {
-
-    final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private final PostService postService;
@@ -32,11 +32,29 @@ public class PostController {
     /* 게시물 리스트 조회 */
     @GetMapping("")
     @JsonIgnore
-    public BaseResponse<List<PostGetResDto>> getPosts(@RequestParam int user_id) {
+    public BaseResponse<List<GetPostsResDto>> getPosts(@RequestParam int user_id) {
         try {
-            List<PostGetResDto> posts = postService.getPosts(user_id);
+            List<GetPostsResDto> posts = postService.getPosts(user_id);
 
             return new BaseResponse<>(posts);
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
+    }
+
+    /* 게시물 등록 */
+    @PostMapping("")
+    public BaseResponse<String> createPost(@RequestBody CreatePostReqDto createPostReqDto) {
+        try {
+            if(createPostReqDto.getTitle() == null || createPostReqDto.getTitle().length() > 200) {
+                return new BaseResponse<>(POST_POST_INVALID_TITLE);
+            }
+            if(createPostReqDto.getContent() == null || createPostReqDto.getContent().length() > 1000) {
+                return new BaseResponse<>(POST_POST_INVALID_CONTENT);
+            }
+
+            String result = "post_id = " + postService.createPost(createPostReqDto) + " 게시물 등록 성공";
+            return new BaseResponse<>(result);
         } catch (BaseException exception) {
             return new BaseResponse<>(exception.getStatus());
         }
