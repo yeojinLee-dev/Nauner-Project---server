@@ -9,6 +9,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import java.time.LocalDateTime;
 
 @Getter
@@ -36,6 +38,10 @@ public class CreatePostReqDto {
     @JsonProperty("category_id")
     private int categoryId;
 
+    private Progress progress;
+
+    private String postStatus;
+
     public void setUser(User user) {
         this.user = user;
     }
@@ -56,6 +62,8 @@ public class CreatePostReqDto {
                 .time(time)
                 .user(user)
                 .category(category)
+                .progress(progress.Recruit)
+                .postStatus("ACTIVE")
                 .build();
     }
 }

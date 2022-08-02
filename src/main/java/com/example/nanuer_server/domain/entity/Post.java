@@ -3,6 +3,7 @@ package com.example.nanuer_server.domain.entity;
 import com.example.nanuer_server.domain.BaseTimeEntity;
 import com.example.nanuer_server.domain.Progress;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
@@ -35,23 +36,24 @@ public class Post extends BaseTimeEntity {
     @Column(nullable = true)
     private int heart;
 
-    @ColumnDefault("'Recruit'")
     @Enumerated(EnumType.STRING)
     private Progress progress;
 
+    @JsonProperty("delivery_cost")
     private String costInfo;
 
     private String menu;
 
     private int total;
 
+    @JsonProperty("delivery_cost")
     private String deliveryCost;
 
     private String location;
 
     private String time;
 
-    @ColumnDefault("'ACTIVE'")
+    @JsonProperty("post_status")
     private String postStatus;
 
     @ManyToOne(fetch = FetchType.EAGER)

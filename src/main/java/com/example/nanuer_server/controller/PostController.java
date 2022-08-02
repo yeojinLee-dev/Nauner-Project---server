@@ -68,12 +68,23 @@ public class PostController {
             return new BaseResponse<>(exception.getStatus());
         }
     }
-//
+
 //    /* 게시물 수정 */
 //    @PutMapping("/{post_id}")
 //    public BaseResponse<String> updatePost(@PathVariable int post_id, @RequestBody UpdatePostReqDto updatePostReqDto) {
 //
 //
 //    }
+
+    /* 게시물 삭제 */
+    @PatchMapping("/{post_id}")
+    public BaseResponse<String> deletePost(@PathVariable int post_id) {
+        try {
+            String result = "post_id = " + postService.deletePost(post_id) + " 삭제 완료";
+            return new BaseResponse<>(result);
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
+    }
 
 }

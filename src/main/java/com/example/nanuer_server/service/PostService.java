@@ -22,7 +22,7 @@ public class PostService {
     public List<GetPostListResDto> getPostList(int user_id, String query) throws BaseException {
         List<GetPostListResDto> posts = new ArrayList<>();
 
-        List<Post> entities = postRepository.findAll(user_id, query);
+        List<Post> entities = postRepository.findAll(user_id, query, "'ACTIVE'");
         for (Post entity : entities) posts.add(new GetPostListResDto(entity));
 
         return posts;
@@ -47,5 +47,10 @@ public class PostService {
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시물이 없습니다. post_id = " + post_id));
 
         return new GetPostResDto(entity);
+    }
+
+    public int deletePost(int post_id) throws BaseException {
+        postRepository.savePostStatus("INACTIVE", post_id);
+        return post_id;
     }
 }

@@ -29,28 +29,22 @@ public class User extends BaseTimeEntity {
     @Column(nullable = false)
     private String email;
 
-    @Column(nullable = false)
     private String name;
 
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false)
     private String nickName;
 
-    @Column(nullable = false)
     private String phone;
 
-    @Column(nullable = false)
     private String birth;
 
     @Column
     private String profileImg;
 
-    @Column(nullable = false)
     private String university;
 
-    @Column(nullable = false)
     private String userStatus;
 
     @ColumnDefault("0")
