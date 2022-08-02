@@ -27,6 +27,7 @@ public class UserInfoDto {
     private String userStatus;
     private int  userScore;
     private UserRole role;
+
     private List<PostDto> postDtoList;
 
     public UserEntity toEntity() {

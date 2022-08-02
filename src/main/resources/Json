@@ -1,0 +1,14 @@
+{
+    "password": "$2a$10$c4/8TjxfGMsD7YGTCemtVu9WB7/68lyBRi0ItAwdnK.kOmOqD8412",
+    "name": "고동우",
+    "email": "dongwoo0307@naver.com",
+    "nickName": "dongree",
+    "phone": "01099220071",
+    "birth": "20000307",
+    "profileImg": "",
+    "university": "한양대에리카",
+    "userStatus": "active",
+    "userScore": 0,
+    "role": "ROLE_USER",
+    "postDtoList": null
+}
