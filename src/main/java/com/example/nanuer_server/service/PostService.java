@@ -39,6 +39,10 @@ public class PostService {
     }
 
     public GetPostResDto getPost(int post_id) throws BaseException {
+        /* 게시글 조회 수 증가 */
+        int view = postRepository.findViewByPostId(post_id);
+        postRepository.saveView(view+1, post_id);
+
         Post entity = postRepository.findById(post_id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시물이 없습니다. post_id = " + post_id));
 

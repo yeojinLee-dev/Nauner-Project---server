@@ -35,7 +35,7 @@ public class Post extends BaseTimeEntity {
     @Column(nullable = true)
     private int heart;
 
-    @ColumnDefault("Recruit")
+    @ColumnDefault("'Recruit'")
     @Enumerated(EnumType.STRING)
     private Progress progress;
 
@@ -51,7 +51,7 @@ public class Post extends BaseTimeEntity {
 
     private String time;
 
-    @ColumnDefault("ACTIVE")
+    @ColumnDefault("'ACTIVE'")
     private String postStatus;
 
     @ManyToOne(fetch = FetchType.EAGER)

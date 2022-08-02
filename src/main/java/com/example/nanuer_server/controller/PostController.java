@@ -34,7 +34,6 @@ public class PostController {
     public BaseResponse<List<GetPostListResDto>> getPostList(@RequestParam int user_id, @RequestParam String query) {
         try {
             List<GetPostListResDto> posts = postService.getPostList(user_id, query);
-
             return new BaseResponse<>(posts);
         } catch (BaseException exception) {
             return new BaseResponse<>(exception.getStatus());
