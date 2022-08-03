@@ -24,7 +24,7 @@ public class GetPostResDto {
     private String deliveryCost;
     private String location;
     private String time;
-    private String postStatus;
+    private int postStatus;
     private User user;
     private Category category;
 

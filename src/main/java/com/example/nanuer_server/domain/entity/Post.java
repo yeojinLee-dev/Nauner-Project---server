@@ -2,10 +2,12 @@ package com.example.nanuer_server.domain.entity;
 
 import com.example.nanuer_server.domain.BaseTimeEntity;
 import com.example.nanuer_server.domain.Progress;
+import com.example.nanuer_server.dto.Post.UpdatePostReqDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.sql.Update;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -54,7 +56,7 @@ public class Post extends BaseTimeEntity {
     private String time;
 
     @JsonProperty("post_status")
-    private String postStatus;
+    private int postStatus;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
@@ -66,4 +68,16 @@ public class Post extends BaseTimeEntity {
     @JoinColumn(name = "category_id")
     private Category category;
 
+    public void update(UpdatePostReqDto updatePostReqDto) {
+        this.title = updatePostReqDto.getTitle();
+        this.content = updatePostReqDto.getContent();
+        this.costInfo = updatePostReqDto.getCostInfo();
+        this.menu = updatePostReqDto.getMenu();
+        this.total = updatePostReqDto.getTotal();
+        this.deliveryCost = updatePostReqDto.getDeliveryCost();
+        this.time = updatePostReqDto.getTime();
+        this.location = updatePostReqDto.getLocation();
+        this.category = updatePostReqDto.getCategory();
+        this.progress = updatePostReqDto.getProgress();
+    }
 }

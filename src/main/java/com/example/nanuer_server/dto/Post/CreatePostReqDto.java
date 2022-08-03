@@ -40,7 +40,7 @@ public class CreatePostReqDto {
 
     private Progress progress;
 
-    private String postStatus;
+    private int postStatus;
 
     public void setUser(User user) {
         this.user = user;
@@ -63,7 +63,7 @@ public class CreatePostReqDto {
                 .user(user)
                 .category(category)
                 .progress(progress.Recruit)
-                .postStatus("ACTIVE")
+                .postStatus(1)
                 .build();
     }
 }

@@ -69,12 +69,17 @@ public class PostController {
         }
     }
 
-//    /* 게시물 수정 */
-//    @PutMapping("/{post_id}")
-//    public BaseResponse<String> updatePost(@PathVariable int post_id, @RequestBody UpdatePostReqDto updatePostReqDto) {
-//
-//
-//    }
+    /* 게시물 수정 */
+    @PutMapping("/{post_id}")
+    public BaseResponse<String> updatePost(@PathVariable int post_id, @RequestBody UpdatePostReqDto updatePostReqDto) {
+        try {
+            String result = "post_id = " + postService.updatePost(post_id, updatePostReqDto) + " 수정 완료";
+            return new BaseResponse<>(result);
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
+
+    }
 
     /* 게시물 삭제 */
     @PatchMapping("/{post_id}")
