@@ -39,20 +39,4 @@ public class UpdatePostReqDto {
     public void setCategory(Category category) {
         this.category = category;
     }
-
-    public Post toEntity() {
-        return Post.builder()
-                .title(title)
-                .content(content)
-                .costInfo(costInfo)
-                .menu(menu)
-                .total(total)
-                .deliveryCost(deliveryCost)
-                .location(location)
-                .time(time)
-                .location(location)
-                .category(category)
-                .progress(progress)
-                .build();
-    }
 }

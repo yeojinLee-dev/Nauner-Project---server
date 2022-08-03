@@ -40,15 +40,14 @@ public class PostService {
         return postRepository.save(createPostReqDto.toEntity()).getPostId();
     }
 
+    @Transactional
     public GetPostResDto getPost(int post_id) throws BaseException {
-        /* 게시글 조회 수 증가 */
-        int view = postRepository.findViewByPostId(post_id);
-        postRepository.saveView(view+1, post_id);
-
-        Post entity = postRepository.findById(post_id)
+        Post post = postRepository.findById(post_id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시물이 없습니다. post_id = " + post_id));
 
-        return new GetPostResDto(entity);
+        post.increaseView();
+
+        return new GetPostResDto(post);
     }
 
     @Transactional
@@ -61,8 +60,12 @@ public class PostService {
         return post_id;
     }
 
+    @Transactional
     public int deletePost(int post_id) throws BaseException {
-        postRepository.savePostStatus(post_id);
+        Post post = postRepository.findById(post_id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. post_id = " + post_id));
+        post.delete();
+
         return post_id;
     }
 }

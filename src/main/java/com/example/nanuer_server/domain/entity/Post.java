@@ -80,4 +80,12 @@ public class Post extends BaseTimeEntity {
         this.category = updatePostReqDto.getCategory();
         this.progress = updatePostReqDto.getProgress();
     }
+
+    public void delete() {
+        this.postStatus = 0;
+    }
+
+    public void increaseView() {
+        this.view += 1;
+    }
 }
