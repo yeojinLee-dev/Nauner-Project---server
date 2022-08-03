@@ -15,7 +15,7 @@ public class PostDto {
     private String title;
     private String content;
     private int view;
-    private int heart;
+    private int heartCount;
     private Progress progress;
     private String costInfo;
     private int total;
@@ -32,7 +32,7 @@ public class PostDto {
                 .title(title)
                 .content(content)
                 .view(view)
-                .heart(heart)
+                .heartCount(heartCount)
                 .progress(progress)
                 .costInfo(costInfo)
                 .total(total)

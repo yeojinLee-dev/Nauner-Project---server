@@ -33,7 +33,7 @@ class MyPageServiceTest {
         UserInfoDto beforeUserInfoDto = userRepository.findByEmail("dongwoo0307@naver.com").get().toDto();
         UserInfoDto updatedUserInfoDto = beforeUserInfoDto;
         try {
-            UserInfoDto userInfoDto = myPageService.updateUser(updatedUserInfoDto);
+            UserInfoDto userInfoDto = myPageService.updateUser(updatedUserInfoDto,"dongwoo0307@naver.com" );
             System.out.println(userInfoDto.toString());
         } catch (BaseException exception){
             System.out.println(exception.getMessage());

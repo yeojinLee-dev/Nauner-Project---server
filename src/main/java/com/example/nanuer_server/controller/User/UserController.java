@@ -103,6 +103,7 @@ public class UserController {
 
         }
         catch (BaseException exception) {
+            System.out.println("error");
             return new BaseResponse<>((exception.getStatus()));
         }
     }

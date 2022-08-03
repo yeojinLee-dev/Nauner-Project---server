@@ -29,7 +29,7 @@ public class PostEntity extends BaseTimeEntity {
     private int view;
     //**
 
-    private int heart;
+    private int heartCount;
 
     @Enumerated(EnumType.STRING)
     private Progress progress;
@@ -65,7 +65,7 @@ public class PostEntity extends BaseTimeEntity {
                 .title(title)
                 .content(content)
                 .view(view)
-                .heart(heart)
+                .heartCount(heartCount)
                 .progress(progress)
                 .costInfo(costInfo)
                 .total(total)

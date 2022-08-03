@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 import static com.example.nanuer_server.config.BaseResponseStatus.USERS_EMPTY_USER_EMAIL;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class MyPageService {
     private final UserRepository userRepository;
@@ -28,7 +29,6 @@ public class MyPageService {
 
 
     //Post CRUD를 postService에서 관리하고, 내가 쓴 글 조회하는 getPosts는 마이페이지에서 하는 게 낫지 않나
-    @Transactional
     public List<PostDto> getPosts(int userId){
         List<PostEntity> postEntityList = userRepository.findById(userId).get().getPostEntities();
         List<PostDto> postDtoList = postEntityList.stream()
@@ -38,7 +38,6 @@ public class MyPageService {
     }
 
     // like를 어떤 식으로...? 찜한 게시물을 보여주는 건데 그러면 게시물에
-    @Transactional
     public List<PostDto> getHeartPosts(String email){
         List<HeartDto> heartDtoList = heartRepository
                 .findAll(userRepository.findByEmail(email).get().getUserId())
@@ -51,29 +50,44 @@ public class MyPageService {
                 .collect(Collectors.toList());
         return postDtoList;
     }
-    @Transactional
-    public UserInfoDto updateUser(UserInfoDto userInfoDto) throws BaseException{
-        UserEntity userEntity = userRepository.findByEmail(userInfoDto.getEmail()).get();
+
+    public UserInfoDto updateUser(UserInfoDto userInfoDto,String email) throws BaseException{
+        UserEntity userEntity = userRepository.findByEmail(email).get();
         if(!userEntity.isPresent()) {
             throw new BaseException(USERS_EMPTY_USER_EMAIL);
         }
-        userEntity = userInfoDto.toEntity();
+        userEntity = updateUserUsingUserInfoDto(userEntity, userInfoDto);
         userRepository.save(userEntity);
         return userEntity.toDto();
     }
+
+    private UserEntity updateUserUsingUserInfoDto(UserEntity userEntity, UserInfoDto userInfoDto){
+        userEntity.setEmail(userInfoDto.getEmail());
+        userEntity.setName(userInfoDto.getName());
+        userEntity.setPassword(userInfoDto.getPassword());
+        userEntity.setNickName(userInfoDto.getNickName());
+        userEntity.setPhone(userInfoDto.getPhone());
+        userEntity.setBirth(userInfoDto.getBirth());
+        userEntity.setProfileImg(userInfoDto.getProfileImg());
+        userEntity.setUniversity(userInfoDto.getUniversity());
+        userEntity.setUserStatus(userInfoDto.getUserStatus());
+        userEntity.setUserScore(userInfoDto.getUserScore());
+        userEntity.setRole(userInfoDto.getRole());
+        userEntity.setPostEntities(userInfoDto.toEntity().getPostEntities());
+        return userEntity;
+    }
 }
 
-
-/* userEntity.setEmail(userInfoDto.getEmail());
-         userEntity.setName(userInfoDto.getName());
-         userEntity.setPassword(userInfoDto.getPassword());
-         userEntity.setNickName(userInfoDto.getNickName());
-         userEntity.setPhone(userInfoDto.getPhone());
-         userEntity.setBirth(userInfoDto.getBirth());
-         userEntity.setProfileImg(userInfoDto.getProfileImg());
-         userEntity.setUniversity(userInfoDto.getUniversity());
-         userEntity.setUserStatus(userInfoDto.getUserStatus());
-         userEntity.setUserScore(userInfoDto.getUserScore());
-         userEntity.setRole(userInfoDto.getRole());
-         userEntity.setPostEntities(userInfoDto.toEntity().getPostEntities());
-         userRepository.save(userEntity);*/
+/*
+userEntity.setEmail(userInfoDto.getEmail());
+        userEntity.setName(userInfoDto.getName());
+        userEntity.setPassword(userInfoDto.getPassword());
+        userEntity.setNickName(userInfoDto.getNickName());
+        userEntity.setPhone(userInfoDto.getPhone());
+        userEntity.setBirth(userInfoDto.getBirth());
+        userEntity.setProfileImg(userInfoDto.getProfileImg());
+        userEntity.setUniversity(userInfoDto.getUniversity());
+        userEntity.setUserStatus(userInfoDto.getUserStatus());
+        userEntity.setUserScore(userInfoDto.getUserScore());
+        userEntity.setRole(userInfoDto.getRole());
+        userEntity.setPostEntities(userInfoDto.toEntity().getPostEntities());*/
