@@ -90,6 +90,13 @@ public class UserService {
         return userInfoDto;
     }
 
-
+    public UserInfoDto GetUserByPhone(String phone) throws BaseException {
+        Optional<UserEntity> userEntity = userRepository.findByPhone(phone);
+        UserInfoDto userInfoDto = userEntity.get().toDto();
+        if(!userEntity.isPresent()) {
+            throw new BaseException(USERS_EMPTY_USER_EMAIL);
+        }
+        return userInfoDto;
+    }
 
 }

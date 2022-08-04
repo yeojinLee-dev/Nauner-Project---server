@@ -30,7 +30,7 @@ public class MyPageService {
 
     //Post CRUD를 postService에서 관리하고, 내가 쓴 글 조회하는 getPosts는 마이페이지에서 하는 게 낫지 않나
     public List<PostDto> getPosts(int userId){
-        List<PostEntity> postEntityList = userRepository.findById(userId).get().getPostEntities();
+        List<PostEntity> postEntityList = userRepository.findByUserId(userId).get().getPostEntities();
         List<PostDto> postDtoList = postEntityList.stream()
                 .map(PostEntity::toDto)
                 .collect(Collectors.toList());

@@ -3,10 +3,7 @@ package com.example.nanuer_server.domain.entity;
 import com.example.nanuer_server.domain.BaseTimeEntity;
 import com.example.nanuer_server.dto.User.UserInfoDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.databind.PropertyNamingStrategies;
-import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -53,12 +50,11 @@ public class UserEntity extends BaseTimeEntity {
     @Column(name = "user_score")
     private int userScore;
 
-    //@Column(s) not allowed on a @OneToOne property 발생
-    //@Column(name = "my_page_entity")
+    /*
     @JoinColumn(name="my_page_id")
     @OneToOne
     @ToString.Exclude // 순환참조 방지
-    private MyPageEntity myPageEntity;
+    private MyPageEntity myPageEntity;*/
 
     //mapped 이름 수정
     @JsonIgnore
@@ -90,12 +86,12 @@ public class UserEntity extends BaseTimeEntity {
         return userInfoDto;
     }
 
+
     public boolean isPresent(){
-        if(userId != null)
+        if(userId >0)
             return true;
         else
             return false;
     }
-
 
 }

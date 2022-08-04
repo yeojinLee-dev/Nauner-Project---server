@@ -109,5 +109,31 @@ public class UserController {
     }
 
 
+    //아이디 찾기
+    @GetMapping("/getEmail")
+    public BaseResponse<String> GetUserEmail(@RequestParam String phone){
+        try{
+            UserInfoDto userInfoDto = userService.GetUserByPhone(phone);
+            String result =  userInfoDto.getEmail();
+            return  new BaseResponse<>(result);
+
+        }
+        catch (BaseException exception){
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
+
+    /*
+    // 이메일 보내기
+    @Transactional
+    @PostMapping("/sendEmail")
+    public String sendEmail(@RequestParam("memberEmail") String memberEmail){
+        MailDTO dto = ms.createMailAndChangePassword(memberEmail);
+        ms.mailSend(dto);
+
+        return "/member/login";
+    }
+
+*/
 
 }
