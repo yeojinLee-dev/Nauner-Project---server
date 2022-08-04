@@ -14,11 +14,10 @@ import javax.persistence.*;
 @ToString
 @EqualsAndHashCode
 @Entity
-public class CategoryEntity {
-
+public class CategoryEntity{
     @Id
+    @Column(name="category_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "category_id")
     private int categoryId;
 
     @Column(name="category_name",nullable = false)

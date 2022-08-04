@@ -27,6 +27,7 @@ class MyPageServiceTest {
         postDtoList.forEach(System.out::println);
     }
 
+    /*
     @Test
     void updateUserTest(){
         UserInfoDto beforeUserInfoDto = userRepository.findByEmail("dongwoo0307@naver.com").get().toDto();
@@ -38,5 +39,5 @@ class MyPageServiceTest {
             System.out.println(exception.getMessage());
         }
     }
-
+*/
 }

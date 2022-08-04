@@ -30,7 +30,7 @@ public class PostService {
     }
 
     public int createPost(CreatePostReqDto createPostReqDto) throws BaseException {
-        UserEntity userEntity = userRepository.getReferenceById(createPostReqDto.getUserId());
+        UserEntity userEntity = userRepository.getReferenceById((long) createPostReqDto.getUserId());
         CategoryEntity categoryEntity = categoryRepository.getReferenceById(createPostReqDto.getCategoryId());
 
         createPostReqDto.setUserEntity(userEntity);

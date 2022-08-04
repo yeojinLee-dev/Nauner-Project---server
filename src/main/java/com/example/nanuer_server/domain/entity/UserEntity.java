@@ -28,13 +28,11 @@ public class UserEntity extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    private Integer userId;
-
+    private int userId;
 
     @Column(nullable = false,unique = true)
     private String email;
 
-    @Column(nullable = false)
     private String name;
 
     @Column(nullable = false)
@@ -111,7 +109,7 @@ public class UserEntity extends BaseTimeEntity {
     }
 
     public boolean isPresent(){
-        if(userId != null)
+        if(userId >0)
             return true;
         else
             return false;
