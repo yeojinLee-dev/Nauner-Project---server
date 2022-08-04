@@ -1,4 +1,4 @@
-package com.example.nanuer_server.service.User;
+package com.example.nanuer_server.service.message;
 
 
 import lombok.RequiredArgsConstructor;

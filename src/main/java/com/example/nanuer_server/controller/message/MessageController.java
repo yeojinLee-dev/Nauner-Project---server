@@ -1,7 +1,7 @@
-package com.example.nanuer_server.controller.User;
+package com.example.nanuer_server.controller.message;
 
 import com.example.nanuer_server.config.BaseResponse;
-import com.example.nanuer_server.service.User.MessageService;
+import com.example.nanuer_server.service.message.MessageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.annotation.*;

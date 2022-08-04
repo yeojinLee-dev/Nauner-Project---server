@@ -12,7 +12,10 @@ import com.example.nanuer_server.config.User.JwtTokenProvider;
 import com.example.nanuer_server.dto.User.LoginUserDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 
 @Log4j2
@@ -33,11 +36,11 @@ public class UserController {
 
     @ResponseBody
     @PostMapping("/join")
-    public BaseResponse<UserEntity> join(@RequestBody JoinUserDto userDto) throws BaseException {
+    public BaseResponse<UserEntity> join(@RequestBody JoinUserDto joinUserDto) {
         //BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         //UserEntity userEntity = UserEntity.createUser(userDto);
         try {
-            UserEntity userEntity = userService.signup(userDto);
+            UserEntity userEntity = userService.signup(joinUserDto);
             return new BaseResponse<>(userEntity);
         } catch (BaseException exception) {
             return new BaseResponse<>((exception.getStatus()));
