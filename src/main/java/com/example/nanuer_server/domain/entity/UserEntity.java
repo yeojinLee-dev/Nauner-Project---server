@@ -1,7 +1,8 @@
 package com.example.nanuer_server.domain.entity;
 
 import com.example.nanuer_server.domain.BaseTimeEntity;
-import com.example.nanuer_server.dto.User.UserDto;
+import com.example.nanuer_server.dto.User.UserInfoDto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.*;
@@ -62,7 +63,7 @@ public class UserEntity extends BaseTimeEntity {
     //mapped 이름 수정
     @JsonIgnore
     @OneToMany(mappedBy = "userEntity")
-    @Column(name = "posts")
+    @Column(name = "post")
     private List<PostEntity> postEntities = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)

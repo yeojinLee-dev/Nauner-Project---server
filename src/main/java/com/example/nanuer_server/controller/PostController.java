@@ -3,10 +3,7 @@ package com.example.nanuer_server.controller;
 import com.example.nanuer_server.config.BaseException;
 import com.example.nanuer_server.config.BaseResponse;
 import com.example.nanuer_server.domain.entity.PostEntity;
-<<<<<<< HEAD
 import com.example.nanuer_server.dto.Post.PostGetResDto;
-=======
->>>>>>> c113c13be73b37a4851747a14fc0d81662072a6b
 import com.example.nanuer_server.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
