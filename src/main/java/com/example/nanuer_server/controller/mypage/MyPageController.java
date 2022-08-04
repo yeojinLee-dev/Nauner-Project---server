@@ -18,6 +18,12 @@ import java.util.List;
 public class MyPageController {
     private final MyPageService myPageService;
 
+    @GetMapping("/my-posts")
+    public BaseResponse<List<PostDto>> getMyPosts(@RequestParam String email){
+        List<PostDto> postDtoList = myPageService.getMyPosts(email);
+        return new BaseResponse<>(postDtoList);
+    }
+
     @GetMapping("/heart-posts")
     public BaseResponse<List<PostDto>> getHeartPosts(@RequestParam String email){
         List<PostDto> postDtoList = myPageService.getHeartPosts(email);
