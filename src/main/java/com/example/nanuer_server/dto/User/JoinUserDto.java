@@ -3,13 +3,12 @@ package com.example.nanuer_server.dto.User;
 import com.example.nanuer_server.domain.entity.UserEntity;
 import com.example.nanuer_server.domain.entity.UserRole;
 import lombok.*;
-import org.springframework.security.core.userdetails.UserDetails;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class UserDto {
+public class JoinUserDto {
 
     private String id;
     private String password;
@@ -26,7 +25,6 @@ public class UserDto {
     /* DTO -> Entity */
     public UserEntity toEntity() {
         UserEntity userEntity = UserEntity.builder()
-                .id(id)
                 .password(password)
                 .name(name)
                 .nickName(nickName)
