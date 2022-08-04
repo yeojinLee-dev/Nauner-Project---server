@@ -1,6 +1,7 @@
 package com.example.nanuer_server.domain.entity;
 
 import com.example.nanuer_server.domain.BaseTimeEntity;
+import com.example.nanuer_server.dto.category.CategoryDto;
 import lombok.*;
 
 import javax.persistence.*;
@@ -12,10 +13,9 @@ import javax.persistence.*;
 @Data
 @Entity
 public class CategoryEntity{
-
     @Id
+    @Column(name="category_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "category_id")
     private int categoryId;
 
     @Column(name="category_name",nullable = false)
@@ -24,4 +24,12 @@ public class CategoryEntity{
     //일대일, 양방향, 이름 수정 (mapped에는 테이블 이름을 앞에 소문자로 적어야하는듯..싶은..)
     //@OneToOne(mappedBy = "categoryEntity")
     //private PostEntity postEntity;
+
+    public CategoryDto toDto(){
+        CategoryDto categoryDto = CategoryDto.builder()
+                .categoryId(categoryId)
+                .categoryName(categoryName)
+                .build();
+        return categoryDto;
+    }
 }

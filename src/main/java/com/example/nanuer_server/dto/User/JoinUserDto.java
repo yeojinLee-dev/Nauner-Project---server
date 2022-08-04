@@ -10,7 +10,7 @@ import lombok.*;
 @Builder
 public class JoinUserDto {
 
-    private String id;
+    //private String id;
     private String password;
     private String name;
     private String email;

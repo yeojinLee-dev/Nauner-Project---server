@@ -1,21 +1,70 @@
 package com.example.nanuer_server.service;
 
 import com.example.nanuer_server.config.BaseException;
+import com.example.nanuer_server.domain.entity.CategoryEntity;
 import com.example.nanuer_server.domain.entity.PostEntity;
-import com.example.nanuer_server.domain.repository.PostRepository;
+import com.example.nanuer_server.domain.entity.UserEntity;
+import com.example.nanuer_server.domain.repository.*;
+import com.example.nanuer_server.dto.Post.*;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import javax.transaction.Transactional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
 public class PostService {
 
     private final PostRepository postRepository;
+    private final UserRepository userRepository;
+    private final CategoryRepository categoryRepository;
 
-    public List<PostEntity> getPosts(int user_id) throws BaseException {
-        return postRepository.findAll(user_id);
+    public List<GetPostListResDto> getPostList(int user_id, String query) throws BaseException {
+        List<GetPostListResDto> posts = new ArrayList<>();
+
+        List<PostEntity> entities = postRepository.findAll(user_id, 1, query);
+        for (PostEntity entity : entities) posts.add(new GetPostListResDto(entity));
+
+        return posts;
+    }
+
+    public int createPost(CreatePostReqDto createPostReqDto) throws BaseException {
+        UserEntity userEntity = userRepository.getReferenceById((long) createPostReqDto.getUserId());
+        CategoryEntity categoryEntity = categoryRepository.getReferenceById(createPostReqDto.getCategoryId());
+
+        createPostReqDto.setUserEntity(userEntity);
+        createPostReqDto.setCategoryEntity(categoryEntity);
+
+        return postRepository.save(createPostReqDto.toEntity()).getPostId();
+    }
+
+    @Transactional
+    public GetPostResDto getPost(int post_id) throws BaseException {
+        PostEntity postEntity = postRepository.findById(post_id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시물이 없습니다. post_id = " + post_id));
+
+        postEntity.increaseView();
+
+        return new GetPostResDto(postEntity);
+    }
+
+    @Transactional
+    public int updatePost(int post_id, UpdatePostReqDto updatePostReqDto) throws BaseException {
+        PostEntity postEntity = postRepository.findById(post_id)
+                .orElseThrow(()-> new IllegalArgumentException("해당 게시글이 없습니다. post_id = "+ post_id));
+
+        postEntity.update(updatePostReqDto);
+
+        return post_id;
+    }
+
+    @Transactional
+    public int deletePost(int post_id) throws BaseException {
+        PostEntity postEntity = postRepository.findById(post_id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. post_id = " + post_id));
+        postEntity.delete();
+
+        return post_id;
     }
 }

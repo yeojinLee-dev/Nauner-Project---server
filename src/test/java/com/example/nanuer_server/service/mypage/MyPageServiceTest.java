@@ -1,7 +1,6 @@
 package com.example.nanuer_server.service.mypage;
 
 import com.example.nanuer_server.config.BaseException;
-import com.example.nanuer_server.domain.entity.UserEntity;
 import com.example.nanuer_server.domain.repository.UserRepository;
 import com.example.nanuer_server.dto.Post.PostDto;
 import com.example.nanuer_server.dto.User.UserInfoDto;

@@ -36,7 +36,6 @@ public class UserController {
     public BaseResponse<UserEntity> join(@RequestBody JoinUserDto userDto) throws BaseException {
         //BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         //UserEntity userEntity = UserEntity.createUser(userDto);
-
         try {
             UserEntity userEntity = userService.signup(userDto);
             return new BaseResponse<>(userEntity);

@@ -22,7 +22,7 @@ public class PostDto {
     private String deliveryCost;
     private String location;
     private String time;
-    private String postStatus;
+    private int postStatus;
     private UserInfoDto userInfoDto;
     private CategoryDto categoryDto;
 
@@ -41,7 +41,7 @@ public class PostDto {
                 .time(time)
                 .postStatus(postStatus)
                 .userEntity(userInfoDto.toEntity())
-                .category(categoryDto.toEntity())
+                .categoryEntity(categoryDto.toEntity())
                 .build();
         return postEntity;
     }

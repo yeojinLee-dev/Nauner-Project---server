@@ -25,10 +25,17 @@ public enum BaseResponseStatus {
     // users
     USERS_EMPTY_USER_EMAIL(false, 2010, "유저 이메일 값을 확인해주세요."),
 
-    // [POST] /users
+    // [POST] /post
     POST_USERS_EMPTY_EMAIL(false, 2015, "아이디를 입력해주세요."),
     POST_USERS_INVALID_EMAIL(false, 2016, "이메일 형식을 확인해주세요."),
     POST_USERS_EXISTS_EMAIL(false,2017,"중복된 아이디입니다."),
+    POST_POST_INVALID_TITLE(false, 2018, "게시물의 제목을 확인해주세요."),
+    POST_POST_INVALID_CONTENT(false, 2019, "게시물의 내용을 확인해주세요."),
+
+    // [POST] /users
+    POST_USERS_EMPTY_ID(false, 2015, "아이디를 입력해주세요."),
+    POST_USERS_INVALID_ID(false, 2016, "이메일 형식을 확인해주세요."),
+    POST_USERS_EXISTS_ID(false,2017,"중복된 아이디입니다."),
 
     /**
      * 3000 : Response 오류
