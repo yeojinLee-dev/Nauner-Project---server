@@ -38,7 +38,7 @@ public class PostEntity extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private Progress progress;
 
-    @JsonProperty("delivery_cost")
+    @JsonProperty("cost_info")
     private String costInfo;
 
     private String menu;
