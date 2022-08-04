@@ -1,10 +1,10 @@
 package com.example.nanuer_server.dto.Post;
 
 import com.example.nanuer_server.domain.Progress;
-import com.example.nanuer_server.domain.entity.Category;
-import com.example.nanuer_server.domain.entity.Post;
+import com.example.nanuer_server.domain.entity.CategoryEntity;
+import com.example.nanuer_server.domain.entity.PostEntity;
 import lombok.*;
-import com.example.nanuer_server.domain.entity.User;
+import com.example.nanuer_server.domain.entity.UserEntity;
 import java.time.LocalDateTime;
 
 @Getter
@@ -18,11 +18,11 @@ public class GetPostListResDto {
     private int total;
     private String location;
     private LocalDateTime modifiedDate;
-    private User user;
-    private Category category;
+    private UserEntity userEntity;
+    private CategoryEntity categoryEntity;
 
     @Builder
-    public GetPostListResDto(Post entity) {
+    public GetPostListResDto(PostEntity entity) {
         this.postId = entity.getPostId();
         this.title = entity.getTitle();
         this.view = entity.getView();
@@ -30,8 +30,8 @@ public class GetPostListResDto {
         this.total = entity.getTotal();
         this.location = entity.getLocation();
         this.modifiedDate = entity.getModified_date();
-        this.user = entity.getUser();
-        this.category = entity.getCategory();
+        this.userEntity = entity.getUserEntity();
+        this.categoryEntity = entity.getCategoryEntity();
     }
 
 }

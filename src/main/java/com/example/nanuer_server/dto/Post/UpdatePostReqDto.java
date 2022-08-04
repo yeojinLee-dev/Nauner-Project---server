@@ -1,12 +1,9 @@
 package com.example.nanuer_server.dto.Post;
 
 import com.example.nanuer_server.domain.Progress;
-import com.example.nanuer_server.domain.entity.Category;
-import com.example.nanuer_server.domain.entity.Post;
-import com.example.nanuer_server.domain.entity.User;
+import com.example.nanuer_server.domain.entity.CategoryEntity;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
-import org.springframework.web.bind.annotation.GetMapping;
 
 @Getter
 public class UpdatePostReqDto {
@@ -29,14 +26,14 @@ public class UpdatePostReqDto {
 
     private String time;
 
-    private Category category;
+    private CategoryEntity categoryEntity;
 
     @JsonProperty("category_id")
     private int categoryId;
 
     private Progress progress;
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setCategoryEntity(CategoryEntity categoryEntity) {
+        this.categoryEntity = categoryEntity;
     }
 }

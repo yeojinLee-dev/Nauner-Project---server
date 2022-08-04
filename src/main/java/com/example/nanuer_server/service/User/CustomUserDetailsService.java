@@ -1,7 +1,7 @@
 package com.example.nanuer_server.service.User;
 
 import com.example.nanuer_server.config.User.CustomUserDetails;
-import com.example.nanuer_server.domain.entity.User;
+import com.example.nanuer_server.domain.entity.UserEntity;
 import com.example.nanuer_server.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,7 +17,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     //로그인할 때 들어온 username으로 DB에서 정보 찾기
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User userEntity = userRepository.findByEmail(email)
+        UserEntity userEntity = userRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("해당 사용자가 존재하지 않습니다. : " + email));
 
         //UserDetailsImpl에서 정의한 생성자

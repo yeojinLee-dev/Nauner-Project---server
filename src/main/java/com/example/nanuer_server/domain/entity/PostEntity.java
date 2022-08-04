@@ -3,14 +3,10 @@ package com.example.nanuer_server.domain.entity;
 import com.example.nanuer_server.domain.BaseTimeEntity;
 import com.example.nanuer_server.domain.Progress;
 import com.example.nanuer_server.dto.Post.UpdatePostReqDto;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
-import org.hibernate.sql.Update;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Table(name = "post")
 @AllArgsConstructor
@@ -20,7 +16,7 @@ import java.time.LocalDateTime;
 @Getter
 @ToString(callSuper = true) // 부모 클래스의 toString 불러오는 어노테이션. 붙이면 createdAt 하고 updatedAt 데이터 정상적으로 나옴.
 @EqualsAndHashCode(callSuper = true) // 부모클래스의 equalsAndHashCode 불러오는 어노테이션.
-public class Post extends BaseTimeEntity {
+public class PostEntity extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -61,12 +57,12 @@ public class Post extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     @ToString.Exclude
-    private User user;
+    private UserEntity userEntity;
 
     @OneToOne
     @ToString.Exclude
     @JoinColumn(name = "category_id")
-    private Category category;
+    private CategoryEntity categoryEntity;
 
     public void update(UpdatePostReqDto updatePostReqDto) {
         this.title = updatePostReqDto.getTitle();
@@ -77,7 +73,7 @@ public class Post extends BaseTimeEntity {
         this.deliveryCost = updatePostReqDto.getDeliveryCost();
         this.time = updatePostReqDto.getTime();
         this.location = updatePostReqDto.getLocation();
-        this.category = updatePostReqDto.getCategory();
+        this.categoryEntity = updatePostReqDto.getCategoryEntity();
         this.progress = updatePostReqDto.getProgress();
     }
 

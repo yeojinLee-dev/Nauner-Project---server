@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
-import javax.management.relation.Role;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +18,7 @@ import java.util.List;
 @Entity
 @ToString(callSuper = true) // 부모 클래스의 toString 불러오는 어노테이션. 붙이면 createdAt 하고 updatedAt 데이터 정상적으로 나옴.
 @EqualsAndHashCode(callSuper = true) // 부모클래스의 equalsAndHashCode 불러오는 어노테이션.
-public class User extends BaseTimeEntity {
+public class UserEntity extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,8 +51,8 @@ public class User extends BaseTimeEntity {
 
     //mapped 이름 수정
     @JsonIgnore
-    @OneToMany(mappedBy = "user", fetch=FetchType.LAZY)
-    private List<Post> posts = new ArrayList<>();
+    @OneToMany(mappedBy = "userEntity", fetch=FetchType.LAZY)
+    private List<PostEntity> postEntities = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
     private UserRole role;
@@ -92,7 +91,7 @@ public class User extends BaseTimeEntity {
                 .university(university)
                 .userStatus(userStatus)
                 .role(role)
-                .postEntities(posts)
+                .postEntityEntities(postEntities)
                 .build();
         return userInfoDto;
     }

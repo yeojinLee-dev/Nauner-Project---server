@@ -2,7 +2,7 @@ package com.example.nanuer_server.controller.User;
 
 import com.example.nanuer_server.config.BaseException;
 import com.example.nanuer_server.config.BaseResponse;
-import com.example.nanuer_server.domain.entity.User;
+import com.example.nanuer_server.domain.entity.UserEntity;
 import com.example.nanuer_server.domain.entity.UserRole;
 import com.example.nanuer_server.dto.User.JoinUserDto;
 
@@ -33,12 +33,12 @@ public class UserController {
 
     @ResponseBody
     @PostMapping("/join")
-    public BaseResponse<User> join(@RequestBody JoinUserDto userDto) throws BaseException {
+    public BaseResponse<UserEntity> join(@RequestBody JoinUserDto userDto) throws BaseException {
         //BCryptPasswordEncoder passwordEncoder = new BCryptPasswordzEncoder();
         //UserEntity userEntity = UserEntity.createUser(userDto);
 
         try {
-            User userEntity = userService.signup(userDto);
+            UserEntity userEntity = userService.signup(userDto);
             return new BaseResponse<>(userEntity);
         } catch (BaseException exception) {
             return new BaseResponse<>((exception.getStatus()));

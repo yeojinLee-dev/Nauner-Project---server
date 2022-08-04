@@ -2,7 +2,7 @@ package com.example.nanuer_server.service.User;
 
 import com.example.nanuer_server.config.BaseException;
 import static com.example.nanuer_server.config.BaseResponseStatus.*;
-import com.example.nanuer_server.domain.entity.User;
+import com.example.nanuer_server.domain.entity.UserEntity;
 import com.example.nanuer_server.domain.repository.UserRepository;
 import com.example.nanuer_server.dto.User.JoinUserDto;
 import com.example.nanuer_server.dto.User.LoginUserDto;
@@ -28,7 +28,7 @@ public class UserService {
 
     //회원가입
 
-    public User signup(JoinUserDto userDto) throws BaseException {
+    public UserEntity signup(JoinUserDto userDto) throws BaseException {
         String email = userDto.getEmail();
         if (userRepository.findByEmail(userDto.getEmail()).orElse(null) != null) {
             throw new BaseException(POST_USERS_EXISTS_EMAIL);
@@ -44,7 +44,7 @@ public class UserService {
 
     //로그인
     public UserInfoDto login(LoginUserDto loginUserDto) throws BaseException {
-        User userEntity = userRepository.findByEmail(loginUserDto.getEmail()).orElseThrow(
+        UserEntity userEntity = userRepository.findByEmail(loginUserDto.getEmail()).orElseThrow(
                 () -> new BaseException(FAILED_TO_LOGIN)
         );
         if (!passwordEncoder.matches(loginUserDto.getPassword(), userEntity.getPassword())) {
@@ -56,7 +56,7 @@ public class UserService {
 
     //삭제
     public void delete(String email) throws BaseException {
-        Optional<User> userEntity = userRepository.findByEmail(email);
+        Optional<UserEntity> userEntity = userRepository.findByEmail(email);
         if(!userEntity.isPresent()) {
             throw new BaseException(USERS_EMPTY_USER_EMAIL);
         }
@@ -66,7 +66,7 @@ public class UserService {
 
     //비활성화, 활성화
     public void UserStatus(String email) throws BaseException {
-        Optional<User> userEntity = userRepository.findByEmail(email);
+        Optional<UserEntity> userEntity = userRepository.findByEmail(email);
         if(userEntity.isEmpty()) {
             throw new BaseException(USERS_EMPTY_USER_EMAIL);
         }
@@ -82,7 +82,7 @@ public class UserService {
 
     //유저 정보 가져오기
     public UserInfoDto GetUser(String email) throws BaseException {
-        Optional<User> userEntity = userRepository.findByEmail(email);
+        Optional<UserEntity> userEntity = userRepository.findByEmail(email);
         UserInfoDto userInfoDto = new UserInfoDto(userEntity.get());
         if(!userEntity.isPresent()) {
             throw new BaseException(USERS_EMPTY_USER_EMAIL);

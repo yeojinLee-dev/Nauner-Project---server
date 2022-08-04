@@ -1,7 +1,7 @@
 package com.example.nanuer_server.dto.User;
 
-import com.example.nanuer_server.domain.entity.Post;
-import com.example.nanuer_server.domain.entity.User;
+import com.example.nanuer_server.domain.entity.PostEntity;
+import com.example.nanuer_server.domain.entity.UserEntity;
 import com.example.nanuer_server.domain.entity.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,9 +26,9 @@ public class UserInfoDto {
     private String userStatus;
     private int  userScore;
     private UserRole role;
-    private List<Post> postEntities;
+    private List<PostEntity> postEntityEntities;
 
-    public UserInfoDto(User userEntity){
+    public UserInfoDto(UserEntity userEntity){
         this.email = userEntity.getEmail();
         this.password = userEntity.getPassword();
         this.name = userEntity.getName();
@@ -40,12 +40,12 @@ public class UserInfoDto {
         this.userStatus = userEntity.getUserStatus();
         this.userScore = userEntity.getUserScore();
         this.role = userEntity.getRole();
-        this.postEntities = userEntity.getPosts();
+        this.postEntityEntities = userEntity.getPostEntities();
         //this.myPageEntity = userEntity.getMyPage();
     }
 
-    public User UserInfoToEntity() {
-        User userEntity = User.builder()
+    public UserEntity UserInfoToEntity() {
+        UserEntity userEntity = UserEntity.builder()
                 .password(password)
                 .name(name)
                 .nickName(nickName)
@@ -58,7 +58,7 @@ public class UserInfoDto {
                 .userScore(userScore)
                 .role(role)
                 //.myPage(myPageEntity)
-                .posts(postEntities)
+                .postEntities(postEntityEntities)
                 .build();
         return userEntity;
     }

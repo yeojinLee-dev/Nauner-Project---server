@@ -1,9 +1,9 @@
 package com.example.nanuer_server.dto.Post;
 
 import com.example.nanuer_server.domain.Progress;
-import com.example.nanuer_server.domain.entity.Category;
-import com.example.nanuer_server.domain.entity.Post;
-import com.example.nanuer_server.domain.entity.User;
+import com.example.nanuer_server.domain.entity.CategoryEntity;
+import com.example.nanuer_server.domain.entity.PostEntity;
+import com.example.nanuer_server.domain.entity.UserEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,11 +25,11 @@ public class GetPostResDto {
     private String location;
     private String time;
     private int postStatus;
-    private User user;
-    private Category category;
+    private UserEntity userEntity;
+    private CategoryEntity categoryEntity;
 
     @Builder
-    public GetPostResDto(Post entity) {
+    public GetPostResDto(PostEntity entity) {
         this.postId = entity.getPostId();
         this.title = entity.getTitle();
         this.content = entity.getContent();
@@ -43,7 +43,7 @@ public class GetPostResDto {
         this.location = entity.getLocation();
         this.time = entity.getTime();
         this.postStatus = entity.getPostStatus();
-        this.user = entity.getUser();
-        this.category = entity.getCategory();
+        this.userEntity = entity.getUserEntity();
+        this.categoryEntity = entity.getCategoryEntity();
     }
 }

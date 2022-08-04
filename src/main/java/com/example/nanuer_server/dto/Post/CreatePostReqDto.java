@@ -1,17 +1,12 @@
 package com.example.nanuer_server.dto.Post;
 
 import com.example.nanuer_server.domain.Progress;
-import com.example.nanuer_server.domain.entity.Category;
-import com.example.nanuer_server.domain.entity.Post;
-import com.example.nanuer_server.domain.entity.User;
-import com.example.nanuer_server.domain.repository.CategoryRepository;
+import com.example.nanuer_server.domain.entity.CategoryEntity;
+import com.example.nanuer_server.domain.entity.PostEntity;
+import com.example.nanuer_server.domain.entity.UserEntity;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor
@@ -29,8 +24,8 @@ public class CreatePostReqDto {
     private String deliveryCost;
     private String location;
     private String time;
-    private User user;
-    private Category category;
+    private UserEntity userEntity;
+    private CategoryEntity categoryEntity;
 
     @JsonProperty("user_id")
     private int userId;
@@ -42,16 +37,16 @@ public class CreatePostReqDto {
 
     private int postStatus;
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserEntity(UserEntity userEntity) {
+        this.userEntity = userEntity;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setCategoryEntity(CategoryEntity categoryEntity) {
+        this.categoryEntity = categoryEntity;
     }
 
-    public Post toEntity() {
-        return Post.builder()
+    public PostEntity toEntity() {
+        return PostEntity.builder()
                 .title(title)
                 .content(content)
                 .costInfo(costInfo)
@@ -60,8 +55,8 @@ public class CreatePostReqDto {
                 .deliveryCost(deliveryCost)
                 .location(location)
                 .time(time)
-                .user(user)
-                .category(category)
+                .userEntity(userEntity)
+                .categoryEntity(categoryEntity)
                 .progress(progress.Recruit)
                 .postStatus(1)
                 .build();
