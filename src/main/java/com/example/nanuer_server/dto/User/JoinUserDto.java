@@ -9,9 +9,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class JoinUserDto {
+public class UserDto {
 
-    private String id;
     private String password;
     private String name;
     private String email;
