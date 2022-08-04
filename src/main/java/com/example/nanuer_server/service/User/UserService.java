@@ -27,15 +27,14 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
     //회원가입
-
-    public UserEntity signup(JoinUserDto userDto) throws BaseException {
-        String email = userDto.getEmail();
-        if (userRepository.findByEmail(userDto.getEmail()).orElse(null) != null) {
+    public UserEntity signup(JoinUserDto joinUserDto) throws BaseException {
+        String email = joinUserDto.getEmail();
+        if (userRepository.findByEmail(joinUserDto.getEmail()).orElse(null) != null) {
             throw new BaseException(POST_USERS_EXISTS_EMAIL);
         }
         try{
-            userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
-            return userRepository.save(userDto.toEntity());
+            joinUserDto.setPassword(passwordEncoder.encode(joinUserDto.getPassword()));
+            return userRepository.save(joinUserDto.toEntity());
         }
         catch (Exception exception) {
             throw new BaseException(DATABASE_ERROR);
@@ -79,7 +78,6 @@ public class UserService {
             }
         }
     }
-
     //유저 정보 가져오기
     public UserInfoDto GetUser(String email) throws BaseException {
         Optional<UserEntity> userEntity = userRepository.findByEmail(email);
@@ -90,6 +88,14 @@ public class UserService {
         return userInfoDto;
     }
 
+    public UserInfoDto GetUserByPhone(String phone) throws BaseException {
+        Optional<UserEntity> userEntity = userRepository.findByPhone(phone);
+        UserInfoDto userInfoDto = new UserInfoDto(userEntity.get());
+        if(!userEntity.isPresent()) {
+            throw new BaseException(USERS_EMPTY_USER_EMAIL);
+        }
+        return userInfoDto;
+    }
 
 
 }

@@ -9,7 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class UserDto {
+public class JoinUserDto {
 
     private String password;
     private String name;

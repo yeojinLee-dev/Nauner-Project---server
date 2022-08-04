@@ -29,7 +29,7 @@ public class PostEntity extends BaseTimeEntity {
     private int view;
 
     //**
-    private int like;
+    private int heart;
 
     @Enumerated(EnumType.STRING)
     private Progress progress;
@@ -56,10 +56,10 @@ public class PostEntity extends BaseTimeEntity {
     @JoinColumn(name = "category_id")
     private CategoryEntity categoryEntity;
 
-
+/*
     @ManyToOne
     @JoinColumn(name="my_page_id")
     @ToString.Exclude
-    private MyPageEntity myPageEntity;
+    private MyPageEntity myPageEntity;*/
 
 }

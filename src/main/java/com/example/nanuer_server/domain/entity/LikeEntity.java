@@ -5,7 +5,7 @@ import lombok.*;
 
 import javax.persistence.*;
 
-@Table(name="Like")
+@Table(name="heart")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -17,13 +17,13 @@ public class LikeEntity extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int LikeId;
-
+    private int heartId;
+/*
     @ManyToOne
     @JoinColumn(name = "my_page_id")
     @ToString.Exclude
     private MyPageEntity myPageEntity;
-
+*/
     @ManyToOne
     @JoinColumn(name = "user_id")
     private UserEntity userEntity;

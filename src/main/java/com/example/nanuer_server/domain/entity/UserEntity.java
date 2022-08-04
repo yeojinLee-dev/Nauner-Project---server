@@ -2,6 +2,7 @@ package com.example.nanuer_server.domain.entity;
 
 import com.example.nanuer_server.domain.BaseTimeEntity;
 import com.example.nanuer_server.dto.User.UserInfoDto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
@@ -23,7 +24,6 @@ public class UserEntity extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private int userId;
-
 
     @Column(nullable = false,unique = true)
     private String email;
@@ -52,17 +52,18 @@ public class UserEntity extends BaseTimeEntity {
     @Column(nullable = false)
     private String userStatus;
 
-    @ColumnDefault("0")
     private int userScore;
-
+/*
     //@Column(s) not allowed on a @OneToOne property 발생
     //@Column(name = "my_page_entity")
     @OneToOne
     @ToString.Exclude // 순환참조 방지
-    private MyPageEntity myPageEntity;
+    @JoinColumn(name="my_page_id")
+    private MyPageEntity myPageEntity;*/
 
     //mapped 이름 수정
     @OneToMany(mappedBy = "userEntity")
+    @JsonIgnore
     private List<PostEntity> postEntities = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
@@ -102,7 +103,6 @@ public class UserEntity extends BaseTimeEntity {
                 .university(university)
                 .userStatus(userStatus)
                 .role(role)
-                .myPageEntity(myPageEntity)
                 .postEntities(postEntities)
                 .build();
         return userInfoDto;

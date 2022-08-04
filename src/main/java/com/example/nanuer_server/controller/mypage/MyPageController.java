@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class MyPageController {
     private final MyPageService myPageService;
-
+/*
     @GetMapping("/{email}")
     public BaseResponse<MyPageDto> getMyPage(@PathVariable("email") String email){
         try{
@@ -27,5 +27,5 @@ public class MyPageController {
         catch(BaseException exception){
             return new BaseResponse<>(exception.getStatus());
         }
-    }
+    }*/
 }

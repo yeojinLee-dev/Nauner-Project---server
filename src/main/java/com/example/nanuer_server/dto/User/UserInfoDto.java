@@ -1,6 +1,5 @@
 package com.example.nanuer_server.dto.User;
 
-import com.example.nanuer_server.domain.entity.MyPageEntity;
 import com.example.nanuer_server.domain.entity.PostEntity;
 import com.example.nanuer_server.domain.entity.UserEntity;
 import com.example.nanuer_server.domain.entity.UserRole;
@@ -28,7 +27,7 @@ public class UserInfoDto {
     private int  userScore;
     private UserRole role;
     private List<PostEntity> postEntities;
-    private MyPageEntity myPageEntity;
+    //private MyPageEntity myPageEntity;
 
     public UserInfoDto(UserEntity userEntity){
         this.email = userEntity.getEmail();
@@ -43,7 +42,7 @@ public class UserInfoDto {
         this.userScore = userEntity.getUserScore();
         this.role = userEntity.getRole();
         this.postEntities = userEntity.getPostEntities();
-        this.myPageEntity = userEntity.getMyPageEntity();
+        //this.myPageEntity = userEntity.getMyPageEntity();
     }
 
     public UserEntity UserInfoToEntity() {
@@ -59,7 +58,7 @@ public class UserInfoDto {
                 .userStatus(userStatus)
                 .userScore(userScore)
                 .role(role)
-                .myPageEntity(myPageEntity)
+                //.myPageEntity(myPageEntity)
                 .postEntities(postEntities)
                 .build();
         return userEntity;
