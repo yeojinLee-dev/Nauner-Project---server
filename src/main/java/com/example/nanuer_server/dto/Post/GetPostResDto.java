@@ -16,7 +16,7 @@ public class GetPostResDto {
     private String title;
     private String content;
     private int view;
-    private int heart;
+    private int heartCount;
     private Progress progress;
     private String costInfo;
     private String menu;
@@ -34,7 +34,7 @@ public class GetPostResDto {
         this.title = entity.getTitle();
         this.content = entity.getContent();
         this.view = entity.getView();
-        this.heart = entity.getHeart();
+        this.heartCount = entity.getHeartCount();
         this.progress = entity.getProgress();
         this.costInfo = entity.getCostInfo();
         this.menu = entity.getMenu();

@@ -50,7 +50,7 @@ public class UserService {
         if (!passwordEncoder.matches(loginUserDto.getPassword(), userEntity.getPassword())) {
             throw new BaseException(FAILED_TO_LOGIN);
         }
-        UserInfoDto userInfoDto = new UserInfoDto(userEntity);
+        UserInfoDto userInfoDto = userEntity.toDto();
         return userInfoDto;
     }
 
@@ -83,7 +83,7 @@ public class UserService {
     //유저 정보 가져오기
     public UserInfoDto GetUser(String email) throws BaseException {
         Optional<UserEntity> userEntity = userRepository.findByEmail(email);
-        UserInfoDto userInfoDto = new UserInfoDto(userEntity.get());
+        UserInfoDto userInfoDto = userEntity.get().toDto();
         if(!userEntity.isPresent()) {
             throw new BaseException(USERS_EMPTY_USER_EMAIL);
         }

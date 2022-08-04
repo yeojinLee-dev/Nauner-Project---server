@@ -32,7 +32,10 @@ public enum BaseResponseStatus {
     POST_POST_INVALID_TITLE(false, 2018, "게시물의 제목을 확인해주세요."),
     POST_POST_INVALID_CONTENT(false, 2019, "게시물의 내용을 확인해주세요."),
 
-
+    // [POST] /users
+    POST_USERS_EMPTY_ID(false, 2015, "아이디를 입력해주세요."),
+    POST_USERS_INVALID_ID(false, 2016, "이메일 형식을 확인해주세요."),
+    POST_USERS_EXISTS_ID(false,2017,"중복된 아이디입니다."),
 
     /**
      * 3000 : Response 오류

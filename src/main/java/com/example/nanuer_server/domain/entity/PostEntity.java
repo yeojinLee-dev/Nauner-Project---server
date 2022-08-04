@@ -2,6 +2,7 @@ package com.example.nanuer_server.domain.entity;
 
 import com.example.nanuer_server.domain.BaseTimeEntity;
 import com.example.nanuer_server.domain.Progress;
+import com.example.nanuer_server.dto.Post.PostDto;
 import com.example.nanuer_server.dto.Post.UpdatePostReqDto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
@@ -32,7 +33,7 @@ public class PostEntity extends BaseTimeEntity {
 
     //**
     @Column(nullable = true)
-    private int heart;
+    private int heartCount;
 
     @Enumerated(EnumType.STRING)
     private Progress progress;
@@ -83,5 +84,26 @@ public class PostEntity extends BaseTimeEntity {
 
     public void increaseView() {
         this.view += 1;
+    }
+
+    public PostDto toDto(){
+        PostDto postDto = PostDto.builder()
+                .postId(postId)
+                .title(title)
+                .content(content)
+                .view(view)
+                .heartCount(heartCount)
+                .progress(progress)
+                .costInfo(costInfo)
+                .total(total)
+                .deliveryCost(deliveryCost)
+                .location(location)
+                .time(time)
+                .postStatus(postStatus)
+                .userInfoDto(userEntity.toDto())
+                .categoryDto(categoryEntity.toDto())
+                .build();
+        return postDto;
+
     }
 }

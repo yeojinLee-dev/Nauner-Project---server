@@ -1,6 +1,7 @@
 package com.example.nanuer_server.domain.entity;
 
 import com.example.nanuer_server.domain.BaseTimeEntity;
+import com.example.nanuer_server.dto.heart.HeartDto;
 import lombok.*;
 
 import javax.persistence.*;
@@ -20,13 +21,22 @@ public class HeartEntity extends BaseTimeEntity {
     @Column(name = "heart_id")
     private int heartId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private UserEntity userEntity;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="post_id")
     @ToString.Exclude
     private PostEntity postEntity;
+
+    public HeartDto toDto(){
+        HeartDto heartDto = HeartDto.builder()
+                .heartId(heartId)
+                .userInfoDto(userEntity.toDto())
+                .postDto(postEntity.toDto())
+                .build();
+        return heartDto;
+    }
 
 }

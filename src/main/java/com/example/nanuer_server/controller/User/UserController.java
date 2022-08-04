@@ -34,9 +34,8 @@ public class UserController {
     @ResponseBody
     @PostMapping("/join")
     public BaseResponse<UserEntity> join(@RequestBody JoinUserDto userDto) throws BaseException {
-        //BCryptPasswordEncoder passwordEncoder = new BCryptPasswordzEncoder();
+        //BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         //UserEntity userEntity = UserEntity.createUser(userDto);
-
         try {
             UserEntity userEntity = userService.signup(userDto);
             return new BaseResponse<>(userEntity);
@@ -51,6 +50,7 @@ public class UserController {
     @ResponseBody
     public BaseResponse<String> login(@RequestBody LoginUserDto loginUserDto) {
         try {
+
             UserInfoDto userInfoDto = userService.login(loginUserDto);
             String Email = userInfoDto.getEmail();
             UserRole role = userInfoDto.getRole();
@@ -102,6 +102,7 @@ public class UserController {
 
         }
         catch (BaseException exception) {
+            System.out.println("error");
             return new BaseResponse<>((exception.getStatus()));
         }
     }
