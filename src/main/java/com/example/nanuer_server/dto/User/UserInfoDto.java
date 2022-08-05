@@ -8,6 +8,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.annotation.Nullable;
+import javax.persistence.Column;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,7 +31,7 @@ public class UserInfoDto {
     private int  userScore;
     private UserRole role;
 
-    private List<PostDto> postDtoList;
+    private List<PostDto> postDtoList = new ArrayList<>();
 
     public UserEntity toEntity() {
         UserEntity userEntity = UserEntity.builder()

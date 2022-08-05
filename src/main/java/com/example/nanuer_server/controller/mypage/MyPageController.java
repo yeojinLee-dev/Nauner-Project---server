@@ -31,7 +31,7 @@ public class MyPageController {
     }
 
     @PatchMapping("/update-user")
-    public BaseResponse<UserInfoDto> patchUpdatedUser(@RequestBody UserInfoDto userInfoDto,@RequestParam String email){
+    public BaseResponse<UserInfoDto> updatedUser(@RequestBody UserInfoDto userInfoDto,@RequestParam String email){
         try {
             var updatedUser = myPageService.updateUser(userInfoDto, email);
             return new BaseResponse<>(updatedUser);
