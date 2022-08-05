@@ -18,6 +18,7 @@ public class HeartController {
 
     // 내가 찜한 게시물 조회는 마이페이지 서비스에서 구현함.
 
+    //AddHeartDto 요청할 때 "userId"와 "postId"만 json으로 넘기면 됨
     @PostMapping("/add")
     public BaseResponse<HeartDto> addHeart(@RequestBody AddHeartDto addheartDto){
         try {
