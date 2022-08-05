@@ -8,6 +8,7 @@ import com.example.nanuer_server.domain.entity.UserEntity;
 import com.example.nanuer_server.domain.repository.HeartRepository;
 import com.example.nanuer_server.domain.repository.PostRepository;
 import com.example.nanuer_server.domain.repository.UserRepository;
+import com.example.nanuer_server.dto.heart.AddHeartDto;
 import com.example.nanuer_server.dto.heart.HeartDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,9 +26,15 @@ public class HeartService {
     private final UserRepository userRepository;
 
     //
-    public HeartDto addHeart(HeartDto heartDto) throws BaseException {
+    public HeartDto addHeart(AddHeartDto addheartDto) throws BaseException {
 
-        HeartEntity heartEntity = heartDto.toEntity();
+        UserEntity userEntity = userRepository.getReferenceById(addheartDto.getUserId());
+        PostEntity postEntity = postRepository.getReferenceById(addheartDto.getPostId());
+
+        addheartDto.setUserEntity(userEntity);
+        addheartDto.setPostEntity(postEntity);
+
+        HeartEntity heartEntity = addheartDto.toEntity();
 
         if(heartEntity.getPostEntity().getPostStatus() == 0){
             throw new BaseException(BaseResponseStatus.POST_POST_EMPTY_POST);

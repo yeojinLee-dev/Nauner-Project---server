@@ -99,20 +99,4 @@ public class UserEntity extends BaseTimeEntity {
             return false;
     }
 
-    public void update(UserInfoDto userInfoDto){
-        this.password = userInfoDto.getPassword();
-        this.name = userInfoDto.getName();
-        this.email = userInfoDto.getEmail();
-        this.nickName = userInfoDto.getNickName();
-        this.phone = userInfoDto.getPhone();
-        this.birth = userInfoDto.getBirth();
-        this.profileImg = userInfoDto.getProfileImg();
-        this.university = userInfoDto.getUniversity();
-        this.userStatus = userInfoDto.getUserStatus();
-        this.userScore = userInfoDto.getUserScore();
-        this.role = userInfoDto.getRole();
-        this.postEntities = userInfoDto.toEntity().getPostEntities();
-    }
-
-
 }
