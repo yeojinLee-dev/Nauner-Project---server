@@ -2,7 +2,10 @@ package com.example.nanuer_server.service.User;
 
 import com.example.nanuer_server.config.BaseException;
 import static com.example.nanuer_server.config.BaseResponseStatus.*;
+
+import com.example.nanuer_server.domain.entity.PostEntity;
 import com.example.nanuer_server.domain.entity.UserEntity;
+import com.example.nanuer_server.domain.repository.PostRepository;
 import com.example.nanuer_server.domain.repository.UserRepository;
 import com.example.nanuer_server.dto.User.JoinUserDto;
 import com.example.nanuer_server.dto.User.LoginUserDto;
@@ -16,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Transactional
@@ -25,6 +29,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final PostRepository postRepository;
 
     //회원가입
 
@@ -60,8 +65,8 @@ public class UserService {
         if(!userEntity.isPresent()) {
             throw new BaseException(USERS_EMPTY_USER_EMAIL);
         }
+        userEntity.get().getPostEntities().forEach(postEntity -> postEntity.delete());
         userRepository.delete(userEntity.get());
-
     }
 
     //비활성화, 활성화

@@ -4,6 +4,7 @@ import com.example.nanuer_server.domain.BaseTimeEntity;
 import com.example.nanuer_server.domain.Progress;
 import com.example.nanuer_server.dto.Post.PostDto;
 import com.example.nanuer_server.dto.Post.UpdatePostReqDto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
