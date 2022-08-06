@@ -27,6 +27,9 @@ public class HeartService {
 
     //
     public HeartDto addHeart(AddHeartDto addheartDto) throws BaseException {
+        if(postRepository.findByPostId(addheartDto.getPostId()).getPostStatus() ==0){
+            throw new BaseException(BaseResponseStatus.USER_USER_EMPTY_USER);
+        }
 
         UserEntity userEntity = userRepository.getReferenceById(addheartDto.getUserId());
         PostEntity postEntity = postRepository.getReferenceById(addheartDto.getPostId());
@@ -36,9 +39,6 @@ public class HeartService {
 
         HeartEntity heartEntity = addheartDto.toEntity();
 
-        if(heartEntity.getPostEntity().getPostStatus() == 0){
-            throw new BaseException(BaseResponseStatus.POST_POST_EMPTY_POST);
-        }
         PostEntity heartPostEntity = heartEntity.getPostEntity();
         heartPostEntity.setHeartCount(heartPostEntity.getHeartCount()+1);
         heartRepository.save(heartEntity);

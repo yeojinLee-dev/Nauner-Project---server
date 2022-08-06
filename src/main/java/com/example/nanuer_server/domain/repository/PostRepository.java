@@ -11,4 +11,6 @@ public interface PostRepository extends JpaRepository<PostEntity, Integer> {
     @Query(value = "select p from PostEntity p " +
             "join fetch p.userEntity where p.userEntity.userId = :user_id and p.postStatus = :post_status and (p.title like %:query% or p.content like %:query%)")
     List<PostEntity> findAll(@Param("user_id") int user_id, @Param("post_status") int status, @Param("query") String query);
+    @Query("select p from PostEntity p where p.postId = :postId")
+    PostEntity findByPostId(@Param("postId") int postId);
 }

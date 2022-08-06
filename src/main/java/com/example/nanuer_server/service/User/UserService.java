@@ -10,6 +10,7 @@ import com.example.nanuer_server.domain.repository.UserRepository;
 import com.example.nanuer_server.dto.User.JoinUserDto;
 import com.example.nanuer_server.dto.User.LoginUserDto;
 import com.example.nanuer_server.dto.User.UserInfoDto;
+import com.example.nanuer_server.service.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -29,7 +30,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final PostRepository postRepository;
+    private final PostService postService;
 
     //회원가입
 
@@ -65,7 +66,9 @@ public class UserService {
         if(!userEntity.isPresent()) {
             throw new BaseException(USERS_EMPTY_USER_EMAIL);
         }
-        userEntity.get().getPostEntities().forEach(postEntity -> postEntity.delete());
+        for(PostEntity postEntity : userEntity.get().getPostEntities()){
+            postService.deletePost(postEntity.getPostId());
+        }
         userRepository.delete(userEntity.get());
     }
 

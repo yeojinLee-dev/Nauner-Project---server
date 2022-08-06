@@ -24,6 +24,7 @@ public enum BaseResponseStatus {
 
     // users
     USERS_EMPTY_USER_EMAIL(false, 2010, "유저 이메일 값을 확인해주세요."),
+    USER_USER_EMPTY_USER(false, 2011, "존재하지 않는 유저입니다."),
 
     // [POST] /post
     POST_USERS_EMPTY_EMAIL(false, 2015, "아이디를 입력해주세요."),
