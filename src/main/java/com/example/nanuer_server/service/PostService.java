@@ -23,14 +23,14 @@ public class PostService {
     public List<GetPostListResDto> getPostList(int user_id, String query) throws BaseException {
         List<GetPostListResDto> posts = new ArrayList<>();
 
-        List<PostEntity> entities = postRepository.findAll(user_id, 1, query);
+        List<PostEntity> entities = postRepository.findAll(user_id, query);
         for (PostEntity entity : entities) posts.add(new GetPostListResDto(entity));
 
         return posts;
     }
 
     public int createPost(CreatePostReqDto createPostReqDto) throws BaseException {
-        UserEntity userEntity = userRepository.getReferenceById((long) createPostReqDto.getUserId());
+        UserEntity userEntity = userRepository.getReferenceById(createPostReqDto.getUserId());
         CategoryEntity categoryEntity = categoryRepository.getReferenceById(createPostReqDto.getCategoryId());
 
         createPostReqDto.setUserEntity(userEntity);
