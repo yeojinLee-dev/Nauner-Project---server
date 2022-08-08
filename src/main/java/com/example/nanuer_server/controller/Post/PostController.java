@@ -1,4 +1,4 @@
-package com.example.nanuer_server.controller;
+package com.example.nanuer_server.controller.Post;
 
 import com.example.nanuer_server.config.BaseException;
 import com.example.nanuer_server.config.BaseResponse;
