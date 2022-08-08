@@ -20,6 +20,10 @@ public class PostService {
     private final UserRepository userRepository;
     private final CategoryRepository categoryRepository;
 
+    public List<PostEntity> getAllPosts() throws BaseException {
+        return postRepository.findAll();
+    }
+
     public List<GetPostListResDto> getPostList(int user_id, String query) throws BaseException {
         List<GetPostListResDto> posts = new ArrayList<>();
 

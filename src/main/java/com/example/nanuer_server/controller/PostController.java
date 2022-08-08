@@ -2,9 +2,11 @@ package com.example.nanuer_server.controller;
 
 import com.example.nanuer_server.config.BaseException;
 import com.example.nanuer_server.config.BaseResponse;
+import com.example.nanuer_server.domain.entity.PostEntity;
 import com.example.nanuer_server.dto.Post.*;
 import com.example.nanuer_server.service.PostService;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.ser.Serializers;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,15 @@ public class PostController {
     @GetMapping("/test")
     public String testPostController() {
         return "success";
+    }
+
+    @GetMapping("/all")
+    public BaseResponse<List<PostEntity>> getAllPosts() {
+        try {
+            return new BaseResponse<>(postService.getAllPosts());
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
     }
 
     /* 게시물 리스트 조회 */

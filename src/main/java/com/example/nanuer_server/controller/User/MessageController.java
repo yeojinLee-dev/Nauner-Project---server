@@ -18,7 +18,7 @@ public class MessageController {
 
     @GetMapping("/send")
     public @ResponseBody
-    BaseResponse<String> sendSMS(String phone) {
+    BaseResponse<String> sendSMS(@RequestParam String phone) {
         Random rand  = new Random();
         String numStr = "";
         for(int i=0; i<5; i++) {
