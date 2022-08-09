@@ -12,7 +12,9 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.example.nanuer_server.config.BaseResponseStatus.*;
 
@@ -31,9 +33,12 @@ public class PostController {
     }
 
     @GetMapping("/all")
-    public BaseResponse<List<PostEntity>> getAllPosts() {
+    public BaseResponse<Map<String, List<PostEntity>>> getAllPosts() {
         try {
-            return new BaseResponse<>(postService.getAllPosts());
+            Map<String, List<PostEntity>> response = new HashMap<String, List<PostEntity>>();
+            response.put("postList", postService.getAllPosts());
+
+            return new BaseResponse<>(response);
         } catch (BaseException exception) {
             return new BaseResponse<>(exception.getStatus());
         }
@@ -42,10 +47,13 @@ public class PostController {
     /* 게시물 리스트 조회 */
     @GetMapping("")
     @JsonIgnore
-    public BaseResponse<List<GetPostListResDto>> getPostList(@RequestParam int user_id, @RequestParam String query) {
+    public BaseResponse<Map<String, List<GetPostListResDto>>> getPostList(@RequestParam int user_id, @RequestParam String query) {
         try {
+            Map<String, List<GetPostListResDto>> response = new HashMap<String, List<GetPostListResDto>>();
             List<GetPostListResDto> posts = postService.getPostList(user_id, query);
-            return new BaseResponse<>(posts);
+            response.put("postList", posts);
+
+            return new BaseResponse<>(response);
         } catch (BaseException exception) {
             return new BaseResponse<>(exception.getStatus());
         }
