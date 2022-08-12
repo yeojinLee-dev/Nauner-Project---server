@@ -47,10 +47,10 @@ public class PostController {
     /* 게시물 리스트 조회 */
     @GetMapping("")
     @JsonIgnore
-    public BaseResponse<Map<String, List<GetPostListResDto>>> getPostList(@RequestParam int user_id, @RequestParam String query) {
+    public BaseResponse<Map<String, List<PostEntity>>> getPostList(@RequestParam int user_id, @RequestParam String query) {
         try {
-            Map<String, List<GetPostListResDto>> response = new HashMap<String, List<GetPostListResDto>>();
-            List<GetPostListResDto> posts = postService.getPostList(user_id, query);
+            Map<String, List<PostEntity>> response = new HashMap<String, List<PostEntity>>();
+            List<PostEntity> posts = postService.getPostList(user_id, query);
             response.put("postList", posts);
 
             return new BaseResponse<>(response);

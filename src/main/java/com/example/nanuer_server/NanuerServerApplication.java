@@ -12,7 +12,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 @SpringBootApplication
 public class NanuerServerApplication {
 
-
 	public static void main(String[] args) {
 		SpringApplication.run(NanuerServerApplication.class, args);
 		System.out.println("hello");

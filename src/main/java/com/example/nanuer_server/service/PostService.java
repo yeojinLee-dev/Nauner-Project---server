@@ -21,16 +21,11 @@ public class PostService {
     private final CategoryRepository categoryRepository;
 
     public List<PostEntity> getAllPosts() throws BaseException {
-        return postRepository.findAll();
+        return postRepository.findAllOrderByPostIdDesc();
     }
 
-    public List<GetPostListResDto> getPostList(int user_id, String query) throws BaseException {
-        List<GetPostListResDto> posts = new ArrayList<>();
-
-        List<PostEntity> entities = postRepository.findAll(user_id, query);
-        for (PostEntity entity : entities) posts.add(new GetPostListResDto(entity));
-
-        return posts;
+    public List<PostEntity> getPostList(int user_id, String query) throws BaseException {
+        return postRepository.findAll(user_id, query);
     }
 
     public int createPost(CreatePostReqDto createPostReqDto) throws BaseException {

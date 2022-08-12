@@ -13,6 +13,9 @@ public interface PostRepository extends JpaRepository<PostEntity, Integer> {
             "left join UserEntity u on p.userEntity.userId =  u.userId " +
             "where u.university = (" +
             "select u.university from u where u.userId = :user_id) " +
-            "and p.postStatus = 1 and (p.title like %:query% or p.content like %:query%)")
+            "and p.postStatus = 1 and (p.title like %:query% or p.content like %:query%) order by p.postId desc")
     List<PostEntity> findAll(@Param("user_id") int user_id, @Param("query") String query);
+
+    @Query(value = "select p from PostEntity p where p.postStatus = 1 order by p.postId desc")
+    List<PostEntity> findAllOrderByPostIdDesc();
 }
