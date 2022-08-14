@@ -11,6 +11,8 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Builder
 @Data
+@ToString
+@EqualsAndHashCode
 @Entity
 public class CategoryEntity{
     @Id
