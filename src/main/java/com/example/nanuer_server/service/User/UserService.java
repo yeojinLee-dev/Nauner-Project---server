@@ -4,11 +4,14 @@ import com.example.nanuer_server.config.BaseException;
 import static com.example.nanuer_server.config.BaseResponseStatus.*;
 
 import com.example.nanuer_server.config.User.JwtTokenProvider;
+import com.example.nanuer_server.domain.entity.PostEntity;
 import com.example.nanuer_server.domain.entity.UserEntity;
+import com.example.nanuer_server.domain.repository.PostRepository;
 import com.example.nanuer_server.domain.repository.UserRepository;
 import com.example.nanuer_server.dto.User.JoinUserDto;
 import com.example.nanuer_server.dto.User.LoginUserDto;
 import com.example.nanuer_server.dto.User.UserInfoDto;
+import com.example.nanuer_server.service.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Transactional
@@ -29,6 +33,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
+    private final PostService postService;
 
     //회원가입
 
@@ -64,8 +69,10 @@ public class UserService {
         if(!userEntity.isPresent()) {
             throw new BaseException(USERS_EMPTY_USER_EMAIL);
         }
+        for(PostEntity postEntity : userEntity.get().getPostEntities()){
+            postService.deletePost(postEntity.getPostId());
+        }
         userRepository.delete(userEntity.get());
-
     }
 
     //비활성화, 활성화
@@ -84,7 +91,7 @@ public class UserService {
         }
     }
 
-    //email로 유저 정보 가져오기
+    //유저 정보 가져오기
     public UserInfoDto GetUser(String email) throws BaseException {
         Optional<UserEntity> userEntity = userRepository.findByEmail(email);
         UserInfoDto userInfoDto = userEntity.get().toDto();

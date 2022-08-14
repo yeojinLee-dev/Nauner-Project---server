@@ -8,6 +8,7 @@ import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
+import javax.annotation.Nullable;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -70,24 +71,6 @@ public class UserEntity extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
-    /*
-    public static UserEntity createUser(UserDto userDto) {
-        UserEntity userEntity = new UserEntity();
-        userEntity.setId(userEntity.getId());
-        userEntity.setName(userEntity.getName());
-        userEntity.setNickName(userEntity.getNickName());
-        userEntity.setEmail(userEntity.getEmail());
-        userEntity.setPhone(userEntity.getPhone());
-        userEntity.setBirth(userEntity.getBirth());
-        userEntity.setProfileImg(userEntity.getProfileImg());
-        userEntity.setUserStatus(userEntity.getUserStatus());
-        userEntity.setUserScore(userEntity.getUserScore());
-        userEntity.setArea(userEntity.getArea());
-        //String password = passwordEncoder.encode(memberDto.getPassword());
-        //userEntity.setPassword(passwordEncoder.encode(memberDto.getPassword()));
-        return userEntity;
-    }*/
-
     public void status(String status){
         this.userStatus  = status;
     }
@@ -106,6 +89,7 @@ public class UserEntity extends BaseTimeEntity {
                 .profileImg(profileImg)
                 .university(university)
                 .userStatus(userStatus)
+                .userScore(userScore)
                 .role(role)
                 .build();
         return userInfoDto;
@@ -117,6 +101,5 @@ public class UserEntity extends BaseTimeEntity {
         else
             return false;
     }
-
 
 }

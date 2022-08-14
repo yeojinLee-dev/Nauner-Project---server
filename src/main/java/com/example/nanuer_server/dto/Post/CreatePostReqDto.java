@@ -15,22 +15,18 @@ public class CreatePostReqDto {
     private String title;
     private String content;
 
-    @JsonProperty("cost_info")
     private String costInfo;
     private String menu;
     private int total;
 
-    @JsonProperty("delivery_cost")
     private String deliveryCost;
     private String location;
     private String time;
     private UserEntity userEntity;
     private CategoryEntity categoryEntity;
 
-    @JsonProperty("user_id")
     private int userId;
 
-    @JsonProperty("category_id")
     private int categoryId;
 
     private Progress progress;
