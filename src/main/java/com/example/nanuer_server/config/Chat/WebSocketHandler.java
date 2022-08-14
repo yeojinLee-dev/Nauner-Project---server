@@ -1,3 +1,4 @@
+/*
 package com.example.nanuer_server.config.Chat;
 
 
@@ -79,4 +80,4 @@ public class WebSocketHandler extends TextWebSocketHandler {
     public void handleTransportError(WebSocketSession session, Throwable exception) throws Exception {
         //TODO:
     }
-}
+}*/
