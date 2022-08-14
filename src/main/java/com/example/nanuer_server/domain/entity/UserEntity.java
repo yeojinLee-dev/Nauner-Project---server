@@ -90,7 +90,10 @@ public class UserEntity extends BaseTimeEntity {
 
     public void status(String status){
         this.userStatus  = status;
+    }
 
+    public void upDatePw(String password){
+        this.password = password;
     }
     public UserInfoDto toDto(){
         UserInfoDto userInfoDto = UserInfoDto.builder()

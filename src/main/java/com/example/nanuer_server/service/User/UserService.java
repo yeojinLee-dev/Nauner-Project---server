@@ -2,6 +2,8 @@ package com.example.nanuer_server.service.User;
 
 import com.example.nanuer_server.config.BaseException;
 import static com.example.nanuer_server.config.BaseResponseStatus.*;
+
+import com.example.nanuer_server.config.User.JwtTokenProvider;
 import com.example.nanuer_server.domain.entity.UserEntity;
 import com.example.nanuer_server.domain.repository.UserRepository;
 import com.example.nanuer_server.dto.User.JoinUserDto;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -25,6 +28,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtTokenProvider jwtTokenProvider;
 
     //회원가입
 
@@ -80,7 +84,7 @@ public class UserService {
         }
     }
 
-    //유저 정보 가져오기
+    //email로 유저 정보 가져오기
     public UserInfoDto GetUser(String email) throws BaseException {
         Optional<UserEntity> userEntity = userRepository.findByEmail(email);
         UserInfoDto userInfoDto = userEntity.get().toDto();
@@ -97,6 +101,28 @@ public class UserService {
             throw new BaseException(USERS_EMPTY_USER_EMAIL);
         }
         return userInfoDto;
+    }
+
+    //비밀번호 재설정
+    // 재설정 페이지 전에 받은 폰번호로 회원 찾기
+    public void ModifyPw(String phone, String password) throws BaseException {
+        Optional<UserEntity> userEntity = userRepository.findByPhone(phone);
+        if(userEntity.isEmpty()) {
+            throw new BaseException(USERS_EMPTY_USER_EMAIL);
+        }
+        else{
+            userEntity.get().upDatePw(" ");
+            userEntity.get().upDatePw(passwordEncoder.encode(password));
+        }
+
+    }
+
+    public int GetHeaderAndGetUser(HttpServletRequest request) throws BaseException {
+        String token = request.getHeader("X-AUTH-TOKEN");
+        String userEmail = jwtTokenProvider.getUserPk(token);
+        Optional<UserEntity> userEntity = userRepository.findByEmail(userEmail);
+        int userId = userEntity.get().getUserId();
+        return userId;
     }
 
 }

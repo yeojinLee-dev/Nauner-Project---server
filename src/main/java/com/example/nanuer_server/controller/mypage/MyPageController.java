@@ -4,6 +4,7 @@ import com.example.nanuer_server.config.BaseException;
 import com.example.nanuer_server.config.BaseResponse;
 import com.example.nanuer_server.dto.Post.PostDto;
 import com.example.nanuer_server.dto.User.UserInfoDto;
+import com.example.nanuer_server.service.User.UserService;
 import com.example.nanuer_server.service.mypage.MyPageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

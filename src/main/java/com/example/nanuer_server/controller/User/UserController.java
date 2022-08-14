@@ -15,6 +15,9 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Optional;
 
 
@@ -123,6 +126,26 @@ public class UserController {
         catch (BaseException exception){
             return new BaseResponse<>((exception.getStatus()));
         }
+    }
+
+    @PatchMapping("/updatePw")
+    public BaseResponse<String> ModifyPw(@RequestParam String phone, String password){
+        try {
+            userService.ModifyPw(phone,password);
+            UserInfoDto userInfoDto  = userService.GetUserByPhone(phone);
+            String result = "새 비밀번호 : " + userInfoDto.getPassword();
+            return new BaseResponse<>(result);
+        } catch(BaseException exception){
+            return new BaseResponse<>(exception.getStatus());
+        }
+    }
+
+    //jwt 토근 헤더에서 가져와 사용자 이메일 조회
+    @ResponseBody
+    @GetMapping("/userInfo")
+    public BaseResponse<Integer> getUserInfoByJwt(HttpServletRequest request) throws BaseException {
+        int userId = userService.GetHeaderAndGetUser(request);
+        return new BaseResponse<>(userId);
     }
 
     /*
