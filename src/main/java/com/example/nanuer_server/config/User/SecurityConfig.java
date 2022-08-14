@@ -52,7 +52,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         //URL 인증여부.
         http.authorizeRequests()
-                .antMatchers( "/","/heart/**", "/user/**", "/css/**", "/mypage/**", "/exception/**", "/favicon.ico", "/post/**", "/chat/**", "/ws/**").permitAll()
+                .antMatchers("/user/**","/heart/**","/post/**","/mypage/**").hasAuthority("ROLE_USER")
+                .antMatchers( "/join","/login","/css/**", "/exception/**", "/favicon.ico", "/chat/**", "/ws/**","/room/**")
+                .permitAll()
                 .anyRequest().authenticated();
 
         //JwtFilter 추가

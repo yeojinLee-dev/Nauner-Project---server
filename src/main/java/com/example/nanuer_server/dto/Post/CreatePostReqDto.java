@@ -4,7 +4,6 @@ import com.example.nanuer_server.domain.Progress;
 import com.example.nanuer_server.domain.entity.CategoryEntity;
 import com.example.nanuer_server.domain.entity.PostEntity;
 import com.example.nanuer_server.domain.entity.UserEntity;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

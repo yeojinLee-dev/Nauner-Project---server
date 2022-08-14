@@ -15,35 +15,5 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Log4j2
 public class RoomController {
 
-    private final ChatRoomRepository repository;
 
-    //채팅방 목록 조회
-    @GetMapping(value = "/rooms")
-    public ModelAndView rooms() {
-
-        log.info("# All Chat Rooms");
-        ModelAndView mv = new ModelAndView("rooms");
-
-        mv.addObject("list", repository.findAllRooms());
-
-        return mv;
-    }
-
-    //채팅방 개설
-    @PostMapping(value = "/room")
-    public String create(@RequestParam String name, RedirectAttributes rttr){
-
-        log.info("# Create Chat Room , name: " + name);
-        rttr.addFlashAttribute("roomName", repository.createChatRoomDTO(name));
-        return "redirect:/rooms";
-    }
-
-    //채팅방 조회
-    @GetMapping("/room")
-    public void getRoom(String roomId, Model model){
-
-        log.info("# get Chat Room, roomID : " + roomId);
-
-        model.addAttribute("room", repository.findRoomById(roomId));
-    }
 }

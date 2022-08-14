@@ -4,13 +4,13 @@ import com.example.nanuer_server.domain.BaseTimeEntity;
 import com.example.nanuer_server.domain.Progress;
 import com.example.nanuer_server.dto.Post.PostDto;
 import com.example.nanuer_server.dto.Post.UpdatePostReqDto;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Table(name = "post")
 @AllArgsConstructor
@@ -71,6 +71,12 @@ public class PostEntity extends BaseTimeEntity {
     @ToString.Exclude
     @JoinColumn(name = "category_id")
     private CategoryEntity categoryEntity;
+
+    //채팅 ******
+    @OneToMany(mappedBy = "postEntity")
+    @ToString.Exclude
+    private List<ChatRoomEntity> chatRoomEntityList;
+
 
     public void update(UpdatePostReqDto updatePostReqDto) {
         this.title = updatePostReqDto.getTitle();
