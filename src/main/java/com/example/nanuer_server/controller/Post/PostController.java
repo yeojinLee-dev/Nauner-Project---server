@@ -1,7 +1,8 @@
-package com.example.nanuer_server.controller;
+package com.example.nanuer_server.controller.Post;
 
 import com.example.nanuer_server.config.BaseException;
 import com.example.nanuer_server.config.BaseResponse;
+import com.example.nanuer_server.domain.entity.PostEntity;
 import com.example.nanuer_server.dto.Post.*;
 import com.example.nanuer_server.service.PostService;
 import com.example.nanuer_server.service.User.UserService;
@@ -12,7 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Map;
 
 import static com.example.nanuer_server.config.BaseResponseStatus.*;
 
@@ -34,12 +38,14 @@ public class PostController {
     /* 게시물 리스트 조회 */
     @GetMapping("")
     @JsonIgnore
-    public BaseResponse<List<GetPostListResDto>> getPostList(HttpServletRequest request ,@RequestParam String query) throws BaseException {
-
-       int user_id = userService.GetHeaderAndGetUser(request);
+    public BaseResponse<Map<String, List<PostEntity>>> getPostList(HttpServletRequest request, @RequestParam String query) {
         try {
-            List<GetPostListResDto> posts = postService.getPostList(user_id, query);
-            return new BaseResponse<>(posts);
+            int user_id = userService.GetHeaderAndGetUser(request);
+            Map<String, List<PostEntity>> response = new HashMap<String, List<PostEntity>>();
+            List<PostEntity> posts = postService.getPostList(user_id, query);
+            response.put("postList", posts);
+
+            return new BaseResponse<>(response);
         } catch (BaseException exception) {
             return new BaseResponse<>(exception.getStatus());
         }
