@@ -18,4 +18,7 @@ public interface PostRepository extends JpaRepository<PostEntity, Integer> {
 
     @Query(value = "select p from PostEntity p where p.postStatus = 1 order by p.postId desc")
     List<PostEntity> findAllOrderByPostIdDesc();
+
+    @Query("select p from PostEntity p where p.postId = :postId")
+    PostEntity findByPostId(@Param("postId") int postId);
 }

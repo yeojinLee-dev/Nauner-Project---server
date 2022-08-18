@@ -5,14 +5,16 @@ import com.example.nanuer_server.config.BaseResponse;
 import com.example.nanuer_server.domain.entity.PostEntity;
 import com.example.nanuer_server.dto.Post.*;
 import com.example.nanuer_server.service.PostService;
+import com.example.nanuer_server.service.User.UserService;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.databind.ser.Serializers;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
@@ -26,29 +28,19 @@ public class PostController {
 
     @Autowired
     private final PostService postService;
+    private final UserService userService;
 
     @GetMapping("/test")
     public String testPostController() {
         return "success";
     }
 
-    @GetMapping("/all")
-    public BaseResponse<Map<String, List<PostEntity>>> getAllPosts() {
-        try {
-            Map<String, List<PostEntity>> response = new HashMap<String, List<PostEntity>>();
-            response.put("postList", postService.getAllPosts());
-
-            return new BaseResponse<>(response);
-        } catch (BaseException exception) {
-            return new BaseResponse<>(exception.getStatus());
-        }
-    }
-
     /* 게시물 리스트 조회 */
     @GetMapping("")
     @JsonIgnore
-    public BaseResponse<Map<String, List<PostEntity>>> getPostList(@RequestParam int user_id, @RequestParam String query) {
+    public BaseResponse<Map<String, List<PostEntity>>> getPostList(HttpServletRequest request, @RequestParam String query) {
         try {
+            int user_id = userService.GetHeaderAndGetUser(request);
             Map<String, List<PostEntity>> response = new HashMap<String, List<PostEntity>>();
             List<PostEntity> posts = postService.getPostList(user_id, query);
             response.put("postList", posts);
@@ -61,7 +53,9 @@ public class PostController {
 
     /* 게시물 등록 */
     @PostMapping("")
-    public BaseResponse<String> createPost(@RequestBody CreatePostReqDto createPostReqDto) {
+    public BaseResponse<String> createPost(HttpServletRequest request, @RequestBody CreatePostReqDto createPostReqDto) throws BaseException  {
+        int user_id = userService.GetHeaderAndGetUser(request);
+        createPostReqDto.setUserId(user_id);
         try {
             if(createPostReqDto.getTitle() == null || createPostReqDto.getTitle().length() > 200) {
                 return new BaseResponse<>(POST_POST_INVALID_TITLE);
@@ -79,7 +73,7 @@ public class PostController {
 
     /* 게시물 조회 */
     @GetMapping("/{post_id}")
-    public BaseResponse<GetPostResDto> getPost(@PathVariable int post_id) {
+    public BaseResponse<GetPostResDto> getPost(@PathVariable int post_id)  {
         try {
             GetPostResDto post = postService.getPost(post_id);
             return new BaseResponse<>(post);

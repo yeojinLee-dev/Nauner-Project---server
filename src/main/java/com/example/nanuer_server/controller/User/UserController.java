@@ -12,9 +12,11 @@ import com.example.nanuer_server.config.User.JwtTokenProvider;
 import com.example.nanuer_server.dto.User.LoginUserDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Optional;
 
 
@@ -33,41 +35,11 @@ public class UserController {
         return "hello";
     }
 
-
-    @ResponseBody
-    @PostMapping("/join")
-    public BaseResponse<UserEntity> join(@RequestBody JoinUserDto joinUserDto) {
-        //BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        //UserEntity userEntity = UserEntity.createUser(userDto);
-        try {
-            UserEntity userEntity = userService.signup(joinUserDto);
-            return new BaseResponse<>(userEntity);
-        } catch (BaseException exception) {
-            return new BaseResponse<>((exception.getStatus()));
-        }
-    }
-
-    //로그인
-
-    @PostMapping("/login")
-    @ResponseBody
-    public BaseResponse<String> login(@RequestBody LoginUserDto loginUserDto) {
-        try {
-
-            UserInfoDto userInfoDto = userService.login(loginUserDto);
-            String Email = userInfoDto.getEmail();
-            UserRole role = userInfoDto.getRole();
-            String result = jwtTokenProvider.createToken(Email, role);
-            return new BaseResponse<>(result);
-        } catch (BaseException exception) {
-            return new BaseResponse<>((exception.getStatus()));
-        }
-    }
-
-
     //삭제
     @DeleteMapping("")
-    public BaseResponse<String> delete(@RequestParam String email) {
+    public BaseResponse<String> delete(HttpServletRequest request) {
+        String token = request.getHeader("X-AUTH-TOKEN");
+        String email = jwtTokenProvider.getUserPk(token);
         try{
             userService.delete(email);
             String result = email + " 해당 유저가 삭제되었습니다.";
@@ -81,7 +53,9 @@ public class UserController {
 
     //유저 상태관리
     @PatchMapping("/status")
-    public BaseResponse<String> UserStatus(@RequestParam String email) {
+    public BaseResponse<String> UserStatus(HttpServletRequest request) {
+        String token = request.getHeader("X-AUTH-TOKEN");
+        String email = jwtTokenProvider.getUserPk(token);
         try{
             userService.UserStatus(email);
             UserInfoDto userInfoDto  = userService.GetUser(email);
@@ -97,7 +71,9 @@ public class UserController {
 
     //유저 정보 조회
     @GetMapping("/info")
-    public BaseResponse<UserInfoDto> GetUser(@RequestParam String email) {
+    public BaseResponse<UserInfoDto> GetUser(HttpServletRequest request) {
+        String token = request.getHeader("X-AUTH-TOKEN");
+        String email = jwtTokenProvider.getUserPk(token);
         try{
             UserInfoDto userInfoDto = userService.GetUser(email);
 
@@ -110,19 +86,17 @@ public class UserController {
         }
     }
 
+    //jwt 토근 헤더에서 가져와 사용자 이메일 조회
+    @ResponseBody
+    @GetMapping("/userInfo")
+    public BaseResponse<Integer> getUserInfoByJwt(HttpServletRequest request) throws BaseException {
+        int userId = userService.GetHeaderAndGetUser(request);
+        return new BaseResponse<>(userId);
+    }
 
-    //아이디 찾기
-    @GetMapping("/getEmail")
-    public BaseResponse<String> GetUserEmail(@RequestParam String phone){
-        try{
-            UserInfoDto userInfoDto = userService.GetUserByPhone(phone);
-            String result =  userInfoDto.getEmail();
-            return  new BaseResponse<>(result);
-
-        }
-        catch (BaseException exception){
-            return new BaseResponse<>((exception.getStatus()));
-        }
+    public BaseResponse<Boolean> getUserAuth(HttpServletRequest request) throws BaseException {
+        Boolean result = userService.UserAuth(request);
+        return new BaseResponse<>(result);
     }
 
     /*

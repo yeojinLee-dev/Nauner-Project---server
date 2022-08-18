@@ -10,4 +10,7 @@ import java.util.List;
 public interface HeartRepository extends JpaRepository<HeartEntity,Integer> {
     @Query("select l from HeartEntity l join fetch l.userEntity where l.userEntity.userId = :userId")
     List<HeartEntity> findAll(@Param("userId")int userId);
+
+    @Query("select h from HeartEntity h join fetch h.postEntity where h.postEntity.postId = :postId")
+    List<HeartEntity> findByPostId(@Param("postId") int postId);
 }

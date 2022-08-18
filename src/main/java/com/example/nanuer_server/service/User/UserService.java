@@ -2,11 +2,16 @@ package com.example.nanuer_server.service.User;
 
 import com.example.nanuer_server.config.BaseException;
 import static com.example.nanuer_server.config.BaseResponseStatus.*;
+
+import com.example.nanuer_server.config.User.JwtTokenProvider;
+import com.example.nanuer_server.domain.entity.PostEntity;
 import com.example.nanuer_server.domain.entity.UserEntity;
+import com.example.nanuer_server.domain.repository.PostRepository;
 import com.example.nanuer_server.domain.repository.UserRepository;
 import com.example.nanuer_server.dto.User.JoinUserDto;
 import com.example.nanuer_server.dto.User.LoginUserDto;
 import com.example.nanuer_server.dto.User.UserInfoDto;
+import com.example.nanuer_server.service.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -14,8 +19,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Transactional
@@ -25,6 +32,8 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtTokenProvider jwtTokenProvider;
+    private final PostService postService;
 
     //회원가입
 
@@ -60,8 +69,10 @@ public class UserService {
         if(!userEntity.isPresent()) {
             throw new BaseException(USERS_EMPTY_USER_EMAIL);
         }
+        for(PostEntity postEntity : userEntity.get().getPostEntities()){
+            postService.deletePost(postEntity.getPostId());
+        }
         userRepository.delete(userEntity.get());
-
     }
 
     //비활성화, 활성화
@@ -97,6 +108,36 @@ public class UserService {
             throw new BaseException(USERS_EMPTY_USER_EMAIL);
         }
         return userInfoDto;
+    }
+
+    //비밀번호 재설정
+    // 재설정 페이지 전에 받은 폰번호로 회원 찾기
+    public void ModifyPw(String phone, String password) throws BaseException {
+        Optional<UserEntity> userEntity = userRepository.findByPhone(phone);
+        if(userEntity.isEmpty()) {
+            throw new BaseException(USERS_EMPTY_USER_EMAIL);
+        }
+        else{
+            userEntity.get().upDatePw(" ");
+            userEntity.get().upDatePw(passwordEncoder.encode(password));
+        }
+
+    }
+
+    public int GetHeaderAndGetUser(HttpServletRequest request) throws BaseException {
+        String token = request.getHeader("X-AUTH-TOKEN");
+        String userEmail = jwtTokenProvider.getUserPk(token);
+        Optional<UserEntity> userEntity = userRepository.findByEmail(userEmail);
+        int userId = userEntity.get().getUserId();
+        return userId;
+    }
+
+    public Boolean UserAuth(HttpServletRequest request)throws BaseException{
+        String token = request.getHeader("X-AUTH-TOKEN");
+        if (jwtTokenProvider.getUserPk(token) != null){
+            return true;
+        }
+        else return false;
     }
 
 }

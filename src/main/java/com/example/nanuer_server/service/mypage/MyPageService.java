@@ -28,7 +28,6 @@ public class MyPageService {
     private final HeartRepository heartRepository;
 
 
-    //Post CRUD를 postService에서 관리하고, 내가 쓴 글 조회하는 getPosts는 마이페이지에서 하는 게 낫지 않나
     public List<PostDto> getMyPosts(String email){
         List<PostEntity> postEntityList = userRepository.findByEmail(email).get().getPostEntities();
         List<PostDto> postDtoList = postEntityList.stream()
@@ -37,7 +36,7 @@ public class MyPageService {
         return postDtoList;
     }
 
-    // like를 어떤 식으로...? 찜한 게시물을 보여주는 건데 그러면 게시물에
+    // 마이페이지에서 회원이 찜한 게시물들을 볼 수 있는 메서드
     public List<PostDto> getHeartPosts(String email){
         List<HeartDto> heartDtoList = heartRepository
                 .findAll(userRepository.findByEmail(email).get().getUserId())

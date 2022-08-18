@@ -8,12 +8,13 @@ import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
+import javax.annotation.Nullable;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Table(name = "user")
+@Table(name="user")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -38,31 +39,29 @@ public class UserEntity extends BaseTimeEntity {
     @Column(nullable = false)
     private String password;
 
+    @Column(name= "nick_name" ,nullable = false)
     private String nickName;
 
     @Column(nullable = false)
     private String phone;
 
+    @Column(nullable = false)
     private String birth;
 
     @Column(name = "profile_img")
     private String profileImg;
 
+    @Column(nullable = false)
     private String university;
 
     @Column(nullable = false)
     private String userStatus;
 
-    @Column(name = "user_score")
+    @ColumnDefault("0")
     private int userScore;
 
     //@Column(s) not allowed on a @OneToOne property 발생
     //@Column(name = "my_page_entity")
-    /*
-    @JoinColumn(name="my_page_id")
-    @OneToOne
-    @ToString.Exclude // 순환참조 방지
-    private MyPageEntity myPageEntity;*/
 
     //mapped 이름 수정
     @JsonIgnore
@@ -72,10 +71,16 @@ public class UserEntity extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "userEntity")
+    private List<ChatRoomEntity> chatRoom = new ArrayList<>();
 
     public void status(String status){
         this.userStatus  = status;
+    }
 
+    public void upDatePw(String password){
+        this.password = password;
     }
     public UserInfoDto toDto(){
         UserInfoDto userInfoDto = UserInfoDto.builder()
@@ -88,6 +93,7 @@ public class UserEntity extends BaseTimeEntity {
                 .profileImg(profileImg)
                 .university(university)
                 .userStatus(userStatus)
+                .userScore(userScore)
                 .role(role)
                 .build();
         return userInfoDto;
