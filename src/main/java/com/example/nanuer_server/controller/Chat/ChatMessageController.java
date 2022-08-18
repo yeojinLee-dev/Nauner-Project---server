@@ -42,10 +42,11 @@ public class ChatMessageController {
     }*/
 
     @MessageMapping("/send") //채팅방에서 메세지 보내기 버튼
-    public void message(ChatMessageEntity message) {
+    public void message(ChatMessageEntity message, @RequestHeader("X-AUTH-TOKEN") String token) {
        // System.out.println("토큰 : " + token);
-        //String userEmail = jwtTokenProvider.getUserPk(token);
-        //String nickName = userRepository.findByEmail(userEmail).get().getNickName();
+        String userEmail = jwtTokenProvider.getUserPk(token);
+        String nickName = userRepository.findByEmail(userEmail).get().getNickName();
+        ChatRoomEntity chatRoom=chatService.findRoomById(message.getChannelId());
         //message.setSender(nickName);
         chatService.sendChatMessage(message);
         //simpMessageSendingOperations.convertAndSend("/sub/channel/" + message.getChannelId(), message);

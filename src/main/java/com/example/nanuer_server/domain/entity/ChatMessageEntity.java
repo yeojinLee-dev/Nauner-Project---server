@@ -1,8 +1,7 @@
 package com.example.nanuer_server.domain.entity;
 
 import lombok.*;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
+
 
 import javax.persistence.*;
 
@@ -21,7 +20,9 @@ public class ChatMessageEntity {
     private Object data;
 
     public void setSender(String sender) {this.sender = sender;}
-
+    public void setData(String data){
+        this.data=data;
+    }
 
 
 }

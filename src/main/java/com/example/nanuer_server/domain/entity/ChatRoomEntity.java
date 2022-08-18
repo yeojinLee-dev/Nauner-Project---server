@@ -41,9 +41,14 @@ public class ChatRoomEntity implements Serializable {
     @ToString.Exclude
     private PostEntity postEntity;
 
-    public static ChatRoomEntity create(){
+    @ElementCollection
+    private List<ChatMessageEntity> chatMessages = new ArrayList<>();
+
+    public static ChatRoomEntity create(UserEntity userEntity, PostEntity postEntity){
         ChatRoomEntity room = new ChatRoomEntity();
         room.roomId = UUID.randomUUID().toString();
+        room.userEntity = userEntity;
+        room.postEntity = postEntity;
         return room;
     }
 
