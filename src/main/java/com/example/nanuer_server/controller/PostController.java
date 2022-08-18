@@ -35,8 +35,7 @@ public class PostController {
     @GetMapping("")
     @JsonIgnore
     public BaseResponse<List<GetPostListResDto>> getPostList(HttpServletRequest request ,@RequestParam String query) throws BaseException {
-
-       int user_id = userService.GetHeaderAndGetUser(request);
+        int user_id = userService.GetHeaderAndGetUser(request);
         try {
             List<GetPostListResDto> posts = postService.getPostList(user_id, query);
             return new BaseResponse<>(posts);

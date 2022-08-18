@@ -16,7 +16,7 @@ public class ChatMessageEntity {
     }
     private Type type;
     private String sender;
-    private String channelId;
+    private int roomId;
     private Object data;
 
     public void setSender(String sender) {this.sender = sender;}

@@ -27,9 +27,9 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
                 .addEndpoint("/ws")
                 .setAllowedOrigins("*");
     }
-
+/*
     @Override
     public void configureClientInboundChannel(ChannelRegistration registration) {
         registration.interceptors(stompHandler);
-    }
+    }*/
 }
