@@ -4,12 +4,14 @@ import com.example.nanuer_server.config.BaseException;
 import com.example.nanuer_server.config.BaseResponse;
 import com.example.nanuer_server.dto.Post.*;
 import com.example.nanuer_server.service.PostService;
+import com.example.nanuer_server.service.User.UserService;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 import static com.example.nanuer_server.config.BaseResponseStatus.*;
@@ -22,6 +24,7 @@ public class PostController {
 
     @Autowired
     private final PostService postService;
+    private final UserService userService;
 
     @GetMapping("/test")
     public String testPostController() {
@@ -31,7 +34,9 @@ public class PostController {
     /* 게시물 리스트 조회 */
     @GetMapping("")
     @JsonIgnore
-    public BaseResponse<List<GetPostListResDto>> getPostList(@RequestParam int user_id, @RequestParam String query) {
+    public BaseResponse<List<GetPostListResDto>> getPostList(HttpServletRequest request ,@RequestParam String query) throws BaseException {
+
+       int user_id = userService.GetHeaderAndGetUser(request);
         try {
             List<GetPostListResDto> posts = postService.getPostList(user_id, query);
             return new BaseResponse<>(posts);
@@ -42,7 +47,9 @@ public class PostController {
 
     /* 게시물 등록 */
     @PostMapping("")
-    public BaseResponse<String> createPost(@RequestBody CreatePostReqDto createPostReqDto) {
+    public BaseResponse<String> createPost(HttpServletRequest request, @RequestBody CreatePostReqDto createPostReqDto) throws BaseException  {
+        int user_id = userService.GetHeaderAndGetUser(request);
+        createPostReqDto.setUserId(user_id);
         try {
             if(createPostReqDto.getTitle() == null || createPostReqDto.getTitle().length() > 200) {
                 return new BaseResponse<>(POST_POST_INVALID_TITLE);
@@ -60,7 +67,7 @@ public class PostController {
 
     /* 게시물 조회 */
     @GetMapping("/{post_id}")
-    public BaseResponse<GetPostResDto> getPost(@PathVariable int post_id) {
+    public BaseResponse<GetPostResDto> getPost(@PathVariable int post_id)  {
         try {
             GetPostResDto post = postService.getPost(post_id);
             return new BaseResponse<>(post);

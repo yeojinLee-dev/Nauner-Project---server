@@ -13,6 +13,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Log4j2
 @RequiredArgsConstructor
 @RestController
@@ -48,6 +50,32 @@ public class PermitController {
             return new BaseResponse<>(result);
         } catch (BaseException exception) {
             return new BaseResponse<>((exception.getStatus()));
+        }
+    }
+
+    //아이디 찾기
+    @GetMapping("/getEmail")
+    public BaseResponse<String> GetUserEmail(HttpServletRequest request, @RequestParam String phone){
+        try{
+            UserInfoDto userInfoDto = userService.GetUserByPhone(phone);
+            String result =  userInfoDto.getEmail();
+            return  new BaseResponse<>(result);
+
+        }
+        catch (BaseException exception){
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
+
+    @PatchMapping("/updatePw")
+    public BaseResponse<String> ModifyPw(@RequestParam String phone, String password){
+        try {
+            userService.ModifyPw(phone,password);
+            UserInfoDto userInfoDto  = userService.GetUserByPhone(phone);
+            String result = "새 비밀번호 : " + userInfoDto.getPassword();
+            return new BaseResponse<>(result);
+        } catch(BaseException exception){
+            return new BaseResponse<>(exception.getStatus());
         }
     }
 

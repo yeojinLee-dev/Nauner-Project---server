@@ -132,4 +132,12 @@ public class UserService {
         return userId;
     }
 
+    public Boolean UserAuth(HttpServletRequest request)throws BaseException{
+        String token = request.getHeader("X-AUTH-TOKEN");
+        if (jwtTokenProvider.getUserPk(token) != null){
+            return true;
+        }
+        else return false;
+    }
+
 }

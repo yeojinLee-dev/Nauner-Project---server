@@ -37,7 +37,9 @@ public class UserController {
 
     //삭제
     @DeleteMapping("")
-    public BaseResponse<String> delete(@RequestParam String email) {
+    public BaseResponse<String> delete(HttpServletRequest request) {
+        String token = request.getHeader("X-AUTH-TOKEN");
+        String email = jwtTokenProvider.getUserPk(token);
         try{
             userService.delete(email);
             String result = email + " 해당 유저가 삭제되었습니다.";
@@ -51,7 +53,9 @@ public class UserController {
 
     //유저 상태관리
     @PatchMapping("/status")
-    public BaseResponse<String> UserStatus(@RequestParam String email) {
+    public BaseResponse<String> UserStatus(HttpServletRequest request) {
+        String token = request.getHeader("X-AUTH-TOKEN");
+        String email = jwtTokenProvider.getUserPk(token);
         try{
             userService.UserStatus(email);
             UserInfoDto userInfoDto  = userService.GetUser(email);
@@ -67,7 +71,9 @@ public class UserController {
 
     //유저 정보 조회
     @GetMapping("/info")
-    public BaseResponse<UserInfoDto> GetUser(@RequestParam String email) {
+    public BaseResponse<UserInfoDto> GetUser(HttpServletRequest request) {
+        String token = request.getHeader("X-AUTH-TOKEN");
+        String email = jwtTokenProvider.getUserPk(token);
         try{
             UserInfoDto userInfoDto = userService.GetUser(email);
 
@@ -80,39 +86,17 @@ public class UserController {
         }
     }
 
-
-    //아이디 찾기
-    @GetMapping("/getEmail")
-    public BaseResponse<String> GetUserEmail(HttpServletRequest request, @RequestParam String phone){
-        try{
-            UserInfoDto userInfoDto = userService.GetUserByPhone(phone);
-            String result =  userInfoDto.getEmail();
-            return  new BaseResponse<>(result);
-
-        }
-        catch (BaseException exception){
-            return new BaseResponse<>((exception.getStatus()));
-        }
-    }
-
-    @PatchMapping("/updatePw")
-    public BaseResponse<String> ModifyPw(@RequestParam String phone, String password){
-        try {
-            userService.ModifyPw(phone,password);
-            UserInfoDto userInfoDto  = userService.GetUserByPhone(phone);
-            String result = "새 비밀번호 : " + userInfoDto.getPassword();
-            return new BaseResponse<>(result);
-        } catch(BaseException exception){
-            return new BaseResponse<>(exception.getStatus());
-        }
-    }
-
     //jwt 토근 헤더에서 가져와 사용자 이메일 조회
     @ResponseBody
     @GetMapping("/userInfo")
     public BaseResponse<Integer> getUserInfoByJwt(HttpServletRequest request) throws BaseException {
         int userId = userService.GetHeaderAndGetUser(request);
         return new BaseResponse<>(userId);
+    }
+
+    public BaseResponse<Boolean> getUserAuth(HttpServletRequest request) throws BaseException {
+        Boolean result = userService.UserAuth(request);
+        return new BaseResponse<>(result);
     }
 
     /*
