@@ -7,7 +7,9 @@ import com.example.nanuer_server.domain.entity.UserEntity;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Setter
 @Getter
 @NoArgsConstructor
 public class CreatePostReqDto {
