@@ -95,6 +95,8 @@ public class PostEntity extends BaseTimeEntity {
         this.postStatus = 0;
     }
 
+
+
     public void increaseView() {
         this.view += 1;
     }

@@ -45,17 +45,11 @@ dependencies {
 	//이메일 보내기
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
 
-
-//문자인증
-	implementation group: 'net.nurigo', name: 'javaSDK', version: '2.2'
-
-	//이메일 보내기
-	implementation 'org.springframework.boot:spring-boot-starter-mail'
-
-
-	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	//채팅
+	//implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 	implementation 'org.springframework.boot:spring-boot-starter-websocket'
 	implementation group: 'org.webjars', name: 'stomp-websocket', version: '2.3.3-1'
+	//implementation 'it.ozimov:embedded-redis:0.7.2'
 
 }
 

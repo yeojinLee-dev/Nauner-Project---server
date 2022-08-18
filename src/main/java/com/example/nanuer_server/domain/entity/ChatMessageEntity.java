@@ -10,26 +10,18 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Builder
 @Data
+@Setter
 public class ChatMessageEntity {
-
-    private String type;
+    public enum Type {
+        ENTER, TALK, QUIT
+    }
+    private Type type;
     private String sender;
-    private String receiver;
+    private String channelId;
     private Object data;
-
-    //private String chatRoomId;
-    //private String writer;
-    //private String message;
-    //private MessageType type;
 
     public void setSender(String sender) {this.sender = sender;}
 
-    public void newConnect(){
-        this.type = "new";
-    }
-    public void closeConnect(){
-        this.type = "close";
-    }
 
 
 }

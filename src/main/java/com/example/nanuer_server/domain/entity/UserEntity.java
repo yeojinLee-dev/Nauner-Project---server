@@ -71,6 +71,10 @@ public class UserEntity extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "userEntity")
+    private List<ChatRoomEntity> chatRoom = new ArrayList<>();
+
     public void status(String status){
         this.userStatus  = status;
     }

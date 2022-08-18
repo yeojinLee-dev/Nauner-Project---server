@@ -1,20 +1,15 @@
 package com.example.nanuer_server.config.Chat;
 
 
-import com.example.nanuer_server.domain.entity.ChatMessageEntity;
-import com.example.nanuer_server.utils.Utils;
-import org.springframework.stereotype.Component;
-import org.springframework.web.socket.CloseStatus;
-import org.springframework.web.socket.TextMessage;
-import org.springframework.web.socket.WebSocketSession;
+
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-@Component
 public class WebSocketHandler extends TextWebSocketHandler {
+    /*
 
     private final Map<String, WebSocketSession> sessions = new ConcurrentHashMap<>();
     //웹소켓 연결 시
@@ -78,5 +73,5 @@ public class WebSocketHandler extends TextWebSocketHandler {
     @Override
     public void handleTransportError(WebSocketSession session, Throwable exception) throws Exception {
         //TODO:
-    }
+    }*/
 }
