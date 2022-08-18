@@ -23,7 +23,7 @@ import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
-public class ChatMessageController {
+public class ChatController {
 
     private final SimpMessageSendingOperations simpMessageSendingOperations;
     private final UserService userService;
@@ -34,37 +34,14 @@ public class ChatMessageController {
         /sub/channel/12345      - 구독(channelId:12345)
         /pub/send        - 메시지 발행
     */
-    /*
-    @MessageMapping("/join") //채팅방에서 입장 버튼 (채팅하기 버튼)
-    public String JoinChat() {
-        ChatRoomEntity room =  ChatRoomEntity.create();
-        //simpMessageSendingOperations.convertAndSend("/sub/channel/" + room.getRoomId() , "방에 입장하셨습니다");
-    }*/
 
     @MessageMapping("/send") //채팅방에서 메세지 보내기 버튼
     public void message(ChatMessageEntity message, @RequestHeader("X-AUTH-TOKEN") String token) {
-       // System.out.println("토큰 : " + token);
         String userEmail = jwtTokenProvider.getUserPk(token);
         String nickName = userRepository.findByEmail(userEmail).get().getNickName();
-        ChatRoomEntity chatRoom=chatService.findRoomById(message.getChannelId());
-        //message.setSender(nickName);
         chatService.sendChatMessage(message);
-        //simpMessageSendingOperations.convertAndSend("/sub/channel/" + message.getChannelId(), message);
     }
-    /*
-    @MessageMapping("/join")
-    public void enter(HttpServletRequest request,ChatMessageEntity message) throws BaseException{
-        message.setType(ChatMessageEntity.Type.ENTER);
-        int userId = userService.GetHeaderAndGetUser(request);
-        String nickName = userRepository.findByUserId(userId).get().getNickName();
-        String roomId = chatService.createRoom();
-        message.setChannelId(roomId);
-        message.setSender(nickName);
-        message.setData(message.getChannelId()+ "방에 " +message.getSender()+" 님이 입장하였습니다.");
-        simpMessageSendingOperations.convertAndSend("/sub/channel/"+message.getChannelId(),message);
-    }*/
-
-    @PostMapping("/chat/join")
+    @PostMapping("/chat/join") //채팅방에서 입장 버튼 (채팅하기 버튼)
     @ResponseBody
     public BaseResponse<String> createRoom(HttpServletRequest request, @RequestParam int postId) throws BaseException {
         ChatRoomEntity room = chatService.createRoom(request, postId);

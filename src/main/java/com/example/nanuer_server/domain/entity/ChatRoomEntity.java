@@ -2,7 +2,6 @@ package com.example.nanuer_server.domain.entity;
 
 
 import lombok.*;
-import org.apache.catalina.User;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.NotFound;
@@ -10,9 +9,8 @@ import org.hibernate.annotations.NotFoundAction;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
+
 
 @Table(name="room")
 @AllArgsConstructor
@@ -41,8 +39,7 @@ public class ChatRoomEntity implements Serializable {
     @ToString.Exclude
     private PostEntity postEntity;
 
-    @ElementCollection
-    private List<ChatMessageEntity> chatMessages = new ArrayList<>();
+
 
     public static ChatRoomEntity create(UserEntity userEntity, PostEntity postEntity){
         ChatRoomEntity room = new ChatRoomEntity();

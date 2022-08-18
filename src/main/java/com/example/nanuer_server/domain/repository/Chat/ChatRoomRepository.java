@@ -9,7 +9,5 @@ import java.util.*;
 
 public interface ChatRoomRepository extends JpaRepository<ChatRoomEntity, String> {
     Optional<ChatRoomEntity> findByRoomId(String roomId);
-    List<ChatRoomEntity> findByRoomByUser(UserEntity userEntity);
-    List<ChatRoomEntity> findByRoomByPost(PostEntity PostEntity);
 
 }
