@@ -35,7 +35,7 @@ public class ChatService {
         UserEntity userEntity = userRepository.findByUserId(userId).get();
         PostEntity postEntity = postRepository.findByPostId(postId);
         ChatRoomEntity chatRoom = ChatRoomEntity.builder()
-                .roomId(UUID.randomUUID().toString())
+                //.roomId(UUID.randomUUID().toString())
                 .postEntity(postEntity)
                 .userEntity(userEntity)
                 .build();
@@ -44,15 +44,14 @@ public class ChatService {
     }
 
     public void sendChatMessage(ChatMessageEntity chatMessage) {
-
-        if (ChatMessageEntity.Type.ENTER.equals(chatMessage.getType())) {
+        if (ChatMessageEntity.Type.ENTER.equals(chatMessage.getType())) { //입장하는 버튼
             chatMessage.setData(chatMessage.getSender() + "님이 방에 입장했습니다.");
             chatMessage.setSender("[알림]");
-
-        } else if (ChatMessageEntity.Type.QUIT.equals(chatMessage.getType())) {
+        }
+        else if (ChatMessageEntity.Type.QUIT.equals(chatMessage.getType())) { //나가기 버튼
             chatMessage.setData(chatMessage.getSender() + "님이 방에서 나갔습니다.");
             chatMessage.setSender("[알림]");
         }
-        simpMessageSendingOperations.convertAndSend("/sub/channel/" + chatMessage.getChannelId(), chatMessage);
+        simpMessageSendingOperations.convertAndSend("/sub/channel/" + chatMessage.getRoomId(), chatMessage);
     }
 }

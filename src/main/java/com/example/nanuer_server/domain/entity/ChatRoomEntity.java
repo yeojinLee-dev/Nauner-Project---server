@@ -21,12 +21,12 @@ import java.util.UUID;
 @DynamicInsert
 @Entity
 @ToString(callSuper = true) // 부모 클래스의 toString 불러오는 어노테이션. 붙이면 createdAt 하고 updatedAt 데이터 정상적으로 나옴.
-public class ChatRoomEntity implements Serializable {
+public class ChatRoomEntity {
 
-    private static final long serialVersionUID = 6494678977089006639L;
     @Id
-    @Column(nullable = false,unique = true)
-    private String roomId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "room_id")
+    private int roomId;
 
     @NotFound(action = NotFoundAction.IGNORE)
     @ManyToOne(fetch = FetchType.EAGER)
@@ -43,7 +43,6 @@ public class ChatRoomEntity implements Serializable {
 
     public static ChatRoomEntity create(UserEntity userEntity, PostEntity postEntity){
         ChatRoomEntity room = new ChatRoomEntity();
-        room.roomId = UUID.randomUUID().toString();
         room.userEntity = userEntity;
         room.postEntity = postEntity;
         return room;
