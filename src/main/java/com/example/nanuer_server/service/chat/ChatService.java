@@ -34,16 +34,12 @@ public class ChatService {
         int userId = userService.GetHeaderAndGetUser(request);
         UserEntity userEntity = userRepository.findByUserId(userId).get();
         PostEntity postEntity = postRepository.findByPostId(postId);
-        ChatRoomEntity chatRoom = ChatRoomEntity.builder()
-                //.roomId(UUID.randomUUID().toString())
-                .postEntity(postEntity)
-                .userEntity(userEntity)
-                .build();
-        chatRoomRepository.save(chatRoom);
-        return chatRoom;
+        ChatRoomEntity chatRoomEntity = ChatRoomEntity.create(false,userEntity, postEntity);
+        chatRoomRepository.save(chatRoomEntity);
+        return chatRoomEntity;
     }
 
     public void sendChatMessage(ChatMessageEntity chatMessage) {
-        simpMessageSendingOperations.convertAndSend("/sub/channel/" + chatMessage.getRoomId(), chatMessage);
+        simpMessageSendingOperations.convertAndSend("/sub/channel/" + chatMessage.getRoomId(), chatMessage.getData());
     }
 }

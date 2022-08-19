@@ -9,5 +9,5 @@ public class GetChatUserDto {
 
     private int userId;
 
-    private int roomId;
+    private int roomNumber;
 }

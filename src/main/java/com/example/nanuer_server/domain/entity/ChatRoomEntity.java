@@ -1,6 +1,7 @@
 package com.example.nanuer_server.domain.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
@@ -28,6 +29,10 @@ public class ChatRoomEntity {
     @Column(name = "room_id")
     private int roomId;
 
+    private int roomNumber;
+
+    private Boolean isWriter;
+
     @NotFound(action = NotFoundAction.IGNORE)
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
@@ -36,15 +41,18 @@ public class ChatRoomEntity {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "post_id")
+    @JsonIgnore
     @ToString.Exclude
     private PostEntity postEntity;
 
 
 
-    public static ChatRoomEntity create(UserEntity userEntity, PostEntity postEntity){
+    public static ChatRoomEntity create(Boolean isWriter,UserEntity userEntity, PostEntity postEntity){
         ChatRoomEntity room = new ChatRoomEntity();
         room.userEntity = userEntity;
         room.postEntity = postEntity;
+        room.roomNumber = postEntity.getPostId();
+        room.isWriter = isWriter;
         return room;
     }
 

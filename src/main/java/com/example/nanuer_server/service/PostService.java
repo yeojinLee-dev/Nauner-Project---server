@@ -1,10 +1,7 @@
 package com.example.nanuer_server.service;
 
 import com.example.nanuer_server.config.BaseException;
-import com.example.nanuer_server.domain.entity.CategoryEntity;
-import com.example.nanuer_server.domain.entity.HeartEntity;
-import com.example.nanuer_server.domain.entity.PostEntity;
-import com.example.nanuer_server.domain.entity.UserEntity;
+import com.example.nanuer_server.domain.entity.*;
 import com.example.nanuer_server.domain.repository.*;
 import com.example.nanuer_server.dto.Post.*;
 import com.example.nanuer_server.service.heart.HeartService;
@@ -40,7 +37,10 @@ public class PostService {
         createPostReqDto.setCategoryEntity(categoryEntity);
 
         return postRepository.save(createPostReqDto.toEntity()).getPostId();
+
     }
+
+
 
     @Transactional
     public GetPostResDto getPost(int post_id) throws BaseException {
