@@ -15,11 +15,11 @@ public class ChatMessageEntity {
         ENTER, TALK, QUIT
     }
     private Type type;
-    private String sender;
+    private int sender;
     private int roomId;
     private Object data;
 
-    public void setSender(String sender) {this.sender = sender;}
+    public void setSender(int sender) {this.sender = sender;}
     public void setData(String data){
         this.data=data;
     }
