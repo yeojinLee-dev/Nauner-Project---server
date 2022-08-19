@@ -106,4 +106,5 @@ public class UserEntity extends BaseTimeEntity {
             return false;
     }
 
+
 }
