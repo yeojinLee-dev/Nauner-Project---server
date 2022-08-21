@@ -40,6 +40,6 @@ public class ChatService {
     }
 
     public void sendChatMessage(ChatMessageEntity chatMessage) {
-        simpMessageSendingOperations.convertAndSend("/sub/channel/" + chatMessage.getRoomId(), chatMessage.getData());
+        simpMessageSendingOperations.convertAndSend("/sub/channel/" + chatMessage.getRoomId(), chatMessage);
     }
 }

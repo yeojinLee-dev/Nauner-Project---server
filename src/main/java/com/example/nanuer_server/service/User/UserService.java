@@ -8,6 +8,7 @@ import com.example.nanuer_server.domain.entity.PostEntity;
 import com.example.nanuer_server.domain.entity.UserEntity;
 import com.example.nanuer_server.domain.repository.PostRepository;
 import com.example.nanuer_server.domain.repository.UserRepository;
+import com.example.nanuer_server.dto.User.GetUserInfoRes;
 import com.example.nanuer_server.dto.User.JoinUserDto;
 import com.example.nanuer_server.dto.User.LoginUserDto;
 import com.example.nanuer_server.dto.User.UserInfoDto;
@@ -95,6 +96,24 @@ public class UserService {
     public UserInfoDto GetUser(String email) throws BaseException {
         Optional<UserEntity> userEntity = userRepository.findByEmail(email);
         UserInfoDto userInfoDto = userEntity.get().toDto();
+        if(!userEntity.isPresent()) {
+            throw new BaseException(USERS_EMPTY_USER_EMAIL);
+        }
+        return userInfoDto;
+    }
+
+    //유저 정보 return 값 특정해주셔서 만든 service 함수 입니다!!
+    public GetUserInfoRes GetUser2(String email) throws BaseException {
+        UserEntity userEntity = userRepository.findByEmail(email).get();
+        GetUserInfoRes userInfoDto = new GetUserInfoRes();
+        userInfoDto.setBirth(userEntity.getBirth());
+        userInfoDto.setEmail(userEntity.getEmail());
+        userInfoDto.setName(userEntity.getName());
+        userInfoDto.setPhone(userEntity.getPhone());
+        userInfoDto.setUniversity(userEntity.getUniversity());
+        userInfoDto.setProfileImg(userEntity.getProfileImg());
+        userInfoDto.setNickName(userEntity.getNickName());
+        userInfoDto.setPassword(userEntity.getPassword());
         if(!userEntity.isPresent()) {
             throw new BaseException(USERS_EMPTY_USER_EMAIL);
         }

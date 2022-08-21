@@ -1,5 +1,6 @@
 package com.example.nanuer_server.dto.User;
 
+
 import com.example.nanuer_server.domain.entity.UserEntity;
 import com.example.nanuer_server.domain.entity.UserRole;
 import com.example.nanuer_server.dto.Post.PostDto;
@@ -18,7 +19,8 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserInfoDto {
+public class GetUserInfoRes {
+    //유저 정보 return 값 이렇게만 반환해달라고 요청하셔서 만든 dto입니다!!
     private String password;
     private String name;
     private String email;
@@ -27,11 +29,8 @@ public class UserInfoDto {
     private String birth;
     private String profileImg;
     private String university;
-    private String userStatus;
-   private int  userScore;
-   private UserRole role;
 
-    //private List<PostDto> postDtoList = new ArrayList<>();
+
 
     public UserEntity toEntity() {
         UserEntity userEntity = UserEntity.builder()
@@ -43,9 +42,7 @@ public class UserInfoDto {
                 .birth(birth)
                 .profileImg(profileImg)
                 .university(university)
-                .userStatus(userStatus)
-                .userScore(userScore)
-                .role(role)
+
                 .build();
         return userEntity;
     }
