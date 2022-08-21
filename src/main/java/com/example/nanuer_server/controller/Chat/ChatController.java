@@ -57,6 +57,7 @@ public class ChatController {
     public ChatMessageEntity message(ChatMessageEntity message) {
         //String userEmail = jwtTokenProvider.getUserPk(token);
         //String nickName = userRepository.findByEmail(userEmail).get().getNickName();
+        System.out.println("ChatController : message() => " + message.getData());
         chatService.sendChatMessage(message);
         return message;
     }

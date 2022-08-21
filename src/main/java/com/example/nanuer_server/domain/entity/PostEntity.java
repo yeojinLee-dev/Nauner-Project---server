@@ -63,7 +63,7 @@ public class PostEntity extends BaseTimeEntity {
     // 이미 삭제된 userId값이 postEntity에 남아있게 되고, postEntity를 조회할 때, 해당 userId값을 가진 userEntity를 찾을 수 없다는
     // 에러가 발생한다. 이를 해결하기 위해 붙인 것이 @NotFound(action = NotFoundAction.IGNORE)
     @NotFound(action = NotFoundAction.IGNORE)
-    @JsonIgnore
+    //@JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     @ToString.Exclude

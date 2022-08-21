@@ -40,6 +40,10 @@ public class ChatService {
     }
 
     public void sendChatMessage(ChatMessageEntity chatMessage) {
+        System.out.println("ChatService : sendChatMessage() => " + chatMessage.getData());
         simpMessageSendingOperations.convertAndSend("/sub/channel/" + chatMessage.getRoomId(), chatMessage.getData());
+
+        System.out.println("ChatService : sendChatMessage() after converAndsend => " + chatMessage.getData());
+
     }
 }
