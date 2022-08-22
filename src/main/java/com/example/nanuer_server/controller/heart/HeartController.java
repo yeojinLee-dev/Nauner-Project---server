@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Slf4j
 @RestController
 @RequestMapping("/heart")
@@ -20,9 +22,9 @@ public class HeartController {
 
     //AddHeartDto 요청할 때 "userId"와 "postId"만 json으로 넘기면 됨
     @PostMapping("/add")
-    public BaseResponse<HeartDto> addHeart(@RequestBody AddHeartDto addheartDto){
+    public BaseResponse<HeartDto> addHeart(HttpServletRequest request, @RequestBody AddHeartDto addheartDto){
         try {
-            HeartDto addedHeartDto = heartService.addHeart(addheartDto);
+            HeartDto addedHeartDto = heartService.addHeart(request, addheartDto);
             return new BaseResponse<>(addedHeartDto);
         } catch (BaseException exception) {
             return new BaseResponse<>(exception.getStatus());
