@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 // 게시물이 삭제되면 heart도 같이 삭제
 @Service
@@ -50,14 +51,23 @@ public class HeartService {
         return heartEntity.toDto();
     }
 
-    public void deleteHeart(int heartId) throws BaseException {
-       HeartEntity heartEntity = heartRepository.findById(heartId).get();
-       if(heartEntity.getPostEntity().getPostStatus()==0){
-           throw new BaseException(BaseResponseStatus.POST_POST_EMPTY_POST);
-       }
-       PostEntity postEntity = heartEntity.getPostEntity();
-       postEntity.setHeartCount(postEntity.getHeartCount()-1);
-       heartRepository.delete(heartEntity);
+    public void deleteHeart(HttpServletRequest request, int postId) throws BaseException {
+        String token = request.getHeader("X-AUTH-TOKEN");
+        String email = jwtTokenProvider.getUserPk(token);
+        List<HeartEntity> heartEntities = heartRepository.findByUserEmail(email);
+        for(int i = 0; i<heartEntities.size(); i++){
+            if(heartEntities.get(i).getPostEntity().getPostId() == postId){
+                if(heartEntities.get(i).getPostEntity().getPostStatus()==0){
+                    throw new BaseException(BaseResponseStatus.POST_POST_EMPTY_POST);
+                }
+
+                PostEntity postEntity = heartEntities.get(i).getPostEntity();
+                postEntity.setHeartCount(postEntity.getHeartCount()-1);
+
+                heartRepository.delete(heartEntities.get(i));
+                break;
+            }
+        }
     }
 
 }

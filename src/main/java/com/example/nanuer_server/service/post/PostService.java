@@ -1,4 +1,4 @@
-package com.example.nanuer_server.service.post;
+package com.example.nanuer_server.service;
 
 import com.example.nanuer_server.config.BaseException;
 import com.example.nanuer_server.domain.entity.*;
@@ -66,8 +66,8 @@ public class PostService {
     public int deletePost(int post_id) throws BaseException {
         PostEntity postEntity = postRepository.findById(post_id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. post_id = " + post_id));
-        for(HeartEntity heartEntity : heartRepository.findByPostId(postEntity.getPostId())) {
-            heartService.deleteHeart(heartEntity.getHeartId());
+        for(HeartEntity heartEntity : heartRepository.findAllByPostId(postEntity.getPostId())){
+            heartRepository.delete(heartEntity);
         }
         postEntity.delete();
         return post_id;

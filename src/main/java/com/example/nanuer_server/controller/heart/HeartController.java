@@ -31,10 +31,10 @@ public class HeartController {
         }
     }
 
-    @DeleteMapping("/delete/{heart_id}")
-    public BaseResponse<String> deleteHeart(@PathVariable(name = "heart_id") int heartId){
+    @DeleteMapping("/delete/{post_id}")
+    public BaseResponse<String> deleteHeart(HttpServletRequest request, @PathVariable(name = "post_id") int postId){
         try {
-            heartService.deleteHeart(heartId);
+            heartService.deleteHeart(request, postId);
             String message = "찜이 해제되었습니다.";
             return new BaseResponse<>(message);
         } catch (BaseException exception){
