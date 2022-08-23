@@ -40,6 +40,8 @@ public class PostService {
 
     }
 
+
+
     @Transactional
     public GetPostResDto getPost(int post_id) throws BaseException {
         PostEntity postEntity = postRepository.findById(post_id)

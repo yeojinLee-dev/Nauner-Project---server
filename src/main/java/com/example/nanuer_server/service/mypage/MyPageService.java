@@ -70,7 +70,7 @@ public class MyPageService {
         userEntity.setProfileImg(userInfoDto.getProfileImg());
         userEntity.setUniversity(userInfoDto.getUniversity());
         userEntity.setUserStatus(userInfoDto.getUserStatus());
-        userEntity.setUserScore(userInfoDto.getUserScore());
+        //userEntity.setUserScore(userInfoDto.getUserScore());
         userEntity.setRole(userInfoDto.getRole());
         userEntity.setPostEntities(userInfoDto.toEntity().getPostEntities());
         return userEntity;
