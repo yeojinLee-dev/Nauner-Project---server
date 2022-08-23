@@ -44,11 +44,14 @@ public class ChatController {
     @GetMapping("/getInfo")
     public BaseResponse<GetChatUserDto> GetChatUser(HttpServletRequest request, @RequestParam int post_id) throws BaseException {
         int userId = userService.GetHeaderAndGetUser(request);
+        UserEntity userEntity = userRepository.findByUserId(userId).get();
         int roomNumber = chatRoomRepository.findAllByPostId(post_id).get(0).getRoomNumber();
         ChatRoomEntity room = chatService.createRoom(request, post_id);
         GetChatUserDto getChatUserDto = GetChatUserDto.builder()
                 .userId(userId)
                 .roomNumber(roomNumber)
+                .nickName(userEntity.getNickName())
+                .profileImg(userEntity.getProfileImg())
                 .build();
         return new BaseResponse<>(getChatUserDto);
     }
@@ -61,13 +64,26 @@ public class ChatController {
         return message;
     }
 
-    @PostMapping("/join") //채팅방에서 입장 버튼 (채팅하기 버튼) [게시물 작성자 말고 채팅 참여자만 보이는]
+    //jwt 읽어서 isWriter(글작성자인지, 아닌지) return
+    /*
+    @GetMapping("/isWriter")
+    public BaseResponse<Boolean> IsWriter(){
+
+        Boolean result = ;
+        return new BaseResponse<>(result)
+    }
+*/
+
+    /*
+    @PostMapping("/join")
     @ResponseBody
     public BaseResponse<Integer> createRoom(HttpServletRequest request, @RequestParam int postId) throws BaseException {
 
         ChatRoomEntity room = chatService.createRoom(request, postId);
         return new BaseResponse<>(room.getRoomNumber());
-    }
-   
+    }*/
+
+
+
 
 }

@@ -8,7 +8,7 @@ import com.example.nanuer_server.domain.repository.Chat.ChatRoomRepository;
 import com.example.nanuer_server.domain.repository.PostRepository;
 import com.example.nanuer_server.domain.repository.UserRepository;
 import com.example.nanuer_server.dto.Post.*;
-import com.example.nanuer_server.service.PostService;
+import com.example.nanuer_server.service.post.PostService;
 import com.example.nanuer_server.service.User.UserService;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 

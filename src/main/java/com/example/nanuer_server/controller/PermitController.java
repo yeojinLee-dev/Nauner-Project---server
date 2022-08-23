@@ -38,8 +38,8 @@ public class PermitController {
 
     //로그인
 
-    @PostMapping("/login")
     @ResponseBody
+    @PostMapping("/login")
     public BaseResponse<String> login(@RequestBody LoginUserDto loginUserDto) {
         try {
 

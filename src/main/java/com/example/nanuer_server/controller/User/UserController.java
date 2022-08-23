@@ -4,6 +4,7 @@ import com.example.nanuer_server.config.BaseException;
 import com.example.nanuer_server.config.BaseResponse;
 import com.example.nanuer_server.domain.entity.UserEntity;
 import com.example.nanuer_server.domain.entity.UserRole;
+import com.example.nanuer_server.dto.User.GetUserInfoRes;
 import com.example.nanuer_server.dto.User.JoinUserDto;
 
 import com.example.nanuer_server.dto.User.UserInfoDto;
@@ -71,11 +72,11 @@ public class UserController {
 
     //유저 정보 조회
     @GetMapping("/info")
-    public BaseResponse<UserInfoDto> GetUser(HttpServletRequest request) {
+    public BaseResponse<GetUserInfoRes> GetUser(HttpServletRequest request) {
         String token = request.getHeader("X-AUTH-TOKEN");
         String email = jwtTokenProvider.getUserPk(token);
         try{
-            UserInfoDto userInfoDto = userService.GetUser(email);
+            GetUserInfoRes userInfoDto = userService.GetUser2(email);
 
             return new BaseResponse<>(userInfoDto);
 
