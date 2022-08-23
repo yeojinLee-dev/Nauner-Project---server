@@ -1,10 +1,7 @@
-package com.example.nanuer_server.service;
+package com.example.nanuer_server.service.post;
 
 import com.example.nanuer_server.config.BaseException;
-import com.example.nanuer_server.domain.entity.CategoryEntity;
-import com.example.nanuer_server.domain.entity.HeartEntity;
-import com.example.nanuer_server.domain.entity.PostEntity;
-import com.example.nanuer_server.domain.entity.UserEntity;
+import com.example.nanuer_server.domain.entity.*;
 import com.example.nanuer_server.domain.repository.*;
 import com.example.nanuer_server.dto.Post.*;
 import com.example.nanuer_server.service.heart.HeartService;
@@ -40,6 +37,7 @@ public class PostService {
         createPostReqDto.setCategoryEntity(categoryEntity);
 
         return postRepository.save(createPostReqDto.toEntity()).getPostId();
+
     }
 
     @Transactional
@@ -66,10 +64,18 @@ public class PostService {
     public int deletePost(int post_id) throws BaseException {
         PostEntity postEntity = postRepository.findById(post_id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. post_id = " + post_id));
-        for(HeartEntity heartEntity : heartRepository.findByPostId(postEntity.getPostId())){
+        for(HeartEntity heartEntity : heartRepository.findByPostId(postEntity.getPostId())) {
             heartService.deleteHeart(heartEntity.getHeartId());
         }
         postEntity.delete();
+        return post_id;
+    }
+
+    public int updatePostProgress(int post_id, int progressId) throws BaseException {
+        PostEntity postEntity = postRepository.findById(post_id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. post_id = " + post_id));
+
+        postEntity.updateProgress(progressId);
         return post_id;
     }
 }

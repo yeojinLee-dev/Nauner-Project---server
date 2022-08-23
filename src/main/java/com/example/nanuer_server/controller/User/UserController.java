@@ -94,6 +94,8 @@ public class UserController {
         return new BaseResponse<>(userId);
     }
 
+    @ResponseBody
+    @GetMapping("/AuthTest")
     public BaseResponse<Boolean> getUserAuth(HttpServletRequest request) throws BaseException {
         Boolean result = userService.UserAuth(request);
         return new BaseResponse<>(result);

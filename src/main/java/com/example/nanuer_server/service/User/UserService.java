@@ -6,12 +6,11 @@ import static com.example.nanuer_server.config.BaseResponseStatus.*;
 import com.example.nanuer_server.config.User.JwtTokenProvider;
 import com.example.nanuer_server.domain.entity.PostEntity;
 import com.example.nanuer_server.domain.entity.UserEntity;
-import com.example.nanuer_server.domain.repository.PostRepository;
 import com.example.nanuer_server.domain.repository.UserRepository;
 import com.example.nanuer_server.dto.User.JoinUserDto;
 import com.example.nanuer_server.dto.User.LoginUserDto;
 import com.example.nanuer_server.dto.User.UserInfoDto;
-import com.example.nanuer_server.service.PostService;
+import com.example.nanuer_server.service.post.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,7 +21,6 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Transactional

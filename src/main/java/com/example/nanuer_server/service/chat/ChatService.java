@@ -34,25 +34,12 @@ public class ChatService {
         int userId = userService.GetHeaderAndGetUser(request);
         UserEntity userEntity = userRepository.findByUserId(userId).get();
         PostEntity postEntity = postRepository.findByPostId(postId);
-        ChatRoomEntity chatRoom = ChatRoomEntity.builder()
-                .roomId(UUID.randomUUID().toString())
-                .postEntity(postEntity)
-                .userEntity(userEntity)
-                .build();
-        chatRoomRepository.save(chatRoom);
-        return chatRoom;
+        ChatRoomEntity chatRoomEntity = ChatRoomEntity.create(false,userEntity, postEntity);
+        chatRoomRepository.save(chatRoomEntity);
+        return chatRoomEntity;
     }
 
     public void sendChatMessage(ChatMessageEntity chatMessage) {
-
-        if (ChatMessageEntity.Type.ENTER.equals(chatMessage.getType())) {
-            chatMessage.setData(chatMessage.getSender() + "님이 방에 입장했습니다.");
-            chatMessage.setSender("[알림]");
-
-        } else if (ChatMessageEntity.Type.QUIT.equals(chatMessage.getType())) {
-            chatMessage.setData(chatMessage.getSender() + "님이 방에서 나갔습니다.");
-            chatMessage.setSender("[알림]");
-        }
-        simpMessageSendingOperations.convertAndSend("/sub/channel/" + chatMessage.getChannelId(), chatMessage);
+        simpMessageSendingOperations.convertAndSend("/sub/channel/" + chatMessage.getRoomId(), chatMessage.getData());
     }
 }

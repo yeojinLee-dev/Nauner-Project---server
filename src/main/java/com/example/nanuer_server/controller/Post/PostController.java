@@ -2,9 +2,13 @@ package com.example.nanuer_server.controller.Post;
 
 import com.example.nanuer_server.config.BaseException;
 import com.example.nanuer_server.config.BaseResponse;
+import com.example.nanuer_server.domain.entity.ChatRoomEntity;
 import com.example.nanuer_server.domain.entity.PostEntity;
+import com.example.nanuer_server.domain.repository.Chat.ChatRoomRepository;
+import com.example.nanuer_server.domain.repository.PostRepository;
+import com.example.nanuer_server.domain.repository.UserRepository;
 import com.example.nanuer_server.dto.Post.*;
-import com.example.nanuer_server.service.PostService;
+import com.example.nanuer_server.service.post.PostService;
 import com.example.nanuer_server.service.User.UserService;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
@@ -29,6 +32,9 @@ public class PostController {
     @Autowired
     private final PostService postService;
     private final UserService userService;
+    private final ChatRoomRepository chatRoomRepository;
+    private final UserRepository userRepository;
+    private final PostRepository postRepository;
 
     @GetMapping("/test")
     public String testPostController() {
@@ -63,8 +69,12 @@ public class PostController {
             if(createPostReqDto.getContent() == null || createPostReqDto.getContent().length() > 1000) {
                 return new BaseResponse<>(POST_POST_INVALID_CONTENT);
             }
+            int post_id = postService.createPost(createPostReqDto);
+            String result = "post_id = " + post_id + " 게시물 등록 성공";
+            //채팅 생성 추가
+            ChatRoomEntity chatRoomEntity = ChatRoomEntity.create(true,userRepository.findByUserId(user_id).get(), postRepository.findByPostId(post_id));
+            chatRoomRepository.save(chatRoomEntity);
 
-            String result = "post_id = " + postService.createPost(createPostReqDto) + " 게시물 등록 성공";
             return new BaseResponse<>(result);
         } catch (BaseException exception) {
             return new BaseResponse<>(exception.getStatus());
