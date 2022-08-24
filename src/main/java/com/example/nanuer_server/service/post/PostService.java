@@ -1,6 +1,7 @@
 package com.example.nanuer_server.service.post;
 
 import com.example.nanuer_server.config.BaseException;
+import com.example.nanuer_server.domain.Progress;
 import com.example.nanuer_server.domain.entity.*;
 import com.example.nanuer_server.domain.repository.*;
 import com.example.nanuer_server.dto.Post.*;
@@ -10,6 +11,8 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.*;
+
+import static com.example.nanuer_server.config.BaseResponseStatus.POST_POST_EMPTY_POST;
 
 @Service
 @RequiredArgsConstructor
@@ -41,11 +44,10 @@ public class PostService {
     }
 
 
-
     @Transactional
     public GetPostResDto getPost(int post_id) throws BaseException {
         PostEntity postEntity = postRepository.findById(post_id)
-                .orElseThrow(() -> new IllegalArgumentException("해당 게시물이 없습니다. post_id = " + post_id));
+                .orElseThrow(() -> new BaseException(POST_POST_EMPTY_POST));
 
         postEntity.increaseView();
 
@@ -55,7 +57,7 @@ public class PostService {
     @Transactional
     public int updatePost(int post_id, UpdatePostReqDto updatePostReqDto) throws BaseException {
         PostEntity postEntity = postRepository.findById(post_id)
-                .orElseThrow(()-> new IllegalArgumentException("해당 게시글이 없습니다. post_id = "+ post_id));
+                .orElseThrow(() -> new BaseException(POST_POST_EMPTY_POST));
 
         postEntity.update(updatePostReqDto);
 
@@ -65,19 +67,31 @@ public class PostService {
     @Transactional
     public int deletePost(int post_id) throws BaseException {
         PostEntity postEntity = postRepository.findById(post_id)
-                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. post_id = " + post_id));
-        for(HeartEntity heartEntity : heartRepository.findByPostId(postEntity.getPostId())) {
-            heartService.deleteHeart(heartEntity.getHeartId());
+                .orElseThrow(() -> new BaseException(POST_POST_EMPTY_POST));
+
+        for (HeartEntity heartEntity : heartRepository.findAllByPostId(postEntity.getPostId())) {
+            heartRepository.delete(heartEntity);
         }
+
         postEntity.delete();
         return post_id;
     }
 
-    public int updatePostProgress(int post_id, int progressId) throws BaseException {
+    public Progress updateProgress(int post_id, int progressId) throws BaseException {
         PostEntity postEntity = postRepository.findById(post_id)
-                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. post_id = " + post_id));
+                .orElseThrow(() -> new BaseException(POST_POST_EMPTY_POST));
 
-        postEntity.updateProgress(progressId);
-        return post_id;
+        if (progressId == 1) {
+            postEntity.setProgress(Progress.Confirm);
+            postRepository.save(postEntity);
+            return Progress.Confirm;
+        }
+        else if (progressId == 2) {
+            postEntity.setProgress(Progress.End);
+            postRepository.save(postEntity);
+            return Progress.End;
+        }
+
+        return Progress.Recruit;
     }
 }

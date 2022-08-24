@@ -17,8 +17,6 @@ public interface ChatRoomRepository extends JpaRepository<ChatRoomEntity, Intege
     @Query("select h from ChatRoomEntity h join fetch h.postEntity where h.postEntity.postId = :postId")
     List<ChatRoomEntity> findAllByPostId(@Param("postId") int postId);
 
-    /*
-    @Query("select user_id from room where (is_writer=1) and (room_number=?)")
-    List<ChatRoomEntity> findIsWriterByPostId(@Param("postId") int postId);
-*/
+    Optional<ChatRoomEntity> findByUserEntityAndIsWriterAndPostEntity(UserEntity userEntity, Boolean isWriter , PostEntity postEntity);
+
 }

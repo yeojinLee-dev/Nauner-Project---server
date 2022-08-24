@@ -39,18 +39,19 @@ public class PostEntity extends BaseTimeEntity {
     @Column(nullable = true)
     private int heartCount;
 
+    @Column(name = "progress")
     @Enumerated(EnumType.STRING)
     private Progress progress;
 
     @JsonProperty("cost_info")
-    private String costInfo;
+    private int costInfo;
 
     private String menu;
 
     private int total;
 
     @JsonProperty("delivery_cost")
-    private String deliveryCost;
+    private int deliveryCost;
 
     private String location;
 

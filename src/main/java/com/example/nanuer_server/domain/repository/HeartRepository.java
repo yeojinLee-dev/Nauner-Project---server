@@ -12,5 +12,9 @@ public interface HeartRepository extends JpaRepository<HeartEntity,Integer> {
     List<HeartEntity> findAll(@Param("userId")int userId);
 
     @Query("select h from HeartEntity h join fetch h.postEntity where h.postEntity.postId = :postId")
-    List<HeartEntity> findByPostId(@Param("postId") int postId);
+    List<HeartEntity> findAllByPostId(@Param("postId") int postId);
+
+    @Query("select h from HeartEntity h join fetch h.userEntity where h.userEntity.email = :email")
+    List<HeartEntity> findByUserEmail(@Param("email") String email);
+
 }

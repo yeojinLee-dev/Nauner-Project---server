@@ -16,11 +16,11 @@ public class CreatePostReqDto {
     private String title;
     private String content;
 
-    private String costInfo;
+    private int costInfo;
     private String menu;
     private int total;
 
-    private String deliveryCost;
+    private int deliveryCost;
     private String location;
     private String time;
     private UserEntity userEntity;
