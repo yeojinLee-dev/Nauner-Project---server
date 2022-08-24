@@ -25,7 +25,6 @@ public class MessageController {
             String ran = Integer.toString(rand.nextInt(10));
             numStr += ran;
         }
-
         System.out.println("수신자 번호 : " + phone);
         System.out.println("인증번호 : " + numStr);
         messageService.sendSMS(phone,numStr);

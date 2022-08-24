@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -34,16 +35,17 @@ public class ChatService {
         int userId = userService.GetHeaderAndGetUser(request);
         UserEntity userEntity = userRepository.findByUserId(userId).get();
         PostEntity postEntity = postRepository.findByPostId(postId);
-        ChatRoomEntity chatRoomEntity = ChatRoomEntity.create(false,userEntity, postEntity);
-        chatRoomRepository.save(chatRoomEntity);
-        return chatRoomEntity;
+        if(chatRoomRepository.findByUserEntityAndIsWriterAndPostEntity(userEntity, false, postEntity).isEmpty() &&
+                chatRoomRepository.findByUserEntityAndIsWriterAndPostEntity(userEntity, true, postEntity).isEmpty() ){
+            ChatRoomEntity chatRoomEntity = ChatRoomEntity.create(false,userEntity, postEntity);
+            chatRoomRepository.save(chatRoomEntity);
+            return chatRoomEntity;
+        }
+        else return chatRoomRepository.findAllByPostId(postId).get(0);
     }
 
     public void sendChatMessage(ChatMessageEntity chatMessage) {
-        System.out.println("ChatService : sendChatMessage() => " + chatMessage.getData());
-        simpMessageSendingOperations.convertAndSend("/sub/channel/" + chatMessage.getRoomId(), chatMessage.getData());
-
-        System.out.println("ChatService : sendChatMessage() after converAndsend => " + chatMessage.getData());
-
+        simpMessageSendingOperations.convertAndSend("/sub/channel/" + chatMessage.getRoomId(), chatMessage);
     }
+
 }

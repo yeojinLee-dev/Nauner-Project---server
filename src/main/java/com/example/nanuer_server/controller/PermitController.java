@@ -26,8 +26,6 @@ public class PermitController {
     @ResponseBody
     @PostMapping("/join")
     public BaseResponse<UserEntity> join(@RequestBody JoinUserDto joinUserDto) {
-        //BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        //UserEntity userEntity = UserEntity.createUser(userDto);
         try {
             UserEntity userEntity = userService.signup(joinUserDto);
             return new BaseResponse<>(userEntity);
@@ -37,9 +35,8 @@ public class PermitController {
     }
 
     //로그인
-
-    @PostMapping("/login")
     @ResponseBody
+    @PostMapping("/login")
     public BaseResponse<String> login(@RequestBody LoginUserDto loginUserDto) {
         try {
 
@@ -55,7 +52,7 @@ public class PermitController {
 
     //아이디 찾기
     @GetMapping("/getEmail")
-    public BaseResponse<String> GetUserEmail(HttpServletRequest request, @RequestParam String phone){
+    public BaseResponse<String> GetUserEmail(@RequestParam String phone){
         try{
             UserInfoDto userInfoDto = userService.GetUserByPhone(phone);
             String result =  userInfoDto.getEmail();
@@ -67,6 +64,7 @@ public class PermitController {
         }
     }
 
+    //비밀번호 재설정
     @PatchMapping("/updatePw")
     public BaseResponse<String> ModifyPw(@RequestParam String phone, String password){
         try {

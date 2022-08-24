@@ -12,17 +12,11 @@ import com.example.nanuer_server.dto.Chat.GetChatUserDto;
 import com.example.nanuer_server.service.User.UserService;
 import com.example.nanuer_server.service.chat.ChatService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
-import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.socket.WebSocketHttpHeaders;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Optional;
-
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/chat")
@@ -44,11 +38,14 @@ public class ChatController {
     @GetMapping("/getInfo")
     public BaseResponse<GetChatUserDto> GetChatUser(HttpServletRequest request, @RequestParam int post_id) throws BaseException {
         int userId = userService.GetHeaderAndGetUser(request);
+        UserEntity userEntity = userRepository.findByUserId(userId).get();
         int roomNumber = chatRoomRepository.findAllByPostId(post_id).get(0).getRoomNumber();
         ChatRoomEntity room = chatService.createRoom(request, post_id);
         GetChatUserDto getChatUserDto = GetChatUserDto.builder()
                 .userId(userId)
                 .roomNumber(roomNumber)
+                .nickName(userEntity.getNickName())
+                .profileImg(userEntity.getProfileImg())
                 .build();
         return new BaseResponse<>(getChatUserDto);
     }
@@ -57,18 +54,35 @@ public class ChatController {
     public ChatMessageEntity message(ChatMessageEntity message) {
         //String userEmail = jwtTokenProvider.getUserPk(token);
         //String nickName = userRepository.findByEmail(userEmail).get().getNickName();
+
+        UserEntity userEntity = userRepository.findByUserId(message.getSender()).get();
+        message.setNickName(userEntity.getNickName());
+        message.setProfileImg(userEntity.getProfileImg());
         System.out.println("ChatController : message() => " + message.getData());
         chatService.sendChatMessage(message);
         return message;
     }
 
-    @PostMapping("/join") //채팅방에서 입장 버튼 (채팅하기 버튼) [게시물 작성자 말고 채팅 참여자만 보이는]
+    //jwt 읽어서 isWriter(글작성자인지, 아닌지) return
+    /*
+    @GetMapping("/isWriter")
+    public BaseResponse<Boolean> IsWriter(){
+
+        Boolean result = ;
+        return new BaseResponse<>(result)
+    }
+*/
+
+    /*
+    @PostMapping("/join")
     @ResponseBody
     public BaseResponse<Integer> createRoom(HttpServletRequest request, @RequestParam int postId) throws BaseException {
 
         ChatRoomEntity room = chatService.createRoom(request, postId);
         return new BaseResponse<>(room.getRoomNumber());
-    }
-   
+    }*/
+
+
+
 
 }

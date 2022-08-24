@@ -39,18 +39,19 @@ public class PostEntity extends BaseTimeEntity {
     @Column(nullable = true)
     private int heartCount;
 
+    @Column(name = "progress")
     @Enumerated(EnumType.STRING)
     private Progress progress;
 
     @JsonProperty("cost_info")
-    private String costInfo;
+    private int costInfo;
 
     private String menu;
 
     private int total;
 
     @JsonProperty("delivery_cost")
-    private String deliveryCost;
+    private int deliveryCost;
 
     private String location;
 
@@ -98,9 +99,15 @@ public class PostEntity extends BaseTimeEntity {
         this.postStatus = 0;
     }
 
-
     public void increaseView() {
         this.view += 1;
+    }
+
+    public void updateProgress(int progressId) {
+        if (progressId == 1)
+            this.progress = Progress.Confirm;
+        else if (progressId == 2)
+            this.progress = Progress.End;
     }
 
     public PostDto toDto() {

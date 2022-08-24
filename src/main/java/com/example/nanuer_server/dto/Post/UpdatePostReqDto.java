@@ -13,14 +13,14 @@ public class UpdatePostReqDto {
     private String content;
 
     @JsonProperty("cost_info")
-    private String costInfo;
+    private int costInfo;
 
     private String menu;
 
     private int total;
 
     @JsonProperty("delivery_cost")
-    private String deliveryCost;
+    private int deliveryCost;
 
     private String location;
 

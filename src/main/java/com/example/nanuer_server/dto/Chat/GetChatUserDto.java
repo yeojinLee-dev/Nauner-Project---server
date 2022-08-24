@@ -9,5 +9,11 @@ public class GetChatUserDto {
 
     private int userId;
 
+    private String nickName;
+
+    private String profileImg;
+
     private int roomNumber;
+
+
 }

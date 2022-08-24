@@ -17,9 +17,9 @@ public class PostDto {
     private int view;
     private int heartCount;
     private Progress progress;
-    private String costInfo;
+    private int costInfo;
     private int total;
-    private String deliveryCost;
+    private int deliveryCost;
     private String location;
     private String time;
     private int postStatus;
