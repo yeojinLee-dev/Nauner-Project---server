@@ -2,6 +2,7 @@ package com.example.nanuer_server.domain.repository;
 
 import com.example.nanuer_server.domain.entity.PostEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -21,4 +22,8 @@ public interface PostRepository extends JpaRepository<PostEntity, Integer> {
 
     @Query("select p from PostEntity p where p.postId = :postId")
     PostEntity findByPostId(@Param("postId") int postId);
+
+//    @Modifying(clearAutomatically = true)
+//    @Query("update PostEntity p set p.progress = 'End' where p.postId = :postId")
+//    void updateProgress(@Param("postId") int postId);
 }

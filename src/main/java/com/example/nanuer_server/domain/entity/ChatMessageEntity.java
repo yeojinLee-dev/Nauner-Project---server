@@ -4,6 +4,7 @@ import lombok.*;
 
 
 import javax.persistence.*;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,6 +19,9 @@ public class ChatMessageEntity {
     private int sender;
     private int roomId;
     private String data;
+    private String profileImg;
+    private String nickName;
+    private List<Integer> userIdList;
 
 
     public void setSender(int sender) {this.sender = sender;}

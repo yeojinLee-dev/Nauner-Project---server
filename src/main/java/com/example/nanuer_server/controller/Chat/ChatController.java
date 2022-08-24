@@ -52,10 +52,35 @@ public class ChatController {
 
     @MessageMapping("/send") //채팅방에서 메세지 보내기 버튼
     public ChatMessageEntity message(ChatMessageEntity message) {
+        //String userEmail = jwtTokenProvider.getUserPk(token);
+        //String nickName = userRepository.findByEmail(userEmail).get().getNickName();
+
+        UserEntity userEntity = userRepository.findByUserId(message.getSender()).get();
+        message.setNickName(userEntity.getNickName());
+        message.setProfileImg(userEntity.getProfileImg());
+        System.out.println("ChatController : message() => " + message.getData());
         chatService.sendChatMessage(message);
         return message;
     }
 
+    //jwt 읽어서 isWriter(글작성자인지, 아닌지) return
+    /*
+    @GetMapping("/isWriter")
+    public BaseResponse<Boolean> IsWriter(){
+
+        Boolean result = ;
+        return new BaseResponse<>(result)
+    }
+*/
+
+    /*
+    @PostMapping("/join")
+    @ResponseBody
+    public BaseResponse<Integer> createRoom(HttpServletRequest request, @RequestParam int postId) throws BaseException {
+
+        ChatRoomEntity room = chatService.createRoom(request, postId);
+        return new BaseResponse<>(room.getRoomNumber());
+    }*/
 
 
 
