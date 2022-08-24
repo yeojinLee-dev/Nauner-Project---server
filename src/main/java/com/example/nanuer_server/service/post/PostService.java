@@ -69,8 +69,8 @@ public class PostService {
         PostEntity postEntity = postRepository.findById(post_id)
                 .orElseThrow(() -> new BaseException(POST_POST_EMPTY_POST));
 
-        for (HeartEntity heartEntity : heartRepository.findByPostId(postEntity.getPostId())) {
-            heartService.deleteHeart(heartEntity.getHeartId());
+        for (HeartEntity heartEntity : heartRepository.findAllByPostId(postEntity.getPostId())) {
+            heartRepository.delete(heartEntity);
         }
 
         postEntity.delete();

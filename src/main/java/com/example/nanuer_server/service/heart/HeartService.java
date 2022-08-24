@@ -2,6 +2,7 @@ package com.example.nanuer_server.service.heart;
 
 import com.example.nanuer_server.config.BaseException;
 import com.example.nanuer_server.config.BaseResponseStatus;
+import com.example.nanuer_server.config.User.JwtTokenProvider;
 import com.example.nanuer_server.domain.entity.HeartEntity;
 import com.example.nanuer_server.domain.entity.PostEntity;
 import com.example.nanuer_server.domain.entity.UserEntity;
@@ -14,6 +15,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+
 // 게시물이 삭제되면 heart도 같이 삭제
 @Service
 @Transactional
@@ -25,13 +29,15 @@ public class HeartService {
 
     private final UserRepository userRepository;
 
+    private final JwtTokenProvider jwtTokenProvider;
     //
-    public HeartDto addHeart(AddHeartDto addheartDto) throws BaseException {
+    public HeartDto addHeart(HttpServletRequest request, AddHeartDto addheartDto) throws BaseException {
         if(postRepository.findByPostId(addheartDto.getPostId()).getPostStatus() ==0){
             throw new BaseException(BaseResponseStatus.USER_USER_EMPTY_USER);
         }
-
-        UserEntity userEntity = userRepository.getReferenceById(addheartDto.getUserId());
+        String token = request.getHeader("X-AUTH-TOKEN");
+        String email  = jwtTokenProvider.getUserPk(token);
+        UserEntity userEntity = userRepository.findByEmail(email).get();
         PostEntity postEntity = postRepository.getReferenceById(addheartDto.getPostId());
 
         addheartDto.setUserEntity(userEntity);
@@ -45,14 +51,23 @@ public class HeartService {
         return heartEntity.toDto();
     }
 
-    public void deleteHeart(int heartId) throws BaseException {
-       HeartEntity heartEntity = heartRepository.findById(heartId).get();
-       if(heartEntity.getPostEntity().getPostStatus()==0){
-           throw new BaseException(BaseResponseStatus.POST_POST_EMPTY_POST);
-       }
-       PostEntity postEntity = heartEntity.getPostEntity();
-       postEntity.setHeartCount(postEntity.getHeartCount()-1);
-       heartRepository.delete(heartEntity);
+    public void deleteHeart(HttpServletRequest request, int postId) throws BaseException {
+        String token = request.getHeader("X-AUTH-TOKEN");
+        String email = jwtTokenProvider.getUserPk(token);
+        List<HeartEntity> heartEntities = heartRepository.findByUserEmail(email);
+        for(int i = 0; i<heartEntities.size(); i++){
+            if(heartEntities.get(i).getPostEntity().getPostId() == postId){
+                if(heartEntities.get(i).getPostEntity().getPostStatus()==0){
+                    throw new BaseException(BaseResponseStatus.POST_POST_EMPTY_POST);
+                }
+
+                PostEntity postEntity = heartEntities.get(i).getPostEntity();
+                postEntity.setHeartCount(postEntity.getHeartCount()-1);
+
+                heartRepository.delete(heartEntities.get(i));
+                break;
+            }
+        }
     }
 
 }

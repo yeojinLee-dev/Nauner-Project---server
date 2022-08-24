@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class AddHeartDto {
-    private int userId;
+
     private int postId;
     private UserEntity userEntity;
     private PostEntity postEntity;
