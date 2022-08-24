@@ -1,24 +1,14 @@
 package com.example.nanuer_server.controller.User;
-
 import com.example.nanuer_server.config.BaseException;
 import com.example.nanuer_server.config.BaseResponse;
-import com.example.nanuer_server.domain.entity.UserEntity;
-import com.example.nanuer_server.domain.entity.UserRole;
 import com.example.nanuer_server.dto.User.GetUserInfoRes;
-import com.example.nanuer_server.dto.User.JoinUserDto;
-
 import com.example.nanuer_server.dto.User.UserInfoDto;
 import com.example.nanuer_server.service.User.UserService;
 import com.example.nanuer_server.config.User.JwtTokenProvider;
-import com.example.nanuer_server.dto.User.LoginUserDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletRequest;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Optional;
 
 
 @Log4j2
@@ -102,17 +92,5 @@ public class UserController {
         return new BaseResponse<>(result);
     }
 
-    /*
-    // 이메일 보내기
-    @Transactional
-    @PostMapping("/sendEmail")
-    public String sendEmail(@RequestParam("memberEmail") String memberEmail){
-        MailDTO dto = ms.createMailAndChangePassword(memberEmail);
-        ms.mailSend(dto);
-
-        return "/member/login";
-    }
-
-*/
 
 }

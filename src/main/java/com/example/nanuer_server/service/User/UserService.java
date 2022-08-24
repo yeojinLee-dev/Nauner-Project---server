@@ -40,6 +40,11 @@ public class UserService {
         String email = userDto.getEmail();
         if (userRepository.findByEmail(userDto.getEmail()).orElse(null) != null) {
             throw new BaseException(POST_USERS_EXISTS_EMAIL);
+            //이메일 중복 validation
+        }
+        else if(userRepository.findByPhone(userDto.getPhone()).orElse(null) != null){
+            throw new BaseException(POST_USERS_EXISTS_PHONE);
+            //휴대폰 중복 validation
         }
         try{
             userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));

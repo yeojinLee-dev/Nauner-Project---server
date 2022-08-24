@@ -23,6 +23,7 @@ public class ChatMessageEntity {
     private String nickName;
     private List<Integer> userIdList;
 
+
     public void setSender(int sender) {this.sender = sender;}
     public void setData(String data){
         this.data=data;

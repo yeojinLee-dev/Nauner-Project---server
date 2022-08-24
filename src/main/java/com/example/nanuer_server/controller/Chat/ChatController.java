@@ -12,17 +12,11 @@ import com.example.nanuer_server.dto.Chat.GetChatUserDto;
 import com.example.nanuer_server.service.User.UserService;
 import com.example.nanuer_server.service.chat.ChatService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
-import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.socket.WebSocketHttpHeaders;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Optional;
-
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/chat")
