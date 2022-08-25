@@ -3,6 +3,7 @@ package com.example.nanuer_server.controller.mypage;
 import com.example.nanuer_server.config.BaseException;
 import com.example.nanuer_server.config.BaseResponse;
 import com.example.nanuer_server.config.User.JwtTokenProvider;
+import com.example.nanuer_server.domain.entity.PostEntity;
 import com.example.nanuer_server.dto.Post.PostDto;
 import com.example.nanuer_server.dto.User.UserInfoDto;
 import com.example.nanuer_server.service.User.UserService;
@@ -12,7 +13,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @RestController
@@ -25,19 +28,25 @@ public class MyPageController {
 
 
     @GetMapping("/my-posts")
-    public BaseResponse<List<PostDto>> getMyPosts(HttpServletRequest request){
+    public BaseResponse<Map<String, List<PostEntity>>> getMyPosts(HttpServletRequest request){
         String token = request.getHeader("X-AUTH-TOKEN");
         String email = jwtTokenProvider.getUserPk(token);
-        List<PostDto> postDtoList = myPageService.getMyPosts(email);
-        return new BaseResponse<>(postDtoList);
+
+        Map<String, List<PostEntity>> response = new HashMap<>();
+        response.put("postList", myPageService.getMyPosts(email));
+        //List<PostDto> postDtoList = myPageService.getMyPosts(email);
+        return new BaseResponse<>(response);
     }
 
     @GetMapping("/heart-posts")
-    public BaseResponse<List<PostDto>> getHeartPosts(HttpServletRequest request){
+    public BaseResponse<Map<String, List<PostEntity>>> getHeartPosts(HttpServletRequest request){
         String token = request.getHeader("X-AUTH-TOKEN");
         String email = jwtTokenProvider.getUserPk(token);
-        List<PostDto> postDtoList = myPageService.getHeartPosts(email);
-        return new BaseResponse<>(postDtoList);
+
+        Map<String, List<PostEntity>> response = new HashMap<>();
+        response.put("postList", myPageService.getHeartPosts(email));
+        //List<PostDto> postDtoList = myPageService.getHeartPosts(email);
+        return new BaseResponse<>(response);
     }
 
     @PatchMapping("/update-user")
