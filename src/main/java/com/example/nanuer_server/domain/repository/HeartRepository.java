@@ -1,6 +1,7 @@
 package com.example.nanuer_server.domain.repository;
 
 import com.example.nanuer_server.domain.entity.HeartEntity;
+import com.example.nanuer_server.domain.entity.PostEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -16,5 +17,9 @@ public interface HeartRepository extends JpaRepository<HeartEntity,Integer> {
 
     @Query("select h from HeartEntity h join fetch h.userEntity where h.userEntity.email = :email")
     List<HeartEntity> findByUserEmail(@Param("email") String email);
+
+
+
+
 
 }

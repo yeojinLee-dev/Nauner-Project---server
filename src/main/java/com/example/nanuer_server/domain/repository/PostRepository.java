@@ -23,6 +23,10 @@ public interface PostRepository extends JpaRepository<PostEntity, Integer> {
     @Query("select p from PostEntity p where p.postId = :postId")
     PostEntity findByPostId(@Param("postId") int postId);
 
+    @Query("select p from PostEntity p where p.postId in (" +
+            "select h.postEntity.postId from HeartEntity h where h.userEntity.userId = :userId)")
+    List<PostEntity> findHeartByUserId(@Param("userId") int user_id);
+
 //    @Modifying(clearAutomatically = true)
 //    @Query("update PostEntity p set p.progress = 'End' where p.postId = :postId")
 //    void updateProgress(@Param("postId") int postId);

@@ -5,6 +5,7 @@ import com.example.nanuer_server.domain.entity.HeartEntity;
 import com.example.nanuer_server.domain.entity.PostEntity;
 import com.example.nanuer_server.domain.entity.UserEntity;
 import com.example.nanuer_server.domain.repository.HeartRepository;
+import com.example.nanuer_server.domain.repository.PostRepository;
 import com.example.nanuer_server.domain.repository.UserRepository;
 import com.example.nanuer_server.dto.Post.PostDto;
 import com.example.nanuer_server.dto.User.UserInfoDto;
@@ -24,30 +25,36 @@ import static com.example.nanuer_server.config.BaseResponseStatus.USERS_EMPTY_US
 @RequiredArgsConstructor
 public class MyPageService {
     private final UserRepository userRepository;
-
+    private final PostRepository postRepository;
     private final HeartRepository heartRepository;
 
 
-    public List<PostDto> getMyPosts(String email){
+    public List<PostEntity> getMyPosts(String email){
         List<PostEntity> postEntityList = userRepository.findByEmail(email).get().getPostEntities();
-        List<PostDto> postDtoList = postEntityList.stream()
-                .map(PostEntity::toDto)
-                .collect(Collectors.toList());
-        return postDtoList;
+//        List<PostDto> postDtoList = postEntityList.stream()
+//                .map(PostEntity::toDto)
+//                .collect(Collectors.toList());
+        return postEntityList;
     }
 
     // 마이페이지에서 회원이 찜한 게시물들을 볼 수 있는 메서드
-    public List<PostDto> getHeartPosts(String email){
-        List<HeartDto> heartDtoList = heartRepository
-                .findAll(userRepository.findByEmail(email).get().getUserId())
-                .stream()
-                .map(HeartEntity::toDto)
-                .collect(Collectors.toList());
+    public List<PostEntity> getHeartPosts(String email) {
+//        List<HeartDto> heartDtoList = heartRepository
+//                .findAll(userRepository.findByEmail(email).get().getUserId())
+//                .stream()
+//                .map(HeartEntity::toDto)
+//                .collect(Collectors.toList());
+//
+//        List<PostDto> postDtoList = heartDtoList.stream()
+//                .map(HeartDto::getPostDto)
+//                .collect(Collectors.toList());
+//        return postDtoList;
 
-        List<PostDto> postDtoList = heartDtoList.stream()
-                .map(HeartDto::getPostDto)
-                .collect(Collectors.toList());
-        return postDtoList;
+        Optional<UserEntity> userEntity = userRepository.findByEmail(email);
+        return postRepository.findHeartByUserId(userEntity.get().getUserId());
+
+
+
     }
 
     public UserInfoDto updateUser(UserInfoDto userInfoDto,String email) throws BaseException{
