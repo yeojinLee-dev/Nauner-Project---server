@@ -69,9 +69,7 @@ public class PostService {
         PostEntity postEntity = postRepository.findById(post_id)
                 .orElseThrow(() -> new BaseException(POST_POST_EMPTY_POST));
 
-        for (HeartEntity heartEntity : heartRepository.findAllByPostId(postEntity.getPostId())) {
-            heartRepository.delete(heartEntity);
-        }
+        heartRepository.deleteAll(heartRepository.findAllByPostId(postEntity.getPostId()));
 
         postEntity.delete();
         return post_id;
@@ -93,5 +91,12 @@ public class PostService {
         }
 
         return Progress.Recruit;
+    }
+
+    public Progress getProgress(int post_id) throws BaseException {
+        PostEntity postEntity = postRepository.findById(post_id)
+                .orElseThrow(() -> new BaseException(POST_POST_EMPTY_POST));
+
+        return postEntity.getProgress();
     }
 }

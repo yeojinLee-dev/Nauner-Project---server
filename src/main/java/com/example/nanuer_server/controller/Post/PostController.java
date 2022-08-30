@@ -130,4 +130,14 @@ public class PostController {
         }
     }
 
+    /* 게시물 진행 상태 리턴 */
+    @GetMapping("/progress")
+    public BaseResponse<Progress> getProgress(@RequestParam int post_id) {
+        try {
+            return new BaseResponse<>(postService.getProgress(post_id));
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
+    }
+
 }
