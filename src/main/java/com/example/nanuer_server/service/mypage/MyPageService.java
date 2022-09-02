@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -31,10 +32,17 @@ public class MyPageService {
 
     public List<PostEntity> getMyPosts(String email){
         List<PostEntity> postEntityList = userRepository.findByEmail(email).get().getPostEntities();
+        List<PostEntity> lists = new ArrayList<>();
+
+        for (PostEntity postEntity : postEntityList) {
+            if (postEntity.getPostStatus() == 1)
+                lists.add(postEntity);
+        }
+
 //        List<PostDto> postDtoList = postEntityList.stream()
 //                .map(PostEntity::toDto)
 //                .collect(Collectors.toList());
-        return postEntityList;
+        return lists;
     }
 
     // 마이페이지에서 회원이 찜한 게시물들을 볼 수 있는 메서드
@@ -52,9 +60,6 @@ public class MyPageService {
 
         Optional<UserEntity> userEntity = userRepository.findByEmail(email);
         return postRepository.findHeartByUserId(userEntity.get().getUserId());
-
-
-
     }
 
     public UserInfoDto updateUser(UserInfoDto userInfoDto,String email) throws BaseException{
